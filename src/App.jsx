@@ -158,7 +158,7 @@ function ANSHomepage() {
       },
       twinHub: {
         title: 'ツインハブの強み',
-        subtitle: 'Twin Hub的优势',
+        subtitle: 'The Power of Twin Hub',
         subtitleEn: 'The Power of Twin Hub',
         qingdao: {
           name: '青島ハブ',
@@ -189,7 +189,7 @@ function ANSHomepage() {
       },
       services: {
         title: 'サービス内容',
-        subtitle: '服务内容',
+        subtitle: 'Our Services',
         subtitleEn: 'Our Services',
         items: [
           { 
@@ -359,7 +359,7 @@ function ANSHomepage() {
       },
       process: {
         title: 'ご利用の流れ',
-        subtitle: '服务流程',
+        subtitle: 'Service Process',
         subtitleEn: 'Service Process',
         steps: [
           { num: '1', title: 'お問い合わせ', titleEn: 'Inquiry', titleZh: '咨询', desc: 'お電話またはフォームでお気軽にご連絡ください', descZh: '电话或表单咨询' },
@@ -2132,6 +2132,10 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
             }}>
               {t.about.subtitle}
             </p>
