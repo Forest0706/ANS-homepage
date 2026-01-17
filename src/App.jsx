@@ -72,6 +72,9 @@ function ANSHomepage() {
   const [scrolled, setScrolled] = useState(false);
   const [lang, setLang] = useState('ja');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  // Logo URL - 从环境变量或 Supabase 获取
+  const logoUrl = import.meta.env.VITE_LOGO_URL || null;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -447,12 +450,28 @@ function ANSHomepage() {
         }}>
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {logoUrl ? (
+              <img 
+                src={logoUrl} 
+                alt="ANS Logo" 
+                style={{
+                  height: '40px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                }}
+                onError={(e) => {
+                  // 如果图片加载失败，显示文字 logo
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+            ) : null}
             <div style={{
               width: '40px',
               height: '40px',
               background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
               borderRadius: '8px',
-              display: 'flex',
+              display: logoUrl ? 'none' : 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
@@ -1735,12 +1754,27 @@ function ANSHomepage() {
                 gap: '12px',
                 marginBottom: '20px',
               }}>
+                {logoUrl ? (
+                  <img 
+                    src={logoUrl} 
+                    alt="ANS Logo" 
+                    style={{
+                      height: '40px',
+                      width: 'auto',
+                      objectFit: 'contain',
+                    }}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
                 <div style={{
                   width: '40px',
                   height: '40px',
                   background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
                   borderRadius: '8px',
-                  display: 'flex',
+                  display: logoUrl ? 'none' : 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'white',
