@@ -736,9 +736,9 @@ function ANSHomepage() {
         }
         
         @media (max-width: 768px) {
-          /* 全局字体大小增加 */
+          /* 全局字体大小大幅增加 */
           body {
-            font-size: 18px !important;
+            font-size: 20px !important;
           }
           
           /* Header responsive */
@@ -755,148 +755,191 @@ function ANSHomepage() {
           
           /* Logo text larger on mobile */
           .logo-text {
-            font-size: 16px !important;
+            font-size: 18px !important;
           }
           
           .logo-subtext {
-            font-size: 11px !important;
+            font-size: 12px !important;
           }
           
-          /* Hero section mobile - 充满屏幕 */
+          /* Hero section mobile - 充满屏幕并居中 */
           .hero-section {
             padding: 40px 16px 60px !important;
             min-height: auto !important;
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
+            text-align: center !important;
           }
           
-          /* Hero 标题字体增大 */
+          /* Hero 标题字体大幅增大 */
           .hero-section h1 {
-            font-size: clamp(32px, 8vw, 48px) !important;
-            line-height: 1.2 !important;
+            font-size: clamp(36px, 10vw, 52px) !important;
+            line-height: 1.3 !important;
+            text-align: center !important;
           }
           
           /* Hero 副标题字体增大 */
           .hero-section p {
-            font-size: clamp(16px, 4vw, 20px) !important;
+            font-size: clamp(18px, 5vw, 22px) !important;
+            text-align: center !important;
           }
           
-          /* Hero features grid to single column - 字体增大 */
+          /* Hero features grid to single column - 字体增大并居中 */
           .hero-features-grid {
             grid-template-columns: 1fr !important;
-            gap: 16px !important;
+            gap: 18px !important;
+            justify-items: center !important;
+            text-align: center !important;
+            margin: 0 auto !important;
           }
           
           .hero-features-grid > div {
-            font-size: 18px !important;
+            font-size: 20px !important;
+            text-align: center !important;
+            justify-content: center !important;
           }
           
-          /* Hero CTA buttons stack on mobile - 字体增大 */
+          /* Hero CTA buttons stack on mobile - 字体增大并居中 */
           .hero-cta-buttons {
             flex-direction: column !important;
             width: 100% !important;
+            align-items: center !important;
           }
           
           .hero-cta-buttons button {
             width: 100% !important;
-            padding: 16px 24px !important;
-            font-size: 18px !important;
+            max-width: 100% !important;
+            padding: 18px 32px !important;
+            font-size: 20px !important;
           }
           
-          /* Section padding mobile - 充满屏幕 */
+          /* Section padding mobile - 充满屏幕并居中 */
           section {
             padding: 40px 16px !important;
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
+            text-align: center !important;
           }
           
-          /* Section 标题字体增大 */
+          /* Section 标题字体大幅增大并居中 */
           section h2 {
-            font-size: clamp(28px, 6vw, 36px) !important;
+            font-size: clamp(32px, 8vw, 40px) !important;
+            text-align: center !important;
           }
           
           section h3 {
-            font-size: clamp(24px, 5vw, 28px) !important;
+            font-size: clamp(26px, 6vw, 32px) !important;
+            text-align: center !important;
           }
           
-          /* 所有容器充满屏幕 */
+          /* 所有容器充满屏幕并居中 */
           * {
             max-width: 100% !important;
           }
           
-          /* Stats grid mobile - single column */
+          /* Stats grid mobile - single column并居中 */
           .stats-grid {
             grid-template-columns: 1fr !important;
-            gap: 20px !important;
+            gap: 24px !important;
+            justify-items: center !important;
+            margin: 0 auto !important;
           }
           
-          /* Services grid mobile - single column - 字体增大 */
+          /* Services grid mobile - single column - 字体增大并居中 */
           .services-grid {
             grid-template-columns: 1fr !important;
-            gap: 24px !important;
+            gap: 28px !important;
+            justify-items: center !important;
+            margin: 0 auto !important;
           }
           
-          /* Service card 内容字体增大 */
+          /* Service card 内容字体大幅增大并居中 */
+          .service-card {
+            text-align: center !important;
+            margin: 0 auto !important;
+            width: 100% !important;
+          }
+          
           .service-card h3 {
-            font-size: 24px !important;
+            font-size: 28px !important;
+            text-align: center !important;
           }
           
           .service-card p {
-            font-size: 16px !important;
+            font-size: 18px !important;
+            text-align: center !important;
           }
           
           .service-card li {
-            font-size: 15px !important;
+            font-size: 17px !important;
+            text-align: left !important;
           }
           
-          /* Twin Hub warehouse cards - single column */
+          /* Twin Hub warehouse cards - single column并居中 */
           .warehouse-cards-grid {
             grid-template-columns: 1fr !important;
-            gap: 24px !important;
+            gap: 28px !important;
+            justify-items: center !important;
+            margin: 0 auto !important;
           }
           
           .warehouse-card {
-            padding: 24px !important;
+            padding: 28px !important;
+            text-align: center !important;
+            width: 100% !important;
+            margin: 0 auto !important;
           }
           
-          /* Timeline responsive - 字体增大 */
+          .warehouse-card h3 {
+            font-size: 26px !important;
+          }
+          
+          .warehouse-card p {
+            font-size: 17px !important;
+          }
+          
+          /* Timeline responsive - 字体增大并居中 */
           .timeline-line {
             display: none !important;
           }
           .timeline-item {
             flex-direction: column !important;
-            align-items: flex-start !important;
+            align-items: center !important;
             gap: 20px !important;
+            text-align: center !important;
           }
           .timeline-content-left {
             width: 100% !important;
-            text-align: left !important;
+            text-align: center !important;
           }
           .timeline-content-right {
             width: 100% !important;
-            text-align: left !important;
+            text-align: center !important;
           }
           .timeline-spacer {
             display: none !important;
           }
           .timeline-dot {
-            position: absolute !important;
-            left: 30px !important;
-            top: 20px !important;
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            margin: 0 auto !important;
           }
           
           /* Footer responsive */
           .footer-grid {
             grid-template-columns: 1fr !important;
             gap: 32px !important;
+            text-align: center !important;
           }
           
           /* Process steps responsive */
           .process-steps {
             flex-direction: column !important;
             gap: 32px !important;
+            align-items: center !important;
           }
           
           /* Service card image smaller on mobile */
@@ -905,9 +948,11 @@ function ANSHomepage() {
             height: 80px !important;
           }
           
-          /* Recruit cards mobile */
+          /* Recruit cards mobile并居中 */
           .recruit-grid {
             grid-template-columns: 1fr !important;
+            justify-items: center !important;
+            margin: 0 auto !important;
           }
           
           /* Modal mobile adjustments */
@@ -920,19 +965,26 @@ function ANSHomepage() {
             overflow-y: auto !important;
           }
           
-          /* Table 内容字体增大 */
+          /* Table 内容字体增大并居中 */
           table {
-            font-size: 16px !important;
+            font-size: 18px !important;
+            margin: 0 auto !important;
           }
           
           /* 按钮字体增大 */
           button {
-            font-size: 16px !important;
+            font-size: 18px !important;
           }
           
           /* 链接字体增大 */
           a {
-            font-size: 16px !important;
+            font-size: 18px !important;
+          }
+          
+          /* 所有卡片和容器居中 */
+          [style*="maxWidth"], [style*="max-width"] {
+            margin-left: auto !important;
+            margin-right: auto !important;
           }
         }
         
