@@ -43,18 +43,13 @@ ${type === 'recruit' ? '応募ポジション' : 'お問い合わせ内容'}: ${
 `;
 
     // 使用 Resend 发送邮件
-    // 注意：未验证域名时，只能发送到注册邮箱（forestlee621@gmail.com）
-    // 验证域名后，可以发送到任何邮箱
-    const recipientEmail = process.env.RESEND_TEST_EMAIL || 'forestlee621@gmail.com';
-    
+    // 域名已验证，可以直接发送到 info@ans-scm.com
     const { data, error } = await resend.emails.send({
-      from: 'ANS Website <onboarding@resend.dev>', // 临时使用，验证域名后改为 noreply@ans-scm.com
-      to: recipientEmail, // 暂时使用测试邮箱，验证域名后改为 'info@ans-scm.com'
+      from: 'ANS Website <noreply@ans-scm.com>', // 使用验证后的域名
+      to: 'info@ans-scm.com', // 发送到 info@ans-scm.com
       replyTo: email,
       subject: subject,
       text: emailBody,
-      // 在邮件内容中添加实际收件人信息
-      html: emailBody.replace(/\n/g, '<br>') + `<br><br><hr><small>实际收件人: info@ans-scm.com (请转发)</small>`,
     });
 
     if (error) {
