@@ -7,12 +7,16 @@ node_modules/
 dist/
 build/
 
-# Environment variables
+# Environment variables (敏感信息，不要提交)
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+*.local
+
+# 敏感信息文件
+基础信息.md
 
 # IDE
 .vscode/
