@@ -88,56 +88,139 @@ function ANSHomepage() {
       nav: {
         home: 'ホーム',
         about: '会社概要',
-        warehouse: '双倉連動システム',
+        twinHub: 'ツインハブ',
         services: 'サービス',
+        cases: '導入事例',
         contact: 'お問い合わせ',
       },
       hero: {
-        title: '共筑双倉、航通中日',
-        subtitle: '青島・横浜双倉で、あなたのビジネスを加速',
-        cta1: '無料相談',
-        cta2: 'サービス詳細',
+        title: 'Twin Hub ― 中日をつなぐ物流ソリューション',
+        subtitle: '青島・横浜の二拠点体制で、あなたのビジネスを加速',
+        features: [
+          '✓ 中国コスト × 日本品質',
+          '✓ 最短3日で横浜着',
+          '✓ 2週間在庫で効率化',
+          '✓ 中日専門スタッフ対応'
+        ],
+        cta1: '無料相談を申し込む',
+        cta2: 'サービスを見る',
       },
       stats: {
-        revenue: '月間売上高',
-        area: '総倉庫面積',
-        inspection: '通関検査率',
-        delivery: '定時配送率',
-        clearance: '通関所要時間',
-        shipping: '海運リードタイム',
-        turnover: '在庫回転期間',
-        shipments: '月間出荷数',
+        revenue: { value: '6,000', unit: '万円', label: '月間売上高', icon: '💰' },
+        area: { value: '28,000', unit: '㎡', label: '総倉庫面積', icon: '📦' },
+        delivery: { value: '99.8', unit: '%', label: '定時配送率', icon: '⏱' },
+        shipping: { value: '3', unit: '日', label: '海上輸送日数', icon: '🚢' },
+        turnover: { value: '2', unit: '週間', label: '推奨在庫回転', icon: '🔄' },
+        shipments: { value: '38,000', unit: '+', label: '月間出荷件数', icon: '📊' },
       },
-      warehouse: {
-        title: '双倉連動システムの強み',
-        subtitle: 'The Advantages of Dual Warehouse System',
+      twinHub: {
+        title: 'ツインハブの強み',
+        subtitle: 'Twin Hub的优势',
+        subtitleEn: 'The Power of Twin Hub',
         qingdao: {
-          name: '青島倉庫',
-          subtitle: '中国の成本与規模優勢',
+          name: '青島ハブ',
+          subtitle: 'コストと規模の優位性',
+          subtitleEn: 'Cost & Scale Advantage',
           area: '20,000',
-          features: ['コスト優勢', '区位優勢', '規模優勢'],
-          descriptions: ['倉庫費用は日本の1/3', '青島港まで2.5km', '大面積倉储']
+          features: [
+            '一期工程20,000㎡の大型倉庫',
+            '倉庫費用は日本の約1/3',
+            '青島港まで2.5km、鉄道配送対応',
+            '集荷・検品・梱包・出荷の一貫対応'
+          ]
         },
         yokohama: {
-          name: '横浜倉庫',
-          subtitle: '日本のハードウェア&サービス優勢',
+          name: '横浜ハブ',
+          subtitle: 'スピードとサービスの優位性',
+          subtitleEn: 'Speed & Service Advantage',
           area: '8,000',
-          features: ['硬件優勢', '位置優勢', '配送優勢'],
-          descriptions: ['Landport智能倉庫', '本牧埠頭まで10分', 'ヤマトまで400m']
+          features: [
+            'ランドポート横浜杉田 8,000㎡',
+            '本牧港まで8km、車で約10分',
+            'Amazonと同一倉庫エリア、FBA入庫便利',
+            'ヤマト主力店まで400m、当日出荷対応'
+          ]
         },
-        connection: '周六普船 / 石島快船',
-        connectionSub: '3日主港直達'
+        connection: '週末通常便 / 最短3日',
+        connectionSub: '週末通常便 / 最短3日'
       },
       services: {
         title: 'サービス内容',
-        subtitle: 'Our Services',
+        subtitle: '服务内容',
+        subtitleEn: 'Our Services',
         items: [
-          { icon: '🚢', title: '海運サービス', desc: '青島⇔横浜 定期航線で確実な輸送を実現', features: ['週土普船 + 石島快船', 'FCL/LCL対応', '最短3日到着'] },
-          { icon: '📋', title: '通関代理サービス', desc: '迅速・確実な通関で、スムーズな物流を実現', features: ['検査率5%以下', 'ACP申請対応', '保税拆箱'] },
-          { icon: '📦', title: '倉庫管理サービス', desc: '青島20,000㎡ + 横浜8,000㎡ 双倉連動', features: ['システム化在庫管理', '入出庫・貼標', '温湿度管理'] },
-          { icon: '🚚', title: 'B2C代発サービス', desc: '保税代発で最短翌日配達を実現', features: ['ヤマト連携', '当日出荷対応', 'Amazon FBA転送'] },
-          { icon: '📍', title: '物流追跡システム', desc: 'リアルタイムで貨物状況を可視化', features: ['24時間追跡', '自動通知', '一単到底'] },
-          { icon: '💼', title: '総合コンサルティング', desc: '日本市場進出を全面サポート', features: ['物流方案設計', 'ACP/JCT登録', '日本法人設立'] },
+          { 
+            icon: '🚢', 
+            title: '海上輸送サービス', 
+            subtitle: 'Ocean Freight Service',
+            desc: '青島⇔横浜 定期航路で安定輸送', 
+            features: [
+              '週末通常便 + 石島快速便の2ルート',
+              'FCL（コンテナ）/ LCL（混載）対応',
+              '主要港まで最短3日',
+              '船会社一級代理の安定価格'
+            ] 
+          },
+          { 
+            icon: '📋', 
+            title: '通関代理サービス', 
+            subtitle: 'Customs Clearance Service',
+            desc: '迅速・確実な通関で、スムーズな物流を実現', 
+            features: [
+              '自社通関士による専門対応',
+              'ACP申請・登録代行',
+              '保税貨物の分割申告対応',
+              '経験豊富な専門チーム'
+            ] 
+          },
+          { 
+            icon: '📦', 
+            title: '倉庫管理サービス', 
+            subtitle: 'Warehouse Management',
+            desc: '青島20,000㎡ + 横浜8,000㎡ ツインハブ体制', 
+            features: [
+              'WMSによる在庫一元管理',
+              '入出庫・ラベル貼り・検品',
+              '短期・長期保管対応',
+              'セキュリティ完備'
+            ] 
+          },
+          { 
+            icon: '🚚', 
+            title: 'B2C発送代行サービス', 
+            subtitle: 'B2C Fulfillment',
+            desc: '保税倉庫から最短翌日配達', 
+            features: [
+              'ヤマト運輸との連携',
+              '当日出荷、関東翌日着',
+              'Amazon FBA転送対応',
+              '楽天RSL入庫対応'
+            ] 
+          },
+          { 
+            icon: '📍', 
+            title: '貨物追跡システム', 
+            subtitle: 'Cargo Tracking System',
+            desc: 'リアルタイムで貨物状況を可視化', 
+            features: [
+              '24時間システム追跡',
+              'B/L番号・コンテナ番号検索',
+              'メール・SMS自動通知',
+              '一気通貫の全行程可視化'
+            ] 
+          },
+          { 
+            icon: '💼', 
+            title: '総合コンサルティング', 
+            subtitle: 'Comprehensive Consulting',
+            desc: '日本市場進出を全面サポート', 
+            features: [
+              '物流スキーム設計',
+              'コスト構造の最適化',
+              'ACP・JCT登録サポート',
+              '日本法人設立相談'
+            ] 
+          },
         ]
       },
       timeline: {
@@ -162,12 +245,13 @@ function ANSHomepage() {
       },
       process: {
         title: 'ご利用の流れ',
-        subtitle: 'Service Process',
+        subtitle: '服务流程',
+        subtitleEn: 'Service Process',
         steps: [
-          { num: '01', title: 'お問い合わせ', titleEn: 'Inquiry', desc: 'まずはお気軽にお問い合わせください', time: '即時対応' },
-          { num: '02', title: '見積もり・契約', titleEn: 'Quotation', desc: '最適なプランをご提案します', time: '1-2営業日' },
-          { num: '03', title: '貨物受入れ', titleEn: 'Receiving', desc: '青島倉庫で貨物をお預かり', time: '随時' },
-          { num: '04', title: '配送完了', titleEn: 'Delivery', desc: '日本国内へ確実にお届け', time: '最短3日' },
+          { num: '1', title: 'お問い合わせ', titleEn: 'Inquiry', titleZh: '咨询', desc: 'お電話またはフォームでお気軽にご連絡ください', descZh: '电话或表单咨询' },
+          { num: '2', title: 'お見積り・ご契約', titleEn: 'Quote', titleZh: '报价', desc: '貨物情報をもとに最適なプランをご提案', descZh: '根据货物提供最优方案' },
+          { num: '3', title: '貨物受入れ', titleEn: 'Receiving', titleZh: '收货', desc: '青島または横浜倉庫で貨物をお預かり', descZh: '青岛或横滨仓库收货' },
+          { num: '4', title: '配送完了', titleEn: 'Delivery', titleZh: '配送', desc: 'ご指定の届け先まで確実にお届け', descZh: '准确送达指定地点' },
         ]
       },
       cta: {
@@ -188,57 +272,140 @@ function ANSHomepage() {
     zh: {
       nav: {
         home: '首页',
-        about: '公司概要',
-        warehouse: '双仓联动系统',
+        about: '公司概况',
+        twinHub: '双仓联动',
         services: '服务内容',
+        cases: '案例展示',
         contact: '联系我们',
       },
       hero: {
-        title: '共筑双仓，航通中日',
-        subtitle: '青岛・横滨双仓，为您的业务加速',
-        cta1: '免费咨询',
-        cta2: '服务详情',
+        title: 'Twin Hub — 连接中日的物流解决方案',
+        subtitle: '青岛・横滨双据点，助力您的业务腾飞',
+        features: [
+          '✓ 中国成本 × 日本品质',
+          '✓ 最快3天抵达横滨',
+          '✓ 2周库存高效周转',
+          '✓ 中日专业团队服务'
+        ],
+        cta1: '申请免费咨询',
+        cta2: '查看服务',
       },
       stats: {
-        revenue: '月营业额',
-        area: '总仓储面积',
-        inspection: '通关检查率',
-        delivery: '准时交付率',
-        clearance: '清关时间',
-        shipping: '海运时效',
-        turnover: '在库周转',
-        shipments: '月出货量',
+        revenue: { value: '6,000', unit: '万円', label: '月营业额', icon: '💰' },
+        area: { value: '28,000', unit: '㎡', label: '总仓储面积', icon: '📦' },
+        delivery: { value: '99.8', unit: '%', label: '准时交付率', icon: '⏱' },
+        shipping: { value: '3', unit: '日', label: '海运时效', icon: '🚢' },
+        turnover: { value: '2', unit: '周', label: '推荐库存周转', icon: '🔄' },
+        shipments: { value: '38,000', unit: '+', label: '月出货量', icon: '📊' },
       },
-      warehouse: {
-        title: '双仓联动系统的优势',
-        subtitle: 'The Advantages of Dual Warehouse System',
+      twinHub: {
+        title: 'Twin Hub的优势',
+        subtitle: 'Twin Hub的优势',
+        subtitleEn: 'The Power of Twin Hub',
         qingdao: {
-          name: '青岛仓库',
-          subtitle: '中国的成本与规模优势',
+          name: '青岛Hub',
+          subtitle: '成本与规模优势',
+          subtitleEn: 'Cost & Scale Advantage',
           area: '20,000',
-          features: ['成本优势', '区位优势', '规模优势'],
-          descriptions: ['仓储费用仅为日本的1/3', '距离青岛港2.5km', '2万㎡大面积仓储']
+          features: [
+            '一期工程20,000㎡大型仓库',
+            '仓储费用约为日本的1/3',
+            '距青岛港2.5km，铁路配套完善',
+            '集货・检品・包装・出运一站式服务'
+          ]
         },
         yokohama: {
-          name: '横滨仓库',
-          subtitle: '日本的硬件与服务优势',
+          name: '横滨Hub',
+          subtitle: '速度与服务优势',
+          subtitleEn: 'Speed & Service Advantage',
           area: '8,000',
-          features: ['硬件优势', '位置优势', '配送优势'],
-          descriptions: ['Landport智能仓库', '距本牧码头10分钟', '距黑猫宅急便400m']
+          features: [
+            'Landport横滨杉田 8,000㎡',
+            '距本牧港8km，车程约10分钟',
+            '与Amazon同一库区，FBA入库便利',
+            '距黑猫主力店400m，当日出货'
+          ]
         },
-        connection: '周六普船 / 石岛快船',
-        connectionSub: '3日主港直达'
+        connection: '周末普船 / 最短3日',
+        connectionSub: '周末普船 / 最短3日'
       },
       services: {
         title: '服务内容',
-        subtitle: 'Our Services',
+        subtitle: '服务内容',
+        subtitleEn: 'Our Services',
         items: [
-          { icon: '🚢', title: '海运服务', desc: '青岛⇔横滨 定期航线确保稳定运输', features: ['周六普船 + 石岛快船', 'FCL/LCL对应', '最快3天到达'] },
-          { icon: '📋', title: '清关代理服务', desc: '快速・准确的清关，实现顺畅物流', features: ['查验率5%以下', 'ACP申请对应', '保税拆箱'] },
-          { icon: '📦', title: '仓储管理服务', desc: '青岛20,000㎡ + 横滨8,000㎡ 双仓联动', features: ['系统化库存管理', '入出库・贴标', '温湿度管理'] },
-          { icon: '🚚', title: 'B2C代发服务', desc: '保税代发实现最快次日达', features: ['黑猫宅急便合作', '当日出货对应', 'Amazon FBA转运'] },
-          { icon: '📍', title: '物流追踪系统', desc: '实时可视化货物状态', features: ['24小时追踪', '自动通知', '一单到底'] },
-          { icon: '💼', title: '综合咨询服务', desc: '全面支持日本市场进出', features: ['物流方案设计', 'ACP/JCT登录', '日本法人设立'] },
+          { 
+            icon: '🚢', 
+            title: '海上輸送サービス', 
+            subtitle: 'Ocean Freight Service',
+            desc: '青島⇔横浜 定期航路で安定輸送', 
+            features: [
+              '週末通常便 + 石島快速便の2ルート',
+              'FCL（コンテナ）/ LCL（混載）対応',
+              '主要港まで最短3日',
+              '船会社一級代理の安定価格'
+            ] 
+          },
+          { 
+            icon: '📋', 
+            title: '通関代理サービス', 
+            subtitle: 'Customs Clearance Service',
+            desc: '迅速・確実な通関で、スムーズな物流を実現', 
+            features: [
+              '自社通関士による専門対応',
+              'ACP申請・登録代行',
+              '保税貨物の分割申告対応',
+              '経験豊富な専門チーム'
+            ] 
+          },
+          { 
+            icon: '📦', 
+            title: '倉庫管理サービス', 
+            subtitle: 'Warehouse Management',
+            desc: '青島20,000㎡ + 横浜8,000㎡ ツインハブ体制', 
+            features: [
+              'WMSによる在庫一元管理',
+              '入出庫・ラベル貼り・検品',
+              '短期・長期保管対応',
+              'セキュリティ完備'
+            ] 
+          },
+          { 
+            icon: '🚚', 
+            title: 'B2C発送代行サービス', 
+            subtitle: 'B2C Fulfillment',
+            desc: '保税倉庫から最短翌日配達', 
+            features: [
+              'ヤマト運輸との連携',
+              '当日出荷、関東翌日着',
+              'Amazon FBA転送対応',
+              '楽天RSL入庫対応'
+            ] 
+          },
+          { 
+            icon: '📍', 
+            title: '貨物追跡システム', 
+            subtitle: 'Cargo Tracking System',
+            desc: 'リアルタイムで貨物状況を可視化', 
+            features: [
+              '24時間システム追跡',
+              'B/L番号・コンテナ番号検索',
+              'メール・SMS自動通知',
+              '一気通貫の全行程可視化'
+            ] 
+          },
+          { 
+            icon: '💼', 
+            title: '総合コンサルティング', 
+            subtitle: 'Comprehensive Consulting',
+            desc: '日本市場進出を全面サポート', 
+            features: [
+              '物流スキーム設計',
+              'コスト構造の最適化',
+              'ACP・JCT登録サポート',
+              '日本法人設立相談'
+            ] 
+          },
         ]
       },
       timeline: {
@@ -294,6 +461,8 @@ function ANSHomepage() {
   const revenue = useCountUp(6000, 2000);
   const area = useCountUp(28000, 2000);
   const delivery = useCountUp(99.8, 2000);
+  const shipping = useCountUp(3, 2000);
+  const turnover = useCountUp(2, 2000);
   const shipments = useCountUp(38000, 2000);
 
   const warehouseSection = useScrollReveal();
@@ -368,6 +537,27 @@ function ANSHomepage() {
             position: absolute !important;
             left: 30px !important;
             top: 20px !important;
+          }
+          
+          /* Footer responsive */
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+          }
+          
+          /* Process steps responsive */
+          .process-steps {
+            flex-direction: column !important;
+          }
+          
+          /* Stats grid responsive */
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        
+        @media (max-width: 1199px) and (min-width: 769px) {
+          .footer-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
           }
         }
         
@@ -494,25 +684,23 @@ function ANSHomepage() {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '32px',
+            gap: '24px',
           }}>
-            {Object.entries(t.nav).map(([key, value]) => (
-              <a
-                key={key}
-                href={`#${key}`}
-                className="nav-link"
-                style={{
-                  position: 'relative',
-                  color: '#2C3E50',
-                  textDecoration: 'none',
-                  fontSize: '15px',
-                  fontWeight: 500,
-                  transition: 'color 0.3s ease',
-                }}
-              >
-                {value}
-              </a>
-            ))}
+            <a href="#home" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.home}
+            </a>
+            <a href="#about" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.about}
+            </a>
+            <a href="#twin-hub" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.twinHub}
+            </a>
+            <a href="#services" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.services}
+            </a>
+            <a href="#cases" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.cases}
+            </a>
             
             {/* Language Switcher */}
             <div style={{
@@ -658,7 +846,7 @@ function ANSHomepage() {
           }}>
             {/* Main Title */}
             <h1 className="fade-in" style={{
-              fontSize: 'clamp(40px, 6vw, 72px)',
+              fontSize: 'clamp(36px, 5vw, 56px)',
               fontWeight: 700,
               color: 'white',
               lineHeight: 1.1,
@@ -671,28 +859,29 @@ function ANSHomepage() {
             <p className="fade-in-delay-1" style={{
               fontSize: 'clamp(18px, 2.5vw, 24px)',
               color: 'rgba(255,255,255,0.85)',
-              marginBottom: '16px',
+              marginBottom: '32px',
               fontWeight: 300,
             }}>
               {t.hero.subtitle}
             </p>
 
-            {/* Features */}
+            {/* Features - 2列×2行 */}
             <div className="fade-in-delay-2" style={{
-              display: 'flex',
-              flexWrap: 'wrap',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
               gap: '16px',
               marginBottom: '40px',
+              maxWidth: '600px',
             }}>
-              {t.cta.features.map((feature, i) => (
+              {t.hero.features.map((feature, i) => (
                 <div key={i} style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
                   color: 'rgba(255,255,255,0.9)',
-                  fontSize: '15px',
+                  fontSize: '16px',
                 }}>
-                  <span style={{ color: '#4CAF50' }}>✓</span>
+                  <span style={{ color: '#FF8C00', fontSize: '18px' }}>✓</span>
                   {feature}
                 </div>
               ))}
@@ -706,7 +895,7 @@ function ANSHomepage() {
             }}>
               <button className="btn-primary" style={{
                 padding: '18px 40px',
-                background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
+                background: '#D32F2F',
                 border: 'none',
                 borderRadius: '8px',
                 color: 'white',
@@ -718,7 +907,7 @@ function ANSHomepage() {
                 alignItems: 'center',
                 gap: '8px',
               }}>
-                📥 {t.cta.btn1}
+                {t.hero.cta1}
               </button>
               <button className="btn-secondary" style={{
                 padding: '18px 40px',
@@ -734,104 +923,11 @@ function ANSHomepage() {
                 alignItems: 'center',
                 gap: '8px',
               }}>
-                💬 {t.cta.btn2}
+                {t.hero.cta2}
               </button>
             </div>
           </div>
 
-          {/* Stats Cards */}
-          <div className="fade-in-delay-4" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: '16px',
-            marginTop: '60px',
-          }}>
-            <div ref={revenue.ref} className="stat-card" style={{
-              background: 'rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '16px',
-              padding: '24px',
-              border: '1px solid rgba(255,255,255,0.15)',
-              transition: 'all 0.3s ease',
-            }}>
-              <div style={{ fontSize: '36px', fontWeight: 700, color: 'white' }}>
-                {revenue.count.toLocaleString()}
-                <span style={{ fontSize: '20px', marginLeft: '4px' }}>万円</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginTop: '4px' }}>
-                {t.stats.revenue}
-              </div>
-            </div>
-
-            <div ref={area.ref} className="stat-card" style={{
-              background: 'rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '16px',
-              padding: '24px',
-              border: '1px solid rgba(255,255,255,0.15)',
-              transition: 'all 0.3s ease',
-            }}>
-              <div style={{ fontSize: '36px', fontWeight: 700, color: 'white' }}>
-                {area.count.toLocaleString()}
-                <span style={{ fontSize: '20px', marginLeft: '4px' }}>㎡</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginTop: '4px' }}>
-                {t.stats.area}
-              </div>
-            </div>
-
-            <div className="stat-card" style={{
-              background: 'rgba(211, 47, 47, 0.2)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '16px',
-              padding: '24px',
-              border: '1px solid rgba(211, 47, 47, 0.3)',
-              transition: 'all 0.3s ease',
-            }}>
-              <div style={{ fontSize: '36px', fontWeight: 700, color: '#FF6B6B' }}>
-                5%
-                <span style={{ fontSize: '20px', marginLeft: '4px' }}>以下</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginTop: '4px' }}>
-                {t.stats.inspection}
-              </div>
-            </div>
-
-            <div ref={delivery.ref} className="stat-card" style={{
-              background: 'rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '16px',
-              padding: '24px',
-              border: '1px solid rgba(255,255,255,0.15)',
-              transition: 'all 0.3s ease',
-            }}>
-              <div style={{ fontSize: '36px', fontWeight: 700, color: 'white' }}>
-                {delivery.count.toFixed(1)}
-                <span style={{ fontSize: '20px', marginLeft: '4px' }}>%</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginTop: '4px' }}>
-                {t.stats.delivery}
-              </div>
-            </div>
-
-            <div ref={shipments.ref} className="stat-card" style={{
-              background: 'rgba(255,140,0,0.2)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '16px',
-              padding: '24px',
-              border: '1px solid rgba(255,140,0,0.3)',
-              transition: 'all 0.3s ease',
-            }}>
-              <div style={{ fontSize: '36px', fontWeight: 700, color: '#FFB84D' }}>
-                {shipments.count.toLocaleString()}
-                <span style={{ fontSize: '20px', marginLeft: '4px' }}>件</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginTop: '4px' }}>
-                {t.stats.shipments}
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Bottom Wave Divider */}
         <div style={{
@@ -849,10 +945,79 @@ function ANSHomepage() {
         </div>
       </section>
 
-      {/* Dual Warehouse Section */}
+      {/* Stats Section - 数据展示区块 */}
+      <section style={{
+        background: 'linear-gradient(135deg, #1A3A52 0%, #2C3E50 100%)',
+        padding: '100px 24px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Decorative Elements - 半透明集装箱图案 */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.08,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='none'/%3E%3Crect x='10' y='10' width='80' height='80' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E")`,
+          backgroundSize: '200px 200px',
+        }} />
+        
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
+        }}>
+          {/* Stats Cards - 6项数据，3列×2行 */}
+          <div className="fade-in-delay-4 stats-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '20px',
+            maxWidth: '1200px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}>
+            {[
+              { key: 'revenue', ref: revenue, count: revenue.count, isNumber: true },
+              { key: 'area', ref: area, count: area.count, isNumber: true },
+              { key: 'delivery', ref: delivery, count: delivery.count, isNumber: true },
+              { key: 'shipping', ref: shipping, count: shipping.count, isNumber: true },
+              { key: 'turnover', ref: turnover, count: turnover.count, isNumber: true },
+              { key: 'shipments', ref: shipments, count: shipments.count, isNumber: true },
+            ].map((stat, i) => {
+              const statData = t.stats[stat.key];
+              return (
+                <div key={stat.key} ref={stat.ref} className="stat-card" style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(10px)',
+                  borderRadius: '16px',
+                  padding: '32px',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center',
+                }}>
+                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>
+                    {statData.icon}
+                  </div>
+                  <div style={{ fontSize: 'clamp(40px, 5vw, 56px)', fontWeight: 700, color: 'white', lineHeight: 1 }}>
+                    {stat.isNumber ? stat.count.toLocaleString() : statData.value}
+                    <span style={{ fontSize: 'clamp(20px, 2.5vw, 24px)', marginLeft: '4px' }}>
+                      {statData.unit}
+                    </span>
+                  </div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', marginTop: '12px' }}>
+                    {statData.label}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Twin Hub Section */}
       <section 
         ref={warehouseSection.ref}
-        id="warehouse"
+        id="twin-hub"
         style={{
           background: '#F5F7FA',
           padding: '100px 24px',
@@ -877,13 +1042,13 @@ function ANSHomepage() {
               color: '#1A3A52',
               marginBottom: '8px',
             }}>
-              {t.warehouse.title}
+              {t.twinHub.title}
             </h2>
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
             }}>
-              {t.warehouse.subtitle}
+              {lang === 'ja' ? t.twinHub.subtitle : t.twinHub.subtitleEn}
             </p>
           </div>
 
@@ -927,14 +1092,14 @@ function ANSHomepage() {
                 color: '#D32F2F',
                 marginBottom: '8px',
               }}>
-                {t.warehouse.qingdao.name}
+                {t.twinHub.qingdao.name}
               </h3>
               <p style={{
                 fontSize: '14px',
                 color: '#7F8C9A',
                 marginBottom: '24px',
               }}>
-                {t.warehouse.qingdao.subtitle}
+                {t.twinHub.qingdao.subtitle}
               </p>
 
               {/* Area */}
@@ -948,7 +1113,7 @@ function ANSHomepage() {
                   fontWeight: 700,
                   color: '#D32F2F',
                 }}>
-                  {t.warehouse.qingdao.area}
+                  {t.twinHub.qingdao.area}
                 </span>
                 <span style={{
                   fontSize: '20px',
@@ -961,7 +1126,7 @@ function ANSHomepage() {
 
               {/* Features */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {t.warehouse.qingdao.features.map((feature, i) => (
+                {t.twinHub.qingdao.features.map((feature, i) => (
                   <div key={i} style={{
                     display: 'flex',
                     alignItems: 'flex-start',
@@ -980,11 +1145,8 @@ function ANSHomepage() {
                       <span style={{ color: 'white', fontSize: '14px' }}>✓</span>
                     </div>
                     <div>
-                      <div style={{ fontWeight: 600, color: '#2C3E50', fontSize: '16px' }}>
+                      <div style={{ fontWeight: 500, color: '#2C3E50', fontSize: '15px', lineHeight: 1.6 }}>
                         {feature}
-                      </div>
-                      <div style={{ color: '#7F8C9A', fontSize: '14px' }}>
-                        {t.warehouse.qingdao.descriptions[i]}
                       </div>
                     </div>
                   </div>
@@ -1035,14 +1197,14 @@ function ANSHomepage() {
                   fontSize: '16px',
                   marginBottom: '4px',
                 }}>
-                  {t.warehouse.connection}
+                  {t.twinHub.connection}
                 </div>
                 <div style={{
                   color: '#FF8C00',
                   fontSize: '14px',
                   fontWeight: 600,
                 }}>
-                  {t.warehouse.connectionSub}
+                  {t.twinHub.connectionSub}
                 </div>
               </div>
             </div>
@@ -1080,14 +1242,14 @@ function ANSHomepage() {
                 color: '#1A3A52',
                 marginBottom: '8px',
               }}>
-                {t.warehouse.yokohama.name}
+                {t.twinHub.yokohama.name}
               </h3>
               <p style={{
                 fontSize: '14px',
                 color: '#7F8C9A',
                 marginBottom: '24px',
               }}>
-                {t.warehouse.yokohama.subtitle}
+                {t.twinHub.yokohama.subtitle}
               </p>
 
               {/* Area */}
@@ -1101,7 +1263,7 @@ function ANSHomepage() {
                   fontWeight: 700,
                   color: '#1A3A52',
                 }}>
-                  {t.warehouse.yokohama.area}
+                  {t.twinHub.yokohama.area}
                 </span>
                 <span style={{
                   fontSize: '20px',
@@ -1114,7 +1276,7 @@ function ANSHomepage() {
 
               {/* Features */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {t.warehouse.yokohama.features.map((feature, i) => (
+                {t.twinHub.yokohama.features.map((feature, i) => (
                   <div key={i} style={{
                     display: 'flex',
                     alignItems: 'flex-start',
@@ -1133,11 +1295,8 @@ function ANSHomepage() {
                       <span style={{ color: 'white', fontSize: '14px' }}>✓</span>
                     </div>
                     <div>
-                      <div style={{ fontWeight: 600, color: '#2C3E50', fontSize: '16px' }}>
+                      <div style={{ fontWeight: 500, color: '#2C3E50', fontSize: '15px', lineHeight: 1.6 }}>
                         {feature}
-                      </div>
-                      <div style={{ color: '#7F8C9A', fontSize: '14px' }}>
-                        {t.warehouse.yokohama.descriptions[i]}
                       </div>
                     </div>
                   </div>
@@ -1181,7 +1340,7 @@ function ANSHomepage() {
               fontSize: '18px',
               color: '#7F8C9A',
             }}>
-              {t.services.subtitle}
+              {lang === 'ja' ? t.services.subtitle : t.services.subtitleEn}
             </p>
           </div>
 
@@ -1227,13 +1386,23 @@ function ANSHomepage() {
 
                 {/* Title */}
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '24px',
                   fontWeight: 700,
                   color: '#2C3E50',
-                  marginBottom: '8px',
+                  marginBottom: '4px',
                 }}>
                   {service.title}
                 </h3>
+                {service.subtitle && (
+                  <p style={{
+                    color: '#7F8C9A',
+                    fontSize: '14px',
+                    marginBottom: '12px',
+                    fontWeight: 500,
+                  }}>
+                    {service.subtitle}
+                  </p>
+                )}
 
                 {/* Description */}
                 <p style={{
@@ -1530,22 +1699,26 @@ function ANSHomepage() {
               fontSize: '18px',
               color: '#7F8C9A',
             }}>
-              {t.process.subtitle}
+              {lang === 'ja' ? t.process.subtitle : t.process.subtitleEn}
             </p>
           </div>
 
-          {/* Process Steps */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '24px',
+          {/* Process Steps - 4步横向流程 */}
+          <div className="process-steps" style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            gap: '20px',
             position: 'relative',
+            flexWrap: 'wrap',
           }}>
             {t.process.steps.map((step, i) => (
               <div 
                 key={i}
                 className="process-step"
                 style={{
+                  flex: '1',
+                  minWidth: '200px',
                   background: 'white',
                   borderRadius: '16px',
                   padding: '32px',
@@ -1558,13 +1731,13 @@ function ANSHomepage() {
                   transitionDelay: `${i * 0.15}s`,
                 }}
               >
-                {/* Step Number */}
+                {/* Step Number - 80px圆形，物流橙背景 */}
                 <div 
                   className="step-number"
                   style={{
-                    width: '72px',
-                    height: '72px',
-                    background: 'linear-gradient(135deg, #FF8C00 0%, #FF6B00 100%)',
+                    width: '80px',
+                    height: '80px',
+                    background: '#FF8C00',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -1576,7 +1749,7 @@ function ANSHomepage() {
                 >
                   <span style={{
                     color: 'white',
-                    fontSize: '28px',
+                    fontSize: '36px',
                     fontWeight: 700,
                   }}>
                     {step.num}
@@ -1595,50 +1768,42 @@ function ANSHomepage() {
                 <p style={{
                   fontSize: '14px',
                   color: '#7F8C9A',
-                  marginBottom: '16px',
+                  marginBottom: '12px',
                 }}>
-                  {step.titleEn}
+                  {lang === 'ja' ? step.titleEn : (step.titleZh || step.titleEn)}
                 </p>
 
                 {/* Description */}
                 <p style={{
                   color: '#4B5563',
                   fontSize: '14px',
-                  marginBottom: '16px',
                   lineHeight: 1.6,
                 }}>
-                  {step.desc}
+                  {lang === 'ja' ? step.desc : (step.descZh || step.desc)}
                 </p>
 
-                {/* Time Badge */}
-                <div style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(255,140,0,0.1)',
-                  padding: '6px 12px',
-                  borderRadius: '20px',
-                  fontSize: '12px',
-                  color: '#FF8C00',
-                  fontWeight: 600,
-                }}>
-                  ⏱ {step.time}
-                </div>
-
-                {/* Arrow (except last) */}
+                {/* Arrow (except last) - 4px实线，物流橙，带箭头 */}
                 {i < t.process.steps.length - 1 && (
                   <div style={{
                     position: 'absolute',
-                    top: '50%',
-                    right: '-24px',
-                    transform: 'translateY(-50%)',
-                    color: '#FF8C00',
-                    fontSize: '24px',
-                    fontWeight: 700,
+                    top: '40px',
+                    right: '-20px',
+                    width: '40px',
+                    height: '4px',
+                    background: '#FF8C00',
                     zIndex: 1,
-                    display: 'none', // Hide on mobile, show on desktop via media query
+                    display: 'none', // Hide on mobile
                   }}>
-                    →
+                    <div style={{
+                      position: 'absolute',
+                      right: '-4px',
+                      top: '-4px',
+                      width: 0,
+                      height: 0,
+                      borderLeft: '8px solid #FF8C00',
+                      borderTop: '4px solid transparent',
+                      borderBottom: '4px solid transparent',
+                    }} />
                   </div>
                 )}
               </div>
@@ -1740,13 +1905,13 @@ function ANSHomepage() {
           maxWidth: '1320px',
           margin: '0 auto',
         }}>
-          <div style={{
+          <div className="footer-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gridTemplateColumns: 'repeat(5, 1fr)',
             gap: '40px',
             marginBottom: '40px',
           }}>
-            {/* Company Info */}
+            {/* Column 1: Logo + 公司简介 */}
             <div>
               <div style={{
                 display: 'flex',
@@ -1759,7 +1924,7 @@ function ANSHomepage() {
                     src={logoUrl} 
                     alt="ANS Logo" 
                     style={{
-                      height: '40px',
+                      height: '48px',
                       width: 'auto',
                       objectFit: 'contain',
                     }}
@@ -1770,8 +1935,8 @@ function ANSHomepage() {
                   />
                 ) : null}
                 <div style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '48px',
+                  height: '48px',
                   background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
                   borderRadius: '8px',
                   display: logoUrl ? 'none' : 'flex',
@@ -1779,47 +1944,72 @@ function ANSHomepage() {
                   justifyContent: 'center',
                   color: 'white',
                   fontWeight: 700,
-                  fontSize: '16px',
+                  fontSize: '18px',
                 }}>
                   ANS
                 </div>
-                <div style={{ color: 'white', fontWeight: 700, fontSize: '16px' }}>
-                  ANSWER SUPPLY CHAIN
-                </div>
               </div>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: 1.8 }}>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: 1.8, marginBottom: '12px' }}>
                 {t.footer.company}
               </p>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', marginTop: '12px', lineHeight: 1.8 }}>
-                {t.footer.address}
+              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', lineHeight: 1.6 }}>
+                {lang === 'ja' ? 'ツインハブで中日をつなぐ物流ソリューション' : 'Twin Hub连接中日的物流解决方案'}
               </p>
             </div>
 
-            {/* Quick Links */}
+            {/* Column 2: 服务链接 */}
             <div>
               <h4 style={{ color: 'white', fontWeight: 700, fontSize: '16px', marginBottom: '20px' }}>
-                Quick Links
+                {lang === 'ja' ? 'サービス' : '服务'}
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {Object.entries(t.nav).map(([key, value]) => (
-                  <a key={key} href={`#${key}`} style={{
+                {[
+                  { key: 'ocean', label: lang === 'ja' ? '海上輸送' : '海运' },
+                  { key: 'customs', label: lang === 'ja' ? '通関' : '通关' },
+                  { key: 'warehouse', label: lang === 'ja' ? '倉庫' : '仓储' },
+                  { key: 'b2c', label: lang === 'ja' ? 'B2C' : 'B2C' },
+                  { key: 'tracking', label: lang === 'ja' ? '追跡' : '追踪' },
+                  { key: 'consulting', label: lang === 'ja' ? 'コンサル' : '咨询' },
+                ].map((item) => (
+                  <a key={item.key} href="#services" style={{
                     color: 'rgba(255,255,255,0.6)',
                     textDecoration: 'none',
                     fontSize: '14px',
                     transition: 'color 0.2s ease',
                   }}>
-                    {value}
+                    {item.label}
                   </a>
                 ))}
               </div>
             </div>
 
-            {/* Contact */}
+            {/* Column 3: 公司链接 */}
             <div>
               <h4 style={{ color: 'white', fontWeight: 700, fontSize: '16px', marginBottom: '20px' }}>
-                Contact
+                {lang === 'ja' ? '会社情報' : '公司信息'}
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <a href="#about" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '14px' }}>
+                  {t.nav.about}
+                </a>
+                <a href="#twin-hub" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '14px' }}>
+                  {t.nav.twinHub}
+                </a>
+                <a href="#cases" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '14px' }}>
+                  {t.nav.cases}
+                </a>
+              </div>
+            </div>
+
+            {/* Column 4: 联系信息 */}
+            <div>
+              <h4 style={{ color: 'white', fontWeight: 700, fontSize: '16px', marginBottom: '20px' }}>
+                {lang === 'ja' ? 'お問い合わせ' : '联系方式'}
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: 1.6 }}>
+                  {t.footer.address}
+                </div>
                 <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
                   📞 {t.footer.tel}
                 </div>
@@ -1829,29 +2019,34 @@ function ANSHomepage() {
               </div>
             </div>
 
-            {/* Social */}
+            {/* Column 5: 二维码 + SNS */}
             <div>
               <h4 style={{ color: 'white', fontWeight: 700, fontSize: '16px', marginBottom: '20px' }}>
-                Follow Us
+                {lang === 'ja' ? 'SNS' : '社交媒体'}
               </h4>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                {['WeChat', 'LINE', 'LinkedIn'].map((social) => (
-                  <div key={social} style={{
-                    width: '40px',
-                    height: '40px',
-                    background: 'rgba(255,255,255,0.1)',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'rgba(255,255,255,0.7)',
-                    fontSize: '12px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                  }}>
-                    {social.charAt(0)}
-                  </div>
-                ))}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  {['WeChat', 'LINE', 'LinkedIn'].map((social) => (
+                    <div key={social} style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'rgba(255,255,255,0.1)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'rgba(255,255,255,0.7)',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}>
+                      {social.charAt(0)}
+                    </div>
+                  ))}
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>
+                  {lang === 'ja' ? 'QRコード準備中' : '二维码准备中'}
+                </div>
               </div>
             </div>
           </div>
@@ -1863,7 +2058,7 @@ function ANSHomepage() {
             textAlign: 'center',
           }}>
             <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
-              {t.footer.copyright}
+              © 2024 Answer Supply Chain Co., Ltd. All Rights Reserved.
             </p>
           </div>
         </div>
