@@ -2997,10 +2997,16 @@ function ANSHomepage() {
                     })
                   });
 
-                  const data = await response.json();
+                  let data;
+                  try {
+                    data = await response.json();
+                  } catch (e) {
+                    throw new Error(`服务器响应解析失败 (状态码: ${response.status})`);
+                  }
 
                   if (!response.ok) {
-                    throw new Error(data.error || data.message || 'Failed to send email');
+                    const errorMsg = data?.error || data?.message || data?.details || `HTTP ${response.status} 错误`;
+                    throw new Error(errorMsg);
                   }
 
                   // 显示成功消息
