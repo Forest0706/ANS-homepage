@@ -72,9 +72,47 @@ function ANSHomepage() {
   const [scrolled, setScrolled] = useState(false);
   const [lang, setLang] = useState('ja');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('consultation'); // 'consultation' or 'recruit'
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [userType, setUserType] = useState('user'); // 'user' or 'employee'
+  const [loginData, setLoginData] = useState({
+    id: '',
+    password: ''
+  });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: ''
+  });
   
   // Logo URL - 从环境变量或 Supabase 获取
   const logoUrl = import.meta.env.VITE_LOGO_URL || null;
+  
+  // 域名配置 - 从环境变量获取，如果没有则使用默认值
+  const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'https://admin.ans-scm.com';
+  const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://wms.ans-scm.com';
+  const emailDomain = domain;
+
+  // 页面刷新后滚动到顶部
+  useEffect(() => {
+    // 使用多种方法确保滚动到顶部
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // 延迟执行一次，确保在DOM完全加载后执行
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -90,17 +128,18 @@ function ANSHomepage() {
         about: '会社概要',
         twinHub: 'ツインハブ',
         services: 'サービス',
-        cases: '導入事例',
+        recruit: 'リクルート',
+        ths: 'THS',
         contact: 'お問い合わせ',
       },
       hero: {
-        title: 'Twin Hub ― 中日をつなぐ物流ソリューション',
+        title: 'Twin Hub ― 日中をつなぐ物流ソリューション',
         subtitle: '青島・横浜の二拠点体制で、あなたのビジネスを加速',
         features: [
           '✓ 中国コスト × 日本品質',
           '✓ 最短3日で横浜着',
           '✓ 2週間在庫で効率化',
-          '✓ 中日専門スタッフ対応'
+          '✓ 日中専門スタッフ対応'
         ],
         cta1: '無料相談を申し込む',
         cta2: 'サービスを見る',
@@ -138,7 +177,7 @@ function ANSHomepage() {
             'ランドポート横浜杉田 8,000㎡',
             '本牧港まで8km、車で約10分',
             'Amazonと同一倉庫エリア、FBA入庫便利',
-            'ヤマト主力店まで400m、当日出荷対応'
+            'ヤマト横浜ベースまで400m、当日出荷対応'
           ]
         },
         connection: '週末通常便 / 最短3日',
@@ -224,7 +263,7 @@ function ANSHomepage() {
         ]
       },
       timeline: {
-        title: '会社の歩み',
+        title: 'Answerの歩み',
         subtitle: 'Company Timeline',
         milestones: [
           { 
@@ -243,6 +282,77 @@ function ANSHomepage() {
           }
         ]
       },
+      about: {
+        title: '会社概要',
+        subtitle: 'Company Profile',
+        established: '2024年6月',
+        establishedEn: 'June 2024',
+        capital: '5,000万円',
+        capitalEn: '50,000,000 JPY',
+        address: '〒236-0001 神奈川県横浜市金沢区昭和町3174 ランドポート横浜杉田1F',
+        addressEn: '〒236-0001 Kanagawa, Yokohama, Kanazawa Ward, Showa-cho 3174 Landport Yokohama Sugita 1F',
+        employees: '8名',
+        employeesEn: '8',
+      },
+      recruit: {
+        title: 'リクルート',
+        subtitle: 'Recruitment',
+        subtitleEn: 'Recruitment',
+        description: '一緒に日中物流の未来を創りませんか？',
+        descriptionZh: '一起创造日中物流的未来吧？',
+        jobs: [
+          {
+            title: '輸出入業務担当',
+            titleEn: 'Import/Export Operations',
+            titleZh: '进出口业务担当',
+            description: '輸出入書類作成、通関手続き、顧客対応等を担当いただきます。貿易実務経験を活かして、日中物流の最前線で活躍していただけます。',
+            descriptionZh: '负责进出口文件制作、清关手续、客户对应等。发挥贸易实务经验，在日中物流最前线活跃。',
+            requirements: ['貿易実務経験2年以上', '基本的なPCスキル（Excel、Word）', 'コミュニケーション能力', '責任感とチームワーク精神'],
+            requirementsZh: ['贸易实务经验2年以上', '基本的PC技能（Excel、Word）', '沟通能力', '责任感和团队合作精神']
+          },
+          {
+            title: '倉庫作業員',
+            titleEn: 'Warehouse Worker',
+            titleZh: '仓库作业员',
+            description: '入出庫作業、検品、ラベル貼り、在庫管理などの倉庫業務を担当いただきます。安全第一で、効率的な作業を心がけていただける方を募集しています。',
+            descriptionZh: '负责出入库作业、检品、贴标签、库存管理等仓库业务。招募能够以安全第一、追求高效作业的候选人。',
+            requirements: ['体力に自信がある方', '安全意識の高い方', 'チームワークが取れる方', '未経験者歓迎'],
+            requirementsZh: ['有体力自信', '安全意识高', '能够团队合作', '欢迎无经验者']
+          },
+          {
+            title: '経理担当者',
+            titleEn: 'Accounting Staff',
+            titleZh: '会计担当',
+            description: '日次・月次の帳簿処理、請求書・支払管理、決算業務などを担当いただきます。会計知識を活かして、会社の経営をサポートしていただきます。',
+            descriptionZh: '负责日常・月度账务处理、发票・支付管理、决算业务等。发挥会计知识，支持公司经营。',
+            requirements: ['会計実務経験3年以上', '簿記2級以上', '会計ソフト操作経験', '細かさと正確性'],
+            requirementsZh: ['会计实务经验3年以上', '簿记2级以上', '会计软件操作经验', '细致和准确性']
+          }
+        ]
+      },
+      message: {
+        title: 'Supply Chain, we are the ANSWER.',
+        titleZh: '供应链，我们是答案。',
+        subtitle: '代表取締役からのメッセージ',
+        subtitleZh: '社长致辞',
+        content: `アンササプライチェーン株式会社は、2024年6月に設立された新しい企業です。私たちの使命は、「Supply Chain, we are the ANSWER.」という理念のもと、日中間の物流を革新することです。
+
+グローバル化が進む現代において、効率的で信頼性の高いサプライチェーン管理は、企業の成功に不可欠です。私たちは、青島と横浜という2つの戦略的拠点を活用し、日本企業と中国企業の両方のビジネスをサポートします。
+
+20年以上の物流経験を持つ親会社の豊富なノウハウと、最新のテクノロジーを組み合わせることで、従来の物流サービスを超えた価値を提供します。ツインハブシステムにより、コストを30-45%削減しながら、スピードと品質を両立します。
+
+日本企業様には、中国からの輸入を最適化し、在庫管理の効率化を実現します。中国企業様には、日本市場への進出を全面的にサポートし、ACP登録からJCT対応、日本法人設立まで、あらゆる段階でお客様と共に歩みます。
+
+未来への挑戦、私たちがその答えです。`,
+        contentZh: `安尔速供应链株式会社成立于2024年6月。我们的使命是在"Supply Chain, we are the ANSWER."这一理念下，革新日中之间的物流。
+
+在全球化的今天，高效且可靠的供应链管理对企业成功至关重要。我们利用青岛和横滨两个战略据点，支持日本企业和中国企业双方的业务。
+
+我们结合拥有20年以上物流经验的母公司（親会社）的丰富经验和最新技术，提供超越传统物流服务的价值。通过Twin Hub（ツインハブ）系统，在降低成本30-45%的同时，兼顾速度与品质。
+
+
+面向未来的挑战，我们就是答案。`,
+      },
       process: {
         title: 'ご利用の流れ',
         subtitle: '服务流程',
@@ -251,13 +361,13 @@ function ANSHomepage() {
           { num: '1', title: 'お問い合わせ', titleEn: 'Inquiry', titleZh: '咨询', desc: 'お電話またはフォームでお気軽にご連絡ください', descZh: '电话或表单咨询' },
           { num: '2', title: 'お見積り・ご契約', titleEn: 'Quote', titleZh: '报价', desc: '貨物情報をもとに最適なプランをご提案', descZh: '根据货物提供最优方案' },
           { num: '3', title: '貨物受入れ', titleEn: 'Receiving', titleZh: '收货', desc: '青島または横浜倉庫で貨物をお預かり', descZh: '青岛或横滨仓库收货' },
-          { num: '4', title: '配送完了', titleEn: 'Delivery', titleZh: '配送', desc: 'ご指定の届け先まで確実にお届け', descZh: '准确送达指定地点' },
+          { num: '4', title: '配送', titleEn: 'Delivery', titleZh: '配送', desc: 'ご指定の届け先まで確実にお届け', descZh: '准确送达指定地点' },
         ]
       },
       cta: {
-        title: '共筑双倉、航通中日',
+        title: '共筑双倉、航通日中',
         subtitle: '青島・横浜双倉で、あなたのビジネスを加速',
-        features: ['初期費用0円', '柔軟な契約期間', '中日専門サポート', '即日対応可能'],
+        features: ['初期費用0円', '柔軟な契約期間', '日中専門サポート', '即日対応可能'],
         btn1: '無料資料をダウンロード',
         btn2: 'お問い合わせ',
       },
@@ -265,7 +375,7 @@ function ANSHomepage() {
         company: 'アンササプライチェーン株式会社',
         address: '〒236-0001 神奈川県横浜市金沢区昭和町3174 ランドポート横浜杉田1F',
         tel: 'TEL: 045-349-3730',
-        email: 'Email: l.li@ans-scm.com',
+        email: `Email: info@${emailDomain}`,
         copyright: '© 2024 Answer Supply Chain Co., Ltd. All rights reserved.',
       }
     },
@@ -275,17 +385,18 @@ function ANSHomepage() {
         about: '公司概况',
         twinHub: '双仓联动',
         services: '服务内容',
-        cases: '案例展示',
+        recruit: '招聘',
+        ths: 'THS',
         contact: '联系我们',
       },
       hero: {
-        title: 'Twin Hub — 连接中日的物流解决方案',
+        title: 'Twin Hub — 连接日中的物流解决方案',
         subtitle: '青岛・横滨双据点，助力您的业务腾飞',
         features: [
           '✓ 中国成本 × 日本品质',
           '✓ 最快3天抵达横滨',
           '✓ 2周库存高效周转',
-          '✓ 中日专业团队服务'
+          '✓ 日中专业团队服务'
         ],
         cta1: '申请免费咨询',
         cta2: '查看服务',
@@ -409,7 +520,7 @@ function ANSHomepage() {
         ]
       },
       timeline: {
-        title: '公司历程',
+        title: 'Answerの歩み',
         subtitle: 'Company Timeline',
         milestones: [
           { 
@@ -428,6 +539,76 @@ function ANSHomepage() {
           }
         ]
       },
+      about: {
+        title: '公司概况',
+        subtitle: 'Company Profile',
+        established: '2024年6月',
+        establishedEn: 'June 2024',
+        capital: '5,000万日元',
+        capitalEn: '50,000,000 JPY',
+        address: '〒236-0001 神奈川县横滨市金泽区昭和町3174 Landport横滨杉田1F',
+        addressEn: '〒236-0001 Kanagawa, Yokohama, Kanazawa Ward, Showa-cho 3174 Landport Yokohama Sugita 1F',
+        employees: '8人',
+        employeesEn: '8',
+      },
+      recruit: {
+        title: '招聘',
+        subtitle: 'Recruitment',
+        subtitleEn: 'Recruitment',
+        description: '一起创造日中物流的未来吧？',
+        descriptionZh: '一起创造日中物流的未来吧？',
+        jobs: [
+          {
+            title: '进出口业务担当',
+            titleEn: 'Import/Export Operations',
+            titleZh: '进出口业务担当',
+            description: '负责进出口文件制作、清关手续、客户对应等。发挥贸易实务经验，在日中物流最前线活跃。',
+            descriptionZh: '负责进出口文件制作、清关手续、客户对应等。发挥贸易实务经验，在日中物流最前线活跃。',
+            requirements: ['贸易实务经验2年以上', '基本的PC技能（Excel、Word）', '沟通能力', '责任感和团队合作精神'],
+            requirementsZh: ['贸易实务经验2年以上', '基本的PC技能（Excel、Word）', '沟通能力', '责任感和团队合作精神']
+          },
+          {
+            title: '仓库作业员',
+            titleEn: 'Warehouse Worker',
+            titleZh: '仓库作业员',
+            description: '负责出入库作业、检品、贴标签、库存管理等仓库业务。招募能够以安全第一、追求高效作业的候选人。',
+            descriptionZh: '负责出入库作业、检品、贴标签、库存管理等仓库业务。招募能够以安全第一、追求高效作业的候选人。',
+            requirements: ['有体力自信', '安全意识高', '能够团队合作', '欢迎无经验者'],
+            requirementsZh: ['有体力自信', '安全意识高', '能够团队合作', '欢迎无经验者']
+          },
+          {
+            title: '会计担当',
+            titleEn: 'Accounting Staff',
+            titleZh: '会计担当',
+            description: '负责日常・月度账务处理、发票・支付管理、决算业务等。发挥会计知识，支持公司经营。',
+            descriptionZh: '负责日常・月度账务处理、发票・支付管理、决算业务等。发挥会计知识，支持公司经营。',
+            requirements: ['会计实务经验3年以上', '簿记2级以上', '会计软件操作经验', '细致和准确性'],
+            requirementsZh: ['会计实务经验3年以上', '簿记2级以上', '会计软件操作经验', '细致和准确性']
+          }
+        ]
+      },
+      message: {
+        title: 'Supply Chain, we are the ANSWER.',
+        titleZh: '供应链，我们是答案。',
+        subtitle: '社长致辞',
+        subtitleZh: '社长致辞',
+        content: `安尔速供应链株式会社成立于2024年6月。我们的使命是在"Supply Chain, we are the ANSWER."这一理念下，革新中日之间的物流。
+
+在全球化的今天，高效且可靠的供应链管理对企业成功至关重要。我们利用青岛和横滨两个战略据点，支持日本企业和中国企业双方的业务。
+
+我们结合拥有20年以上物流经验的母公司（親会社）的丰富经验和最新技术，提供超越传统物流服务的价值。通过Twin Hub（ツインハブ）系统，在降低成本30-45%的同时，兼顾速度与品质。
+
+
+面向未来的挑战，我们就是答案。`,
+        contentZh: `安尔速供应链株式会社成立于2024年6月。我们的使命是在"Supply Chain, we are the ANSWER."这一理念下，革新日中之间的物流。
+
+在全球化的今天，高效且可靠的供应链管理对企业成功至关重要。我们利用青岛和横滨两个战略据点，支持日本企业和中国企业双方的业务。
+
+我们结合拥有20年以上物流经验的母公司（親会社）的丰富经验和最新技术，提供超越传统物流服务的价值。通过Twin Hub（ツインハブ）系统，在降低成本30-45%的同时，兼顾速度与品质。
+
+
+面向未来的挑战，我们就是答案。`,
+      },
       process: {
         title: '服务流程',
         subtitle: 'Service Process',
@@ -435,13 +616,13 @@ function ANSHomepage() {
           { num: '01', title: '咨询', titleEn: 'Inquiry', desc: '请随时与我们联系', time: '即时对应' },
           { num: '02', title: '报价・签约', titleEn: 'Quotation', desc: '为您提供最优方案', time: '1-2工作日' },
           { num: '03', title: '货物接收', titleEn: 'Receiving', desc: '青岛仓库接收货物', time: '随时' },
-          { num: '04', title: '配送完成', titleEn: 'Delivery', desc: '准确送达日本国内', time: '最快3天' },
+          { num: '04', title: '配送', titleEn: 'Delivery', desc: '准确送达日本国内', time: '最快3天' },
         ]
       },
       cta: {
-        title: '共筑双仓，航通中日',
+        title: '共筑双仓，航通日中',
         subtitle: '青岛・横滨双仓，为您的业务加速',
-        features: ['初期费用0元', '灵活合同期限', '中日专业支持', '即日对应可能'],
+        features: ['初期费用0元', '灵活合同期限', '日中专业支持', '即日对应可能'],
         btn1: '下载免费资料',
         btn2: '联系我们',
       },
@@ -449,7 +630,7 @@ function ANSHomepage() {
         company: 'Answer Supply Chain Co., Ltd.',
         address: '〒236-0001 神奈川県横浜市金沢区昭和町3174 Landport横浜杉田1F',
         tel: 'TEL: 045-349-3730',
-        email: 'Email: l.li@ans-scm.com',
+        email: `Email: info@${emailDomain}`,
         copyright: '© 2024 Answer Supply Chain Co., Ltd. 版权所有',
       }
     }
@@ -458,16 +639,18 @@ function ANSHomepage() {
   const t = content[lang];
 
   // 统计数据动画
-  const revenue = useCountUp(6000, 2000);
   const area = useCountUp(28000, 2000);
   const delivery = useCountUp(99.8, 2000);
-  const shipping = useCountUp(3, 2000);
   const turnover = useCountUp(2, 2000);
   const shipments = useCountUp(38000, 2000);
 
+  const statsSection = useScrollReveal();
   const warehouseSection = useScrollReveal();
   const servicesSection = useScrollReveal();
   const timelineSection = useScrollReveal();
+  const aboutSection = useScrollReveal();
+  const recruitSection = useScrollReveal();
+  const messageSection = useScrollReveal();
   const processSection = useScrollReveal();
 
   return (
@@ -478,18 +661,53 @@ function ANSHomepage() {
       overflowX: 'hidden',
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        
+        .service-card {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .service-card:hover {
+          transform: translateY(-8px) !important;
+          box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+        }
+        
+        .service-card-image {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .service-card:hover .service-card-image {
+          transform: rotate(8deg) scale(1.1) !important;
+        }
+        
+        .timeline-item .timeline-content-left > div,
+        .timeline-item .timeline-content-right > div {
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          cursor: pointer;
+        }
+        
+        .timeline-item:hover .timeline-content-left > div,
+        .timeline-item:hover .timeline-content-right > div {
+          transform: translateY(-6px);
+          box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+          border-color: #FF8C00 !important;
+        }
+        
+        .timeline-item:hover .timeline-dot {
+          transform: scale(1.2);
+          box-shadow: 0 0 0 8px rgba(255, 140, 0, 0.2) !important;
+        }
+        
+        .timeline-dot {
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         @keyframes float {
           0%, 100% { transform: translateY(0) translateX(0); }
           50% { transform: translateY(-10px) translateX(5px); }
-        }
-        
-        @keyframes shipMove {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
         }
         
         @keyframes fadeInUp {
@@ -514,6 +732,77 @@ function ANSHomepage() {
         }
         
         @media (max-width: 768px) {
+          /* Header responsive */
+          header {
+            padding: 16px 20px !important;
+            height: auto !important;
+            min-height: 64px !important;
+          }
+          
+          /* Hide desktop nav on mobile */
+          .desktop-nav {
+            display: none !important;
+          }
+          
+          /* Logo text smaller on mobile */
+          .logo-text {
+            font-size: 14px !important;
+          }
+          
+          .logo-subtext {
+            font-size: 10px !important;
+          }
+          
+          /* Hero section mobile */
+          .hero-section {
+            padding: 60px 20px !important;
+            min-height: auto !important;
+          }
+          
+          /* Hero features grid to single column */
+          .hero-features-grid {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+          }
+          
+          /* Hero CTA buttons stack on mobile */
+          .hero-cta-buttons {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          
+          .hero-cta-buttons button {
+            width: 100% !important;
+          }
+          
+          /* Section padding mobile */
+          section {
+            padding: 60px 20px !important;
+          }
+          
+          /* Stats grid mobile - single column */
+          .stats-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+          
+          /* Services grid mobile - single column */
+          .services-grid {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          
+          /* Twin Hub warehouse cards - single column */
+          .warehouse-cards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          
+          .warehouse-card {
+            padding: 24px !important;
+          }
+          
+          /* Timeline responsive */
           .timeline-line {
             display: none !important;
           }
@@ -542,16 +831,34 @@ function ANSHomepage() {
           /* Footer responsive */
           .footer-grid {
             grid-template-columns: 1fr !important;
+            gap: 32px !important;
           }
           
           /* Process steps responsive */
           .process-steps {
             flex-direction: column !important;
+            gap: 32px !important;
           }
           
-          /* Stats grid responsive */
-          .stats-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
+          /* Service card image smaller on mobile */
+          .service-image-card {
+            width: 80px !important;
+            height: 80px !important;
+          }
+          
+          /* Recruit cards mobile */
+          .recruit-grid {
+            grid-template-columns: 1fr !important;
+          }
+          
+          /* Modal mobile adjustments */
+          .modal-content {
+            width: 95% !important;
+            max-width: 95% !important;
+            margin: 20px auto !important;
+            padding: 24px !important;
+            max-height: 90vh !important;
+            overflow-y: auto !important;
           }
         }
         
@@ -574,7 +881,7 @@ function ANSHomepage() {
         }
         
         .nav-link:hover {
-          color: #D32F2F !important;
+          color: #FF8C00 !important;
         }
         
         .nav-link::after {
@@ -584,7 +891,7 @@ function ANSHomepage() {
           left: 0;
           width: 0;
           height: 2px;
-          background: #D32F2F;
+          background: #FF8C00;
           transition: width 0.3s ease;
         }
         
@@ -604,7 +911,7 @@ function ANSHomepage() {
         
         .stat-card:hover {
           transform: translateY(-4px);
-          background: rgba(255,255,255,0.2);
+          box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
         
         .warehouse-card:hover {
@@ -639,7 +946,14 @@ function ANSHomepage() {
           transition: 'height 0.3s ease',
         }}>
           {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <a 
+            href="#home" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', cursor: 'pointer' }}
+          >
             {logoUrl ? (
               <img 
                 src={logoUrl} 
@@ -659,7 +973,7 @@ function ANSHomepage() {
             <div style={{
               width: '40px',
               height: '40px',
-              background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
+              background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
               borderRadius: '8px',
               display: logoUrl ? 'none' : 'flex',
               alignItems: 'center',
@@ -671,22 +985,30 @@ function ANSHomepage() {
               ANS
             </div>
             <div>
-              <div style={{ fontWeight: 700, fontSize: '16px', color: '#1A3A52' }}>
+              <div className="logo-text" style={{ fontWeight: 700, fontSize: '16px', color: '#1A3A52' }}>
                 ANSWER SUPPLY CHAIN
               </div>
-              <div style={{ fontSize: '11px', color: '#7F8C9A', letterSpacing: '0.5px' }}>
-                共筑双倉、航通中日
+              <div className="logo-subtext" style={{ fontSize: '11px', color: '#7F8C9A', letterSpacing: '0.5px' }}>
+                共筑双倉、航通日中
               </div>
             </div>
-          </div>
+          </a>
 
           {/* Desktop Nav */}
-          <div style={{
+          <div className="desktop-nav" style={{
             display: 'flex',
             alignItems: 'center',
             gap: '24px',
           }}>
-            <a href="#home" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+            <a 
+              href="#home" 
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="nav-link" 
+              style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease', cursor: 'pointer' }}
+            >
               {t.nav.home}
             </a>
             <a href="#about" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
@@ -698,8 +1020,19 @@ function ANSHomepage() {
             <a href="#services" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.services}
             </a>
-            <a href="#cases" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
-              {t.nav.cases}
+            <a href="#recruit" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.recruit}
+            </a>
+            <a 
+              href="#ths" 
+              onClick={(e) => {
+                e.preventDefault();
+                setLoginModalOpen(true);
+              }}
+              className="nav-link" 
+              style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease', cursor: 'pointer' }}
+            >
+              {t.nav.ths}
             </a>
             
             {/* Language Switcher */}
@@ -734,7 +1067,7 @@ function ANSHomepage() {
                   padding: '4px 10px',
                   border: 'none',
                   borderRadius: '12px',
-                  background: lang === 'zh' ? '#D32F2F' : 'transparent',
+                  background: lang === 'zh' ? '#FF8C00' : 'transparent',
                   color: lang === 'zh' ? 'white' : '#7F8C9A',
                   fontSize: '13px',
                   fontWeight: 500,
@@ -749,9 +1082,13 @@ function ANSHomepage() {
             {/* CTA Button */}
             <button
               className="btn-primary"
+              onClick={() => {
+                setModalType('consultation');
+                setConsultationModalOpen(true);
+              }}
               style={{
                 padding: '12px 24px',
-                background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
+                background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                 border: 'none',
                 borderRadius: '8px',
                 color: 'white',
@@ -759,6 +1096,16 @@ function ANSHomepage() {
                 fontWeight: 600,
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               {t.nav.contact}
@@ -768,16 +1115,27 @@ function ANSHomepage() {
       </nav>
 
       {/* Hero Section */}
-      <section style={{
+      <section className="hero-section" style={{
         position: 'relative',
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #1A3A52 0%, #0D1F2D 50%, #1A3A52 100%)',
-        backgroundSize: '200% 200%',
-        animation: 'gradientShift 15s ease infinite',
+        backgroundImage: 'url(https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/back.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
       }}>
+        {/* Dark Overlay for better text readability */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, rgba(26, 58, 82, 0.85) 0%, rgba(13, 31, 45, 0.85) 50%, rgba(26, 58, 82, 0.85) 100%)',
+          zIndex: 0,
+        }} />
         {/* Decorative Elements */}
         <div style={{
           position: 'absolute',
@@ -787,6 +1145,7 @@ function ANSHomepage() {
           bottom: 0,
           overflow: 'hidden',
           opacity: 0.1,
+          zIndex: 1,
         }}>
           {/* Wave Pattern */}
           <svg style={{
@@ -815,31 +1174,13 @@ function ANSHomepage() {
           }} />
         </div>
 
-        {/* Floating Ship Animation */}
-        <div style={{
-          position: 'absolute',
-          top: '30%',
-          left: 0,
-          right: 0,
-          height: '60px',
-          overflow: 'hidden',
-          opacity: 0.15,
-        }}>
-          <div style={{
-            fontSize: '40px',
-            animation: 'shipMove 25s linear infinite',
-          }}>
-            🚢
-          </div>
-        </div>
-
-        <div style={{
+<div style={{
           maxWidth: '1320px',
           margin: '0 auto',
           padding: '120px 24px 80px',
           width: '100%',
           position: 'relative',
-          zIndex: 1,
+          zIndex: 2,
         }}>
           <div style={{
             maxWidth: '800px',
@@ -866,7 +1207,7 @@ function ANSHomepage() {
             </p>
 
             {/* Features - 2列×2行 */}
-            <div className="fade-in-delay-2" style={{
+            <div className="fade-in-delay-2 hero-features-grid" style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
               gap: '16px',
@@ -888,46 +1229,47 @@ function ANSHomepage() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="fade-in-delay-3" style={{
+            <div className="fade-in-delay-3 hero-cta-buttons" style={{
               display: 'flex',
               gap: '16px',
               flexWrap: 'wrap',
             }}>
-              <button className="btn-primary" style={{
-                padding: '18px 40px',
-                background: '#D32F2F',
-                border: 'none',
-                borderRadius: '8px',
-                color: 'white',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-              }}>
+              <button 
+                className="btn-primary" 
+                onClick={() => {
+                  setModalType('recruit');
+                  setConsultationModalOpen(true);
+                }}
+                style={{
+                  padding: '18px 40px',
+                  background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
                 {t.hero.cta1}
-              </button>
-              <button className="btn-secondary" style={{
-                padding: '18px 40px',
-                background: 'transparent',
-                border: '2px solid rgba(255,255,255,0.5)',
-                borderRadius: '8px',
-                color: 'white',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-              }}>
-                {t.hero.cta2}
               </button>
             </div>
           </div>
-
+        </div>
 
         {/* Bottom Wave Divider */}
         <div style={{
@@ -942,75 +1284,6 @@ function ANSHomepage() {
               d="M0,40 C360,100 720,0 1080,60 C1260,90 1380,70 1440,50 L1440,100 L0,100 Z"
             />
           </svg>
-        </div>
-      </section>
-
-      {/* Stats Section - 数据展示区块 */}
-      <section style={{
-        background: 'linear-gradient(135deg, #1A3A52 0%, #2C3E50 100%)',
-        padding: '100px 24px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Decorative Elements - 半透明集装箱图案 */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.08,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='none'/%3E%3Crect x='10' y='10' width='80' height='80' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E")`,
-          backgroundSize: '200px 200px',
-        }} />
-        
-        <div style={{
-          maxWidth: '1320px',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 1,
-        }}>
-          {/* Stats Cards - 6项数据，3列×2行 */}
-          <div className="fade-in-delay-4 stats-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
-            maxWidth: '1200px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}>
-            {[
-              { key: 'revenue', ref: revenue, count: revenue.count, isNumber: true },
-              { key: 'area', ref: area, count: area.count, isNumber: true },
-              { key: 'delivery', ref: delivery, count: delivery.count, isNumber: true },
-              { key: 'shipping', ref: shipping, count: shipping.count, isNumber: true },
-              { key: 'turnover', ref: turnover, count: turnover.count, isNumber: true },
-              { key: 'shipments', ref: shipments, count: shipments.count, isNumber: true },
-            ].map((stat, i) => {
-              const statData = t.stats[stat.key];
-              return (
-                <div key={stat.key} ref={stat.ref} className="stat-card" style={{
-                  background: 'rgba(255,255,255,0.1)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '16px',
-                  padding: '32px',
-                  border: '1px solid rgba(255,255,255,0.15)',
-                  transition: 'all 0.3s ease',
-                  textAlign: 'center',
-                }}>
-                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>
-                    {statData.icon}
-                  </div>
-                  <div style={{ fontSize: 'clamp(40px, 5vw, 56px)', fontWeight: 700, color: 'white', lineHeight: 1 }}>
-                    {stat.isNumber ? stat.count.toLocaleString() : statData.value}
-                    <span style={{ fontSize: 'clamp(20px, 2.5vw, 24px)', marginLeft: '4px' }}>
-                      {statData.unit}
-                    </span>
-                  </div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', marginTop: '12px' }}>
-                    {statData.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </section>
 
@@ -1047,13 +1320,17 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
+              fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
+              fontStyle: lang === 'ja' ? 'normal' : 'italic',
+              fontWeight: lang === 'ja' ? 'normal' : 700,
+              letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
             }}>
               {lang === 'ja' ? t.twinHub.subtitle : t.twinHub.subtitleEn}
             </p>
           </div>
 
           {/* Warehouse Comparison */}
-          <div style={{
+          <div className="warehouse-cards-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
             gap: '40px',
@@ -1067,7 +1344,7 @@ function ANSHomepage() {
                 borderRadius: '20px',
                 padding: '40px',
                 boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
-                border: '3px solid #D32F2F',
+                border: '3px solid #FF8C00',
                 position: 'relative',
                 overflow: 'hidden',
                 transition: 'all 0.3s ease',
@@ -1089,7 +1366,7 @@ function ANSHomepage() {
               <h3 style={{
                 fontSize: '28px',
                 fontWeight: 700,
-                color: '#D32F2F',
+                color: '#FF8C00',
                 marginBottom: '8px',
               }}>
                 {t.twinHub.qingdao.name}
@@ -1111,7 +1388,7 @@ function ANSHomepage() {
                 <span style={{
                   fontSize: '48px',
                   fontWeight: 700,
-                  color: '#D32F2F',
+                  color: '#FF8C00',
                 }}>
                   {t.twinHub.qingdao.area}
                 </span>
@@ -1135,7 +1412,7 @@ function ANSHomepage() {
                     <div style={{
                       width: '28px',
                       height: '28px',
-                      background: 'linear-gradient(135deg, #FF8C00 0%, #FF6B00 100%)',
+                      background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                       borderRadius: '6px',
                       display: 'flex',
                       alignItems: 'center',
@@ -1168,21 +1445,11 @@ function ANSHomepage() {
                 width: '100%',
                 maxWidth: '200px',
                 height: '4px',
-                background: 'linear-gradient(90deg, #D32F2F, #FF8C00, #1A3A52)',
+                background: 'linear-gradient(90deg, #FF8C00 0%, #004E89 50%, #004E89 100%)',
                 borderRadius: '2px',
                 position: 'relative',
                 marginBottom: '24px',
               }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-16px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  fontSize: '32px',
-                  animation: 'float 3s ease-in-out infinite',
-                }}>
-                  🚢
-                </div>
               </div>
               <div style={{
                 textAlign: 'center',
@@ -1339,23 +1606,42 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
+              fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
+              fontStyle: lang === 'ja' ? 'normal' : 'italic',
+              fontWeight: lang === 'ja' ? 'normal' : 700,
+              letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
             }}>
               {lang === 'ja' ? t.services.subtitle : t.services.subtitleEn}
             </p>
           </div>
 
           {/* Service Cards Grid */}
-          <div style={{
+          <div className="services-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '24px',
           }}>
-            {t.services.items.map((service, i) => (
+            {t.services.items.map((service, i) => {
+              // 为每个服务卡片配置背景图片 - 使用索引映射更可靠
+              const backgroundImages = [
+                'https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/OCEAN.png', // 海上輸送サービス
+                'https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/CUSTOMER.png', // 通関代理サービス
+                'https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/warehouse.png', // 倉庫管理サービス
+                'https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/B2C-2.png', // B2C発送代行サービス
+                'https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/TIME.png', // 貨物追跡システム
+                'https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/consloe.png', // 総合コンサルティング
+              ];
+              
+              const backgroundImage = backgroundImages[i] || null;
+              const hasBackground = !!backgroundImage;
+              
+              return (
               <div 
                 key={i}
                 className="service-card"
                 style={{
                   background: 'white',
+                  position: 'relative',
                   borderRadius: '16px',
                   padding: '32px',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
@@ -1365,40 +1651,62 @@ function ANSHomepage() {
                   opacity: servicesSection.isVisible ? 1 : 0,
                   transform: servicesSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
                   transitionDelay: `${i * 0.1}s`,
+                  overflow: 'visible',
                 }}
               >
-                {/* Icon */}
+                {/* 右下角图片卡片 */}
+                {hasBackground && (
+                  <div 
+                    className="service-card-image"
+                    style={{
+                      position: 'absolute',
+                      bottom: '-20px',
+                      right: '-20px',
+                      width: '140px',
+                      height: '140px',
+                      borderRadius: '12px',
+                      backgroundImage: `url("${backgroundImage}")`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+                      zIndex: 10,
+                      overflow: 'hidden',
+                      border: '3px solid white',
+                      transform: 'rotate(5deg)',
+                      transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    }} 
+                  />
+                )}
+                {/* 内容层 */}
                 <div style={{
-                  width: '56px',
-                  height: '56px',
-                  background: i % 2 === 0 
-                    ? 'linear-gradient(135deg, rgba(211,47,47,0.1) 0%, rgba(211,47,47,0.05) 100%)'
-                    : 'linear-gradient(135deg, rgba(26,58,82,0.1) 0%, rgba(26,58,82,0.05) 100%)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '28px',
-                  marginBottom: '20px',
+                  position: 'relative',
+                  zIndex: 1,
                 }}>
-                  {service.icon}
-                </div>
+                {/* Icon - 所有服务都不显示图标 */}
+                {/* Icon removed - 所有卡片都不显示图标 */}
 
-                {/* Title */}
+                {/* Title - 所有服务使用特殊字体和样式 */}
                 <h3 style={{
-                  fontSize: '24px',
-                  fontWeight: 700,
-                  color: '#2C3E50',
-                  marginBottom: '4px',
+                  fontSize: '28px',
+                  fontWeight: 800,
+                  color: '#1A3A52',
+                  marginBottom: '8px',
+                  fontFamily: '"Noto Sans JP", sans-serif',
+                  letterSpacing: '0.8px',
+                  lineHeight: '1.3',
                 }}>
                   {service.title}
                 </h3>
                 {service.subtitle && (
                   <p style={{
-                    color: '#7F8C9A',
-                    fontSize: '14px',
+                    color: '#1A3A52',
+                    fontSize: '18px',
                     marginBottom: '12px',
-                    fontWeight: 500,
+                    fontWeight: 700,
+                    fontFamily: '"Playfair Display", serif',
+                    fontStyle: 'italic',
+                    letterSpacing: '0.5px',
                   }}>
                     {service.subtitle}
                   </p>
@@ -1429,27 +1737,10 @@ function ANSHomepage() {
                     </div>
                   ))}
                 </div>
-
-                {/* Learn More Link */}
-                <div style={{
-                  marginTop: '24px',
-                  paddingTop: '16px',
-                  borderTop: '1px solid #E8ECF0',
-                }}>
-                  <a href="#" style={{
-                    color: '#D32F2F',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}>
-                    詳細を見る →
-                  </a>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1486,6 +1777,10 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
             }}>
               {t.timeline.subtitle}
             </p>
@@ -1504,7 +1799,7 @@ function ANSHomepage() {
               top: 0,
               bottom: 0,
               width: '4px',
-              background: 'linear-gradient(180deg, #FF8C00 0%, #1A3A52 100%)',
+              background: 'linear-gradient(180deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
               transform: 'translateX(-50%)',
               borderRadius: '2px',
               opacity: timelineSection.isVisible ? 1 : 0,
@@ -1546,6 +1841,8 @@ function ANSHomepage() {
                           padding: '32px',
                           boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                           border: '2px solid #E8ECF0',
+                          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                          cursor: 'pointer',
                         }}>
                           <div style={{
                             fontSize: '14px',
@@ -1567,6 +1864,10 @@ function ANSHomepage() {
                             fontSize: '14px',
                             color: '#7F8C9A',
                             marginBottom: '4px',
+                            fontFamily: '"Playfair Display", serif',
+                            fontStyle: 'italic',
+                            fontWeight: 700,
+                            letterSpacing: '0.5px',
                           }}>
                             {milestone.titleEn}
                           </p>
@@ -1625,6 +1926,8 @@ function ANSHomepage() {
                           padding: '32px',
                           boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                           border: '2px solid #E8ECF0',
+                          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                          cursor: 'pointer',
                         }}>
                           <div style={{
                             fontSize: '14px',
@@ -1646,6 +1949,10 @@ function ANSHomepage() {
                             fontSize: '14px',
                             color: '#7F8C9A',
                             marginBottom: '4px',
+                            fontFamily: '"Playfair Display", serif',
+                            fontStyle: 'italic',
+                            fontWeight: 700,
+                            letterSpacing: '0.5px',
                           }}>
                             {milestone.titleEn}
                           </p>
@@ -1662,6 +1969,329 @@ function ANSHomepage() {
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section - 公司概况 */}
+      <section 
+        ref={aboutSection.ref}
+        id="about"
+        style={{
+          background: 'white',
+          padding: '100px 24px',
+        }}
+      >
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+        }}>
+          {/* Section Header */}
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '60px',
+            opacity: aboutSection.isVisible ? 1 : 0,
+            transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 700,
+              color: '#1A3A52',
+              marginBottom: '8px',
+            }}>
+              {t.about.title}
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#7F8C9A',
+            }}>
+              {t.about.subtitle}
+            </p>
+          </div>
+
+          {/* Company Info Table */}
+          <div style={{
+            maxWidth: '800px',
+            margin: '0 auto',
+            background: 'white',
+            borderRadius: '16px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+            overflow: 'hidden',
+            opacity: aboutSection.isVisible ? 1 : 0,
+            transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+            }}>
+              <tbody>
+                <tr style={{
+                  borderBottom: '1px solid #E8ECF0',
+                }}>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#1A3A52',
+                    width: '40%',
+                    backgroundColor: '#F5F7FA',
+                  }}>
+                    {lang === 'ja' ? '設立年月' : '成立时间'}
+                  </td>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    color: '#2C3E50',
+                    fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
+                    fontStyle: lang === 'ja' ? 'normal' : 'italic',
+                    fontWeight: lang === 'ja' ? 'normal' : 700,
+                    letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
+                  }}>
+                    {lang === 'ja' ? t.about.established : t.about.establishedEn}
+                  </td>
+                </tr>
+                <tr style={{
+                  borderBottom: '1px solid #E8ECF0',
+                }}>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#1A3A52',
+                    backgroundColor: '#F5F7FA',
+                  }}>
+                    {lang === 'ja' ? '資本金' : '资本金'}
+                  </td>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    color: '#2C3E50',
+                    fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
+                    fontStyle: lang === 'ja' ? 'normal' : 'italic',
+                    fontWeight: lang === 'ja' ? 'normal' : 700,
+                    letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
+                  }}>
+                    {lang === 'ja' ? t.about.capital : t.about.capitalEn}
+                  </td>
+                </tr>
+                <tr style={{
+                  borderBottom: '1px solid #E8ECF0',
+                }}>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#1A3A52',
+                    backgroundColor: '#F5F7FA',
+                    verticalAlign: 'top',
+                  }}>
+                    {lang === 'ja' ? '本社所在地' : '公司地址'}
+                  </td>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    color: '#2C3E50',
+                    lineHeight: 1.6,
+                  }}>
+                    {lang === 'ja' ? t.about.address : t.about.addressEn}
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#1A3A52',
+                    backgroundColor: '#F5F7FA',
+                  }}>
+                    {lang === 'ja' ? '従業員数' : '员工数'}
+                  </td>
+                  <td style={{
+                    padding: '24px 32px',
+                    fontSize: '16px',
+                    color: '#2C3E50',
+                    fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
+                    fontStyle: lang === 'ja' ? 'normal' : 'italic',
+                    fontWeight: lang === 'ja' ? 'normal' : 700,
+                    letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
+                  }}>
+                    {lang === 'ja' ? t.about.employees : t.about.employeesEn}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section - 数据展示区块 */}
+      <section 
+        ref={statsSection.ref}
+        style={{
+          background: '#F5F7FA',
+          padding: '100px 24px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
+        }}>
+          {/* Stats Cards - 4项数据，2列×2行 */}
+          <div className="fade-in-delay-4 stats-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '40px',
+            maxWidth: '900px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}>
+            {[
+              { key: 'area', countHook: area, isNumber: true },
+              { key: 'delivery', countHook: delivery, isNumber: true },
+              { key: 'turnover', countHook: turnover, isNumber: true },
+              { key: 'shipments', countHook: shipments, isNumber: true },
+            ].map((stat, i) => {
+              const statData = t.stats[stat.key];
+              // useCountUp 返回 { count, ref }
+              // 当statsSection可见时，使用count值；如果count为0但section可见，直接显示最终值
+              const targetValues = {
+                area: 28000,
+                delivery: 99.8,
+                turnover: 2,
+                shipments: 38000
+              };
+              const displayCount = statsSection.isVisible ? 
+                (stat.countHook.count > 0 ? stat.countHook.count : targetValues[stat.key]) : 0;
+              return (
+                <div key={stat.key} ref={stat.countHook.ref} className="stat-card" style={{
+                  background: 'white',
+                  borderRadius: '16px',
+                  padding: '32px',
+                  border: '1px solid #E8ECF0',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center',
+                }}>
+                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>
+                    {statData.icon}
+                  </div>
+                  <div style={{ fontSize: 'clamp(40px, 5vw, 56px)', fontWeight: 700, color: '#1A3A52', lineHeight: 1 }}>
+                    {stat.isNumber ? displayCount.toLocaleString() : statData.value}
+                    <span style={{ fontSize: 'clamp(20px, 2.5vw, 24px)', marginLeft: '4px' }}>
+                      {statData.unit}
+                    </span>
+                  </div>
+                  <div style={{ color: '#7F8C9A', fontSize: '16px', marginTop: '12px' }}>
+                    {statData.label}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Message Section - 社长致辞 */}
+      <section 
+        ref={messageSection.ref}
+        style={{
+          background: 'linear-gradient(135deg, #1A3A52 0%, #0D1F2D 100%)',
+          padding: '100px 24px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Decorative Elements */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.05,
+          backgroundImage: `
+            radial-gradient(circle at 20% 50%, #FF8C00 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, #FF8C00 0%, transparent 50%)
+          `,
+        }} />
+
+        <div style={{
+          maxWidth: '1000px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
+        }}>
+          {/* Section Header */}
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '60px',
+            opacity: messageSection.isVisible ? 1 : 0,
+            transform: messageSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              fontWeight: 700,
+              color: 'white',
+              marginBottom: '16px',
+              lineHeight: 1.2,
+            }}>
+              {t.message.title}
+            </h2>
+            <p style={{
+              fontSize: '20px',
+              color: 'rgba(255,255,255,0.8)',
+              fontWeight: 500,
+            }}>
+              {lang === 'ja' ? t.message.subtitle : t.message.subtitleZh}
+            </p>
+          </div>
+
+          {/* Message Content */}
+          <div style={{
+            background: 'rgba(255,255,255,0.98)',
+            borderRadius: '24px',
+            padding: '60px 48px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+            opacity: messageSection.isVisible ? 1 : 0,
+            transform: messageSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease 0.2s',
+          }}>
+            <div style={{
+              fontSize: '16px',
+              lineHeight: 1.8,
+              color: '#2C3E50',
+              whiteSpace: 'pre-line',
+            }}>
+              {lang === 'ja' ? t.message.content : t.message.contentZh}
+            </div>
+            
+            {/* Signature */}
+            <div style={{
+              marginTop: '40px',
+              paddingTop: '32px',
+              borderTop: '2px solid #E8ECF0',
+              textAlign: 'right',
+            }}>
+              <div style={{
+                fontSize: '18px',
+                fontWeight: 700,
+                color: '#1A3A52',
+                marginBottom: '4px',
+              }}>
+                代表取締役 李林子
+              </div>
+              <div style={{
+                fontSize: '14px',
+                color: '#7F8C9A',
+              }}>
+                CEO, Answer Supply Chain Co., Ltd.
+              </div>
             </div>
           </div>
         </div>
@@ -1698,6 +2328,10 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
+              fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
+              fontStyle: lang === 'ja' ? 'normal' : 'italic',
+              fontWeight: lang === 'ja' ? 'normal' : 700,
+              letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
             }}>
               {lang === 'ja' ? t.process.subtitle : t.process.subtitleEn}
             </p>
@@ -1737,7 +2371,7 @@ function ANSHomepage() {
                   style={{
                     width: '80px',
                     height: '80px',
-                    background: '#FF8C00',
+                    background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -1769,6 +2403,10 @@ function ANSHomepage() {
                   fontSize: '14px',
                   color: '#7F8C9A',
                   marginBottom: '12px',
+                  fontFamily: lang === 'ja' ? '"Playfair Display", serif' : (step.titleZh ? 'inherit' : '"Playfair Display", serif'),
+                  fontStyle: lang === 'ja' || !step.titleZh ? 'italic' : 'normal',
+                  fontWeight: lang === 'ja' || !step.titleZh ? 700 : 'normal',
+                  letterSpacing: lang === 'ja' || !step.titleZh ? '0.5px' : 'normal',
                 }}>
                   {lang === 'ja' ? step.titleEn : (step.titleZh || step.titleEn)}
                 </p>
@@ -1790,7 +2428,7 @@ function ANSHomepage() {
                     right: '-20px',
                     width: '40px',
                     height: '4px',
-                    background: '#FF8C00',
+                    background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                     zIndex: 1,
                     display: 'none', // Hide on mobile
                   }}>
@@ -1812,6 +2450,183 @@ function ANSHomepage() {
         </div>
       </section>
 
+      {/* Recruit Section - 招聘 */}
+      <section 
+        ref={recruitSection.ref}
+        id="recruit"
+        style={{
+          background: 'white',
+          padding: '100px 24px',
+        }}
+      >
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+        }}>
+          {/* Section Header */}
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '60px',
+            opacity: recruitSection.isVisible ? 1 : 0,
+            transform: recruitSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 700,
+              color: '#1A3A52',
+              marginBottom: '8px',
+            }}>
+              {t.recruit.title}
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#7F8C9A',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
+            }}>
+              {t.recruit.subtitleEn}
+            </p>
+            <p style={{
+              fontSize: '16px',
+              color: '#4B5563',
+              marginTop: '16px',
+            }}>
+              {lang === 'ja' ? t.recruit.description : t.recruit.descriptionZh}
+            </p>
+          </div>
+
+          {/* Job Cards */}
+          <div className="recruit-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '32px',
+            maxWidth: '1200px',
+            margin: '0 auto',
+          }}>
+            {t.recruit.jobs.map((job, i) => (
+              <div
+                key={i}
+                className="recruit-card"
+                style={{
+                  background: 'white',
+                  borderRadius: '16px',
+                  padding: '32px',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                  border: '2px solid #E8ECF0',
+                  transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  cursor: 'pointer',
+                  opacity: recruitSection.isVisible ? 1 : 0,
+                  transform: recruitSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+                  transitionDelay: `${i * 0.15}s`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-6px)';
+                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.borderColor = '#FF8C00';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.borderColor = '#E8ECF0';
+                }}
+              >
+                <h3 style={{
+                  fontSize: '24px',
+                  fontWeight: 700,
+                  color: '#1A3A52',
+                  marginBottom: '8px',
+                }}>
+                  {lang === 'ja' ? job.title : (job.titleZh || job.title)}
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#7F8C9A',
+                  marginBottom: '16px',
+                  fontFamily: '"Playfair Display", serif',
+                  fontStyle: 'italic',
+                  fontWeight: 700,
+                  letterSpacing: '0.5px',
+                }}>
+                  {job.titleEn}
+                </p>
+                
+                <p style={{
+                  fontSize: '14px',
+                  color: '#4B5563',
+                  lineHeight: 1.6,
+                  marginBottom: '24px',
+                }}>
+                  {lang === 'ja' ? job.description : (job.descriptionZh || job.description)}
+                </p>
+
+                <div style={{
+                  borderTop: '1px solid #E8ECF0',
+                  paddingTop: '20px',
+                }}>
+                  <h4 style={{
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#1A3A52',
+                    marginBottom: '12px',
+                  }}>
+                    {lang === 'ja' ? '必須条件' : '必备条件'}
+                  </h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {(lang === 'ja' ? job.requirements : (job.requirementsZh || job.requirements)).map((req, j) => (
+                      <div key={j} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontSize: '13px',
+                        color: '#4B5563',
+                      }}>
+                        <span style={{ color: '#FF8C00' }}>•</span>
+                        {req}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                  setModalType('recruit');
+                  setConsultationModalOpen(true);
+                }}
+                  style={{
+                    width: '100%',
+                    marginTop: '24px',
+                    padding: '12px 24px',
+                    background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {lang === 'ja' ? '応募する' : '立即申请'}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section style={{
         background: 'linear-gradient(135deg, #1A3A52 0%, #0D1F2D 100%)',
@@ -1825,7 +2640,7 @@ function ANSHomepage() {
           inset: 0,
           opacity: 0.1,
           backgroundImage: `
-            radial-gradient(circle at 20% 50%, #D32F2F 0%, transparent 50%),
+            radial-gradient(circle at 20% 50%, #FF8C00 0%, transparent 50%),
             radial-gradient(circle at 80% 50%, #FF8C00 0%, transparent 50%)
           `,
         }} />
@@ -1861,7 +2676,7 @@ function ANSHomepage() {
           }}>
             <button className="btn-primary" style={{
               padding: '18px 40px',
-              background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
+              background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
               border: 'none',
               borderRadius: '8px',
               color: 'white',
@@ -1875,20 +2690,37 @@ function ANSHomepage() {
             }}>
               📥 {t.cta.btn1}
             </button>
-            <button className="btn-secondary" style={{
-              padding: '18px 40px',
-              background: 'transparent',
-              border: '2px solid rgba(255,255,255,0.5)',
-              borderRadius: '8px',
-              color: 'white',
-              fontSize: '16px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-            }}>
+            <button 
+              className="btn-secondary" 
+              onClick={() => {
+                setModalType('consultation');
+                setConsultationModalOpen(true);
+              }}
+              style={{
+                padding: '18px 40px',
+                background: 'transparent',
+                border: '2px solid rgba(255,255,255,0.5)',
+                borderRadius: '8px',
+                color: 'white',
+                fontSize: '16px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.8)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
               💬 {t.cta.btn2}
             </button>
           </div>
@@ -1899,7 +2731,7 @@ function ANSHomepage() {
       <footer style={{
         background: '#1A1A1A',
         padding: '60px 24px 30px',
-        borderTop: '3px solid #D32F2F',
+        borderTop: '3px solid #FF8C00',
       }}>
         <div style={{
           maxWidth: '1320px',
@@ -1937,7 +2769,7 @@ function ANSHomepage() {
                 <div style={{
                   width: '48px',
                   height: '48px',
-                  background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
+                  background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                   borderRadius: '8px',
                   display: logoUrl ? 'none' : 'flex',
                   alignItems: 'center',
@@ -1953,7 +2785,7 @@ function ANSHomepage() {
                 {t.footer.company}
               </p>
               <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', lineHeight: 1.6 }}>
-                {lang === 'ja' ? 'ツインハブで中日をつなぐ物流ソリューション' : 'Twin Hub连接中日的物流解决方案'}
+                {lang === 'ja' ? 'ツインハブで日中をつなぐ物流ソリューション' : 'Twin Hub连接日中的物流解决方案'}
               </p>
             </div>
 
@@ -1994,9 +2826,6 @@ function ANSHomepage() {
                 </a>
                 <a href="#twin-hub" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '14px' }}>
                   {t.nav.twinHub}
-                </a>
-                <a href="#cases" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '14px' }}>
-                  {t.nav.cases}
                 </a>
               </div>
             </div>
@@ -2063,6 +2892,545 @@ function ANSHomepage() {
           </div>
         </div>
       </footer>
+
+      {/* Consultation Modal */}
+      {consultationModalOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.6)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10000,
+          padding: '20px',
+        }} onClick={() => setConsultationModalOpen(false)}>
+          <div style={{
+            background: 'white',
+            borderRadius: '16px',
+            maxWidth: '600px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            position: 'relative',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+          }} onClick={(e) => e.stopPropagation()}>
+            {/* Close Button */}
+            <button
+              onClick={() => setConsultationModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                border: 'none',
+                background: '#F5F7FA',
+                color: '#7F8C9A',
+                fontSize: '20px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s ease',
+                zIndex: 1,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#E8ECF0';
+                e.currentTarget.style.color = '#2C3E50';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#F5F7FA';
+                e.currentTarget.style.color = '#7F8C9A';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Modal Content */}
+            <div style={{ padding: '40px' }}>
+              <h2 style={{
+                fontSize: '28px',
+                fontWeight: 700,
+                color: '#1A3A52',
+                marginBottom: '8px',
+              }}>
+                {modalType === 'recruit' 
+                  ? (lang === 'ja' ? '採用応募' : '招聘申请')
+                  : (lang === 'ja' ? 'お問い合わせ' : '联系我们')}
+              </h2>
+              <p style={{
+                fontSize: '14px',
+                color: '#7F8C9A',
+                marginBottom: '32px',
+              }}>
+                {modalType === 'recruit'
+                  ? (lang === 'ja' 
+                      ? '以下のフォームにご記入いただき、お送りください。採用担当者より24時間以内にご連絡いたします。'
+                      : '请填写以下表单，我们将在24小时内与您联系。')
+                  : (lang === 'ja' 
+                      ? '以下のフォームにご記入いただき、お送りください。担当者より24時間以内にご連絡いたします。'
+                      : '请填写以下表单，我们将在24小时内与您联系。')}
+              </p>
+
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                // 这里可以添加表单提交逻辑
+                alert(modalType === 'recruit'
+                  ? (lang === 'ja' ? '応募ありがとうございます。採用担当者よりご連絡いたします。' : '感谢您的申请，我们会尽快与您联系。')
+                  : (lang === 'ja' ? 'お問い合わせありがとうございます。担当者よりご連絡いたします。' : '感谢您的咨询，我们会尽快与您联系。'));
+                setConsultationModalOpen(false);
+                setModalType('consultation');
+                setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+              }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? 'お名前' : '姓名'} <span style={{ color: '#FF8C00' }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? 'メールアドレス' : '邮箱'} <span style={{ color: '#FF8C00' }}>*</span>
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? '電話番号' : '电话'}
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? '会社名' : '公司名称'}
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {modalType === 'recruit' 
+                        ? (lang === 'ja' ? '応募ポジション' : '应聘职位')
+                        : (lang === 'ja' ? 'お問い合わせ内容' : '咨询内容')}
+                    </label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      rows={5}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        fontFamily: 'inherit',
+                        resize: 'vertical',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '16px',
+                      background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      marginTop: '8px',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    {lang === 'ja' ? '送信する' : '提交'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Login Modal - THS登录 */}
+      {loginModalOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.6)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10000,
+          padding: '20px',
+        }} onClick={() => setLoginModalOpen(false)}>
+          <div style={{
+            background: 'white',
+            borderRadius: '16px',
+            maxWidth: '480px',
+            width: '100%',
+            position: 'relative',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+          }} onClick={(e) => e.stopPropagation()}>
+            {/* Close Button */}
+            <button
+              onClick={() => setLoginModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                border: 'none',
+                background: '#F5F7FA',
+                color: '#7F8C9A',
+                fontSize: '20px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s ease',
+                zIndex: 1,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#E8ECF0';
+                e.currentTarget.style.color = '#2C3E50';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#F5F7FA';
+                e.currentTarget.style.color = '#7F8C9A';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Modal Content */}
+            <div style={{ padding: '40px' }}>
+              <h2 style={{
+                fontSize: '28px',
+                fontWeight: 700,
+                color: '#1A3A52',
+                marginBottom: '8px',
+                textAlign: 'center',
+              }}>
+                THS ログイン
+              </h2>
+              <p style={{
+                fontSize: '14px',
+                color: '#7F8C9A',
+                marginBottom: '32px',
+                textAlign: 'center',
+              }}>
+                {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
+              </p>
+
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                // 根据用户类型跳转到不同系统
+                if (userType === 'user') {
+                  // 跳转到客户端系统
+                  window.location.href = adminUrl;
+                } else {
+                  // 跳转到台账系统
+                  window.location.href = wmsUrl;
+                }
+              }}>
+                {/* User Type Selection */}
+                <div style={{ marginBottom: '24px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#2C3E50',
+                    marginBottom: '12px',
+                  }}>
+                    {lang === 'ja' ? 'ログインタイプ' : '登录类型'}
+                  </label>
+                  <div style={{
+                    display: 'flex',
+                    gap: '12px',
+                  }}>
+                    <button
+                      type="button"
+                      onClick={() => setUserType('user')}
+                      style={{
+                        flex: 1,
+                        padding: '12px 24px',
+                        border: `2px solid ${userType === 'user' ? '#FF8C00' : '#E8ECF0'}`,
+                        borderRadius: '8px',
+                        background: userType === 'user' ? '#FFF5F5' : 'white',
+                        color: userType === 'user' ? '#FF8C00' : '#7F8C9A',
+                        fontSize: '14px',
+                        fontWeight: userType === 'user' ? 600 : 500,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      {lang === 'ja' ? 'ユーザー' : '用户'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setUserType('employee')}
+                      style={{
+                        flex: 1,
+                        padding: '12px 24px',
+                        border: `2px solid ${userType === 'employee' ? '#FF8C00' : '#E8ECF0'}`,
+                        borderRadius: '8px',
+                        background: userType === 'employee' ? '#FFF5F5' : 'white',
+                        color: userType === 'employee' ? '#FF8C00' : '#7F8C9A',
+                        fontSize: '14px',
+                        fontWeight: userType === 'employee' ? 600 : 500,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      {lang === 'ja' ? '従業員' : '员工'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* ID Input */}
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#2C3E50',
+                    marginBottom: '8px',
+                  }}>
+                    {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={loginData.id}
+                    onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: '2px solid #E8ECF0',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#FF8C00';
+                      e.currentTarget.style.outline = 'none';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#E8ECF0';
+                    }}
+                  />
+                </div>
+
+                {/* Password Input */}
+                <div style={{ marginBottom: '24px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#2C3E50',
+                    marginBottom: '8px',
+                  }}>
+                    {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={loginData.password}
+                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: '2px solid #E8ECF0',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#FF8C00';
+                      e.currentTarget.style.outline = 'none';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#E8ECF0';
+                    }}
+                  />
+                </div>
+
+                {/* Login Button */}
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    padding: '16px',
+                    background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {lang === 'ja' ? 'ログイン' : '登录'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
