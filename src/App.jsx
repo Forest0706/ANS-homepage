@@ -96,7 +96,8 @@ function ANSHomepage() {
   // 域名配置 - 从环境变量获取，如果没有则使用默认值
   const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
   const adminUrl = import.meta.env.VITE_ADMIN_URL || 'https://admin.ans-scm.com';
-  const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://ans-scm.vercel.app/';
+  // 员工系统域名 - 配置后将使用 ths.ans-scm.com
+  const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://ths.ans-scm.com';
   const emailDomain = domain;
 
   // 页面刷新后滚动到顶部
