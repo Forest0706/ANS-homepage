@@ -736,11 +736,16 @@ function ANSHomepage() {
         }
         
         @media (max-width: 768px) {
+          /* 全局字体大小增加 */
+          body {
+            font-size: 18px !important;
+          }
+          
           /* Header responsive */
           header {
-            padding: 16px 20px !important;
+            padding: 12px 16px !important;
             height: auto !important;
-            min-height: 64px !important;
+            min-height: 56px !important;
           }
           
           /* Hide desktop nav on mobile */
@@ -748,28 +753,46 @@ function ANSHomepage() {
             display: none !important;
           }
           
-          /* Logo text smaller on mobile */
+          /* Logo text larger on mobile */
           .logo-text {
-            font-size: 14px !important;
+            font-size: 16px !important;
           }
           
           .logo-subtext {
-            font-size: 10px !important;
+            font-size: 11px !important;
           }
           
-          /* Hero section mobile */
+          /* Hero section mobile - 充满屏幕 */
           .hero-section {
-            padding: 60px 20px !important;
+            padding: 40px 16px 60px !important;
             min-height: auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
           }
           
-          /* Hero features grid to single column */
+          /* Hero 标题字体增大 */
+          .hero-section h1 {
+            font-size: clamp(32px, 8vw, 48px) !important;
+            line-height: 1.2 !important;
+          }
+          
+          /* Hero 副标题字体增大 */
+          .hero-section p {
+            font-size: clamp(16px, 4vw, 20px) !important;
+          }
+          
+          /* Hero features grid to single column - 字体增大 */
           .hero-features-grid {
             grid-template-columns: 1fr !important;
-            gap: 12px !important;
+            gap: 16px !important;
           }
           
-          /* Hero CTA buttons stack on mobile */
+          .hero-features-grid > div {
+            font-size: 18px !important;
+          }
+          
+          /* Hero CTA buttons stack on mobile - 字体增大 */
           .hero-cta-buttons {
             flex-direction: column !important;
             width: 100% !important;
@@ -777,11 +800,30 @@ function ANSHomepage() {
           
           .hero-cta-buttons button {
             width: 100% !important;
+            padding: 16px 24px !important;
+            font-size: 18px !important;
           }
           
-          /* Section padding mobile */
+          /* Section padding mobile - 充满屏幕 */
           section {
-            padding: 60px 20px !important;
+            padding: 40px 16px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+          }
+          
+          /* Section 标题字体增大 */
+          section h2 {
+            font-size: clamp(28px, 6vw, 36px) !important;
+          }
+          
+          section h3 {
+            font-size: clamp(24px, 5vw, 28px) !important;
+          }
+          
+          /* 所有容器充满屏幕 */
+          * {
+            max-width: 100% !important;
           }
           
           /* Stats grid mobile - single column */
@@ -790,10 +832,23 @@ function ANSHomepage() {
             gap: 20px !important;
           }
           
-          /* Services grid mobile - single column */
+          /* Services grid mobile - single column - 字体增大 */
           .services-grid {
             grid-template-columns: 1fr !important;
             gap: 24px !important;
+          }
+          
+          /* Service card 内容字体增大 */
+          .service-card h3 {
+            font-size: 24px !important;
+          }
+          
+          .service-card p {
+            font-size: 16px !important;
+          }
+          
+          .service-card li {
+            font-size: 15px !important;
           }
           
           /* Twin Hub warehouse cards - single column */
@@ -806,7 +861,7 @@ function ANSHomepage() {
             padding: 24px !important;
           }
           
-          /* Timeline responsive */
+          /* Timeline responsive - 字体增大 */
           .timeline-line {
             display: none !important;
           }
@@ -863,6 +918,21 @@ function ANSHomepage() {
             padding: 24px !important;
             max-height: 90vh !important;
             overflow-y: auto !important;
+          }
+          
+          /* Table 内容字体增大 */
+          table {
+            font-size: 16px !important;
+          }
+          
+          /* 按钮字体增大 */
+          button {
+            font-size: 16px !important;
+          }
+          
+          /* 链接字体增大 */
+          a {
+            font-size: 16px !important;
           }
         }
         
