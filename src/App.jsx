@@ -87,6 +87,8 @@ function ANSHomepage() {
     company: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   
   // Logo URL - 从环境变量或 Supabase 获取
   const logoUrl = import.meta.env.VITE_LOGO_URL || null;
@@ -2977,15 +2979,48 @@ function ANSHomepage() {
                       : '请填写以下表单，我们将在24小时内与您联系。')}
               </p>
 
-              <form onSubmit={(e) => {
+              <form onSubmit={async (e) => {
                 e.preventDefault();
-                // 这里可以添加表单提交逻辑
-                alert(modalType === 'recruit'
-                  ? (lang === 'ja' ? '応募ありがとうございます。採用担当者よりご連絡いたします。' : '感谢您的申请，我们会尽快与您联系。')
-                  : (lang === 'ja' ? 'お問い合わせありがとうございます。担当者よりご連絡いたします。' : '感谢您的咨询，我们会尽快与您联系。'));
-                setConsultationModalOpen(false);
-                setModalType('consultation');
-                setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+                setIsSubmitting(true);
+                setSubmitError('');
+                
+                try {
+                  // 调用 API 发送邮件
+                  const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      ...formData,
+                      type: modalType
+                    })
+                  });
+
+                  const data = await response.json();
+
+                  if (!response.ok) {
+                    throw new Error(data.error || data.message || 'Failed to send email');
+                  }
+
+                  // 显示成功消息
+                  alert(modalType === 'recruit'
+                    ? (lang === 'ja' ? '応募ありがとうございます。採用担当者よりご連絡いたします。' : '感谢您的申请，我们会尽快与您联系。')
+                    : (lang === 'ja' ? 'お問い合わせありがとうございます。担当者よりご連絡いたします。' : '感谢您的咨询，我们会尽快与您联系。'));
+                  
+                  // 关闭对话框并重置表单
+                  setConsultationModalOpen(false);
+                  setModalType('consultation');
+                  setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+                  setIsSubmitting(false);
+                  
+                } catch (error) {
+                  console.error('Error submitting form:', error);
+                  setSubmitError(lang === 'ja' 
+                    ? `送信に失敗しました: ${error.message}。もう一度お試しください。`
+                    : `提交失败: ${error.message}，请稍后重试。`);
+                  setIsSubmitting(false);
+                }
               }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
@@ -3154,33 +3189,53 @@ function ANSHomepage() {
                     />
                   </div>
 
+                  {submitError && (
+                    <div style={{
+                      padding: '12px',
+                      background: '#FFF3CD',
+                      border: '1px solid #FFE69C',
+                      borderRadius: '8px',
+                      color: '#856404',
+                      fontSize: '14px',
+                      marginTop: '8px',
+                    }}>
+                      {submitError}
+                    </div>
+                  )}
+                  
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     style={{
                       width: '100%',
                       padding: '16px',
-                      background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                      background: isSubmitting 
+                        ? '#CCCCCC' 
+                        : 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                       border: 'none',
                       borderRadius: '8px',
                       color: 'white',
                       fontSize: '16px',
                       fontWeight: 600,
-                      cursor: 'pointer',
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
                       transition: 'all 0.3s ease',
                       marginTop: '8px',
+                      opacity: isSubmitting ? 0.7 : 1,
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                      if (!isSubmitting) {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
                       e.currentTarget.style.transform = 'translateY(0)';
                       e.currentTarget.style.boxShadow = 'none';
                     }}
                   >
-                    {lang === 'ja' ? '送信する' : '提交'}
+                    {isSubmitting 
+                      ? (lang === 'ja' ? '送信中...' : '提交中...') 
+                      : (lang === 'ja' ? '送信する' : '提交')}
                   </button>
                 </div>
               </form>
