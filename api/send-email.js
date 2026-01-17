@@ -69,9 +69,16 @@ ${type === 'recruit' ? '応募ポジション' : 'お問い合わせ内容'}: ${
 
   } catch (error) {
     console.error('Error sending email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      apiKeyConfigured: !!process.env.RESEND_API_KEY,
+      apiKeyPrefix: process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.substring(0, 3) : 'not set'
+    });
     return res.status(500).json({ 
       error: 'Failed to send email',
-      message: error.message 
+      message: error.message,
+      details: process.env.RESEND_API_KEY ? 'API Key is configured' : 'API Key is missing'
     });
   }
 }
