@@ -1538,7 +1538,7 @@ function ANSHomepage() {
               <button 
                 className="btn-primary" 
                 onClick={() => {
-                  setModalType('recruit');
+                  setModalType('consultation');
                   setConsultationModalOpen(true);
                 }}
                 style={{
@@ -1621,10 +1621,10 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
-              fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
-              fontStyle: lang === 'ja' ? 'normal' : 'italic',
-              fontWeight: lang === 'ja' ? 'normal' : 700,
-              letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
             }}>
               {lang === 'ja' ? t.twinHub.subtitle : t.twinHub.subtitleEn}
             </p>
@@ -1907,10 +1907,10 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
-              fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
-              fontStyle: lang === 'ja' ? 'normal' : 'italic',
-              fontWeight: lang === 'ja' ? 'normal' : 700,
-              letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
             }}>
               {lang === 'ja' ? t.services.subtitle : t.services.subtitleEn}
             </p>
@@ -2633,10 +2633,10 @@ function ANSHomepage() {
             <p style={{
               fontSize: '18px',
               color: '#7F8C9A',
-              fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
-              fontStyle: lang === 'ja' ? 'normal' : 'italic',
-              fontWeight: lang === 'ja' ? 'normal' : 700,
-              letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
             }}>
               {lang === 'ja' ? t.process.subtitle : t.process.subtitleEn}
             </p>
