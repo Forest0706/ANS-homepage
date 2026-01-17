@@ -1237,6 +1237,181 @@ function ANSHomepage() {
               {t.nav.contact}
             </button>
           </div>
+          
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="mobile-menu-btn"
+            style={{
+              display: 'none',
+              flexDirection: 'column',
+              gap: '6px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px',
+            }}
+          >
+            <span style={{
+              width: '24px',
+              height: '3px',
+              background: '#2C3E50',
+              borderRadius: '2px',
+              transition: 'all 0.3s ease',
+              transform: mobileMenuOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none',
+            }}></span>
+            <span style={{
+              width: '24px',
+              height: '3px',
+              background: '#2C3E50',
+              borderRadius: '2px',
+              transition: 'all 0.3s ease',
+              opacity: mobileMenuOpen ? 0 : 1,
+            }}></span>
+            <span style={{
+              width: '24px',
+              height: '3px',
+              background: '#2C3E50',
+              borderRadius: '2px',
+              transition: 'all 0.3s ease',
+              transform: mobileMenuOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none',
+            }}></span>
+          </button>
+        </div>
+        
+        {/* Mobile Menu Panel */}
+        <div className="mobile-menu-panel" style={{
+          display: mobileMenuOpen ? 'flex' : 'none',
+          position: 'fixed',
+          top: scrolled ? '64px' : '80px',
+          left: 0,
+          right: 0,
+          background: 'white',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          flexDirection: 'column',
+          padding: '20px 16px',
+          gap: '16px',
+          zIndex: 999,
+          maxHeight: `calc(100vh - ${scrolled ? '64px' : '80px'})`,
+          overflowY: 'auto',
+        }}>
+          <a 
+            href="#home" 
+            onClick={(e) => {
+              e.preventDefault();
+              setMobileMenuOpen(false);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.home}
+          </a>
+          <a 
+            href="#about" 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.about}
+          </a>
+          <a 
+            href="#twin-hub" 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.twinHub}
+          </a>
+          <a 
+            href="#services" 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.services}
+          </a>
+          <a 
+            href="#recruit" 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.recruit}
+          </a>
+          <a 
+            href="#ths" 
+            onClick={(e) => {
+              e.preventDefault();
+              setMobileMenuOpen(false);
+              setLoginModalOpen(true);
+            }}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.ths}
+          </a>
+          
+          {/* Language Switcher in Mobile Menu */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 0',
+            borderBottom: '1px solid #E8ECF0',
+          }}>
+            <button
+              onClick={() => setLang('ja')}
+              style={{
+                flex: 1,
+                padding: '10px',
+                border: 'none',
+                borderRadius: '8px',
+                background: lang === 'ja' ? '#1A3A52' : '#F5F7FA',
+                color: lang === 'ja' ? 'white' : '#7F8C9A',
+                fontSize: '16px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              🇯🇵 日本語
+            </button>
+            <button
+              onClick={() => setLang('zh')}
+              style={{
+                flex: 1,
+                padding: '10px',
+                border: 'none',
+                borderRadius: '8px',
+                background: lang === 'zh' ? '#FF8C00' : '#F5F7FA',
+                color: lang === 'zh' ? 'white' : '#7F8C9A',
+                fontSize: '16px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              🇨🇳 中文
+            </button>
+          </div>
+          
+          {/* CTA Button in Mobile Menu */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setModalType('consultation');
+              setConsultationModalOpen(true);
+            }}
+            style={{
+              width: '100%',
+              padding: '16px',
+              background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+              border: 'none',
+              borderRadius: '8px',
+              color: 'white',
+              fontSize: '18px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              marginTop: '8px',
+            }}
+          >
+            {t.nav.contact}
+          </button>
         </div>
       </nav>
 
