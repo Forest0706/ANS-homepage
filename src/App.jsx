@@ -761,6 +761,11 @@ function ANSHomepage() {
             display: none !important;
           }
           
+          /* Show mobile menu button on mobile */
+          .mobile-menu-btn {
+            display: flex !important;
+          }
+          
           /* Logo text larger on mobile */
           .logo-text {
             font-size: 18px !important;
