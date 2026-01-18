@@ -99,7 +99,7 @@ function ANSHomepage() {
   // 客户端系统
   const adminUrl = import.meta.env.VITE_ADMIN_URL || 'https://thscus.ans-scm.com';
   // 员工系统 - THS（勤怠・給与管理）
-  const thsUrl = import.meta.env.VITE_THS_URL || 'https://ths.ans-scm.com';
+  const thsUrl = import.meta.env.VITE_THS_URL || 'https://thswms.ans-scm.com';
   // 员工系统 - 台账管理
   const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com';
   const emailDomain = domain;
