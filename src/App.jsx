@@ -2614,12 +2614,27 @@ function ANSHomepage() {
               textAlign: 'right',
             }}>
               <div style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#1A3A52',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                gap: '12px',
                 marginBottom: '4px',
               }}>
-                代表取締役 李林子
+                <span style={{
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  color: '#1A3A52',
+                }}>
+                  代表取締役
+                </span>
+                <img 
+                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/SIGN-removebg-preview.png"
+                  alt="李林子"
+                  style={{
+                    height: '50px',
+                    objectFit: 'contain',
+                  }}
+                />
               </div>
               <div style={{
                 fontSize: '14px',
