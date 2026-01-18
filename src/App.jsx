@@ -157,19 +157,21 @@ function ANSHomepage() {
         shipments: { value: '38,000', unit: '+', label: '月間出荷件数', icon: '📊' },
       },
       twinHub: {
-        title: 'ツインハブの強み',
+        title: 'ツインハブの連携力',
         subtitle: 'The Power of Twin Hub',
         subtitleEn: 'The Power of Twin Hub',
         qingdao: {
           name: '青島ハブ',
-          subtitle: 'コストと規模の優位性',
-          subtitleEn: 'Cost & Scale Advantage',
+          subtitle: 'コストと流通機能の優位性',
+          subtitleEn: 'Cost & Distribution Advantage',
           area: '20,000',
           features: [
             '一期工程20,000㎡の大型倉庫',
             '倉庫費用は日本の約1/3',
             '青島港まで2.5km、鉄道配送対応',
-            '集荷・検品・梱包・出荷の一貫対応'
+            '集荷・検品・梱包・出荷の一貫対応',
+            '包装変更・ラベル貼り対応（同一商品の多チャネル販売対応）',
+            '流通加工機能で在庫を柔軟に活用'
           ]
         },
         yokohama: {
@@ -181,11 +183,13 @@ function ANSHomepage() {
             'ランドポート横浜杉田 8,000㎡',
             '本牧港まで8km、車で約10分',
             'Amazonと同一倉庫エリア、FBA入庫便利',
-            'ヤマト横浜ベースまで400m、当日出荷対応'
+            'ヤマト横浜ベースまで400m、当日出荷対応',
+            '推奨在庫：2週間分（需要予測に基づき自動補給）'
           ]
         },
-        connection: '週末通常便 / 最短3日',
-        connectionSub: '週末通常便 / 最短3日'
+        connection: '連携システム',
+        connectionSub: '最低在庫設定 × 販売予測 → 自動配分',
+        connectionDesc: '横浜2週間在庫を維持、青島で必要量を保管・加工して自動補給'
       },
       services: {
         title: 'サービス内容',
@@ -414,19 +418,21 @@ function ANSHomepage() {
         shipments: { value: '38,000', unit: '+', label: '月出货量', icon: '📊' },
       },
       twinHub: {
-        title: 'Twin Hub的优势',
-        subtitle: 'Twin Hub的优势',
+        title: 'Twin Hub的协同力',
+        subtitle: 'Twin Hub的协同力',
         subtitleEn: 'The Power of Twin Hub',
         qingdao: {
           name: '青岛Hub',
-          subtitle: '成本与规模优势',
-          subtitleEn: 'Cost & Scale Advantage',
+          subtitle: '成本与流通功能优势',
+          subtitleEn: 'Cost & Distribution Advantage',
           area: '20,000',
           features: [
             '一期工程20,000㎡大型仓库',
             '仓储费用约为日本的1/3',
             '距青岛港2.5km，铁路配套完善',
-            '集货・检品・包装・出运一站式服务'
+            '集货・检品・包装・出运一站式服务',
+            '包装修改・标签贴附（同一商品多渠道销售支持）',
+            '流通加工功能，灵活利用库存'
           ]
         },
         yokohama: {
@@ -438,11 +444,13 @@ function ANSHomepage() {
             'Landport横滨杉田 8,000㎡',
             '距本牧港8km，车程约10分钟',
             '与Amazon同一库区，FBA入库便利',
-            '距黑猫主力店400m，当日出货'
+            '距黑猫主力店400m，当日出货',
+            '推荐库存：2周量（根据需求预测自动补货）'
           ]
         },
-        connection: '周末普船 / 最短3日',
-        connectionSub: '周末普船 / 最短3日'
+        connection: '联动系统',
+        connectionSub: '最低库存设定 × 销售预测 → 自动调配',
+        connectionDesc: '横滨维持2周库存，青岛保管必要量并加工后自动补货'
       },
       services: {
         title: '服务内容',
@@ -1755,15 +1763,16 @@ function ANSHomepage() {
               <div style={{
                 textAlign: 'center',
                 background: 'white',
-                padding: '16px 24px',
+                padding: '20px 24px',
                 borderRadius: '12px',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                maxWidth: '280px',
               }}>
                 <div style={{
                   fontWeight: 700,
                   color: '#1A3A52',
                   fontSize: '16px',
-                  marginBottom: '4px',
+                  marginBottom: '8px',
                 }}>
                   {t.twinHub.connection}
                 </div>
@@ -1771,9 +1780,22 @@ function ANSHomepage() {
                   color: '#FF8C00',
                   fontSize: '14px',
                   fontWeight: 600,
+                  marginBottom: '8px',
                 }}>
                   {t.twinHub.connectionSub}
                 </div>
+                {t.twinHub.connectionDesc && (
+                  <div style={{
+                    color: '#7F8C9A',
+                    fontSize: '12px',
+                    lineHeight: 1.5,
+                    marginTop: '8px',
+                    paddingTop: '8px',
+                    borderTop: '1px solid #E5E9F0',
+                  }}>
+                    {t.twinHub.connectionDesc}
+                  </div>
+                )}
               </div>
             </div>
 
