@@ -3762,7 +3762,7 @@ function ANSHomepage() {
                       >
                         <div style={{ fontWeight: 600 }}>THS</div>
                         <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                          {lang === 'ja' ? '勤怠・給与管理' : '考勤・工资管理'}
+                          {lang === 'ja' ? '在庫・入出荷管理' : '库存・出入库管理'}
                         </div>
                       </button>
                       <button
@@ -3785,7 +3785,7 @@ function ANSHomepage() {
                           {lang === 'ja' ? '台帳管理' : '台账管理'}
                         </div>
                         <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                          {lang === 'ja' ? '在庫・出荷管理' : '库存・出货管理'}
+                          {lang === 'ja' ? '業務台帳管理' : '业务台账管理'}
                         </div>
                       </button>
                     </div>
