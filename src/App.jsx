@@ -2615,9 +2615,9 @@ function ANSHomepage() {
             }}>
               <div style={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'baseline',
                 justifyContent: 'flex-end',
-                gap: '12px',
+                gap: '8px',
                 marginBottom: '4px',
               }}>
                 <span style={{
@@ -2627,14 +2627,14 @@ function ANSHomepage() {
                 }}>
                   代表取締役
                 </span>
-                <img 
-                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/SIGN-removebg-preview.png"
-                  alt="李林子"
-                  style={{
-                    height: '50px',
-                    objectFit: 'contain',
-                  }}
-                />
+                <span style={{
+                  fontSize: '24px',
+                  fontFamily: '"楷体", "KaiTi", "STKaiti", "华文楷体", serif',
+                  fontWeight: 600,
+                  color: '#1A3A52',
+                }}>
+                  李林子
+                </span>
               </div>
               <div style={{
                 fontSize: '14px',
