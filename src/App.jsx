@@ -76,6 +76,7 @@ function ANSHomepage() {
   const [modalType, setModalType] = useState('consultation'); // 'consultation' or 'recruit'
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [userType, setUserType] = useState('user'); // 'user' or 'employee'
+  const [employeeSystem, setEmployeeSystem] = useState('ths'); // 'ths' or 'ledger'
   const [loginData, setLoginData] = useState({
     id: '',
     password: ''
@@ -97,7 +98,9 @@ function ANSHomepage() {
   const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
   // 客户端系统
   const adminUrl = import.meta.env.VITE_ADMIN_URL || 'https://thscus.ans-scm.com';
-  // 员工系统（台账管理）
+  // 员工系统 - THS（勤怠・給与管理）
+  const thsUrl = import.meta.env.VITE_THS_URL || 'https://ths.ans-scm.com';
+  // 员工系统 - 台账管理
   const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com';
   const emailDomain = domain;
 
@@ -3663,8 +3666,12 @@ function ANSHomepage() {
                   // 跳转到客户端系统
                   window.location.href = adminUrl;
                 } else {
-                  // 跳转到台账系统
-                  window.location.href = wmsUrl;
+                  // 员工系统 - 根据选择跳转到THS或台账管理
+                  if (employeeSystem === 'ths') {
+                    window.location.href = thsUrl;
+                  } else {
+                    window.location.href = wmsUrl;
+                  }
                 }
               }}>
                 {/* User Type Selection */}
@@ -3720,6 +3727,70 @@ function ANSHomepage() {
                     </button>
                   </div>
                 </div>
+
+                {/* Employee System Selection - 当选择员工时显示 */}
+                {userType === 'employee' && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '12px',
+                    }}>
+                      {lang === 'ja' ? 'システム選択' : '系统选择'}
+                    </label>
+                    <div style={{
+                      display: 'flex',
+                      gap: '12px',
+                    }}>
+                      <button
+                        type="button"
+                        onClick={() => setEmployeeSystem('ths')}
+                        style={{
+                          flex: 1,
+                          padding: '12px 16px',
+                          border: `2px solid ${employeeSystem === 'ths' ? '#1A3A52' : '#E8ECF0'}`,
+                          borderRadius: '8px',
+                          background: employeeSystem === 'ths' ? '#F0F4F8' : 'white',
+                          color: employeeSystem === 'ths' ? '#1A3A52' : '#7F8C9A',
+                          fontSize: '13px',
+                          fontWeight: employeeSystem === 'ths' ? 600 : 500,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>THS</div>
+                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
+                          {lang === 'ja' ? '勤怠・給与管理' : '考勤・工资管理'}
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEmployeeSystem('ledger')}
+                        style={{
+                          flex: 1,
+                          padding: '12px 16px',
+                          border: `2px solid ${employeeSystem === 'ledger' ? '#1A3A52' : '#E8ECF0'}`,
+                          borderRadius: '8px',
+                          background: employeeSystem === 'ledger' ? '#F0F4F8' : 'white',
+                          color: employeeSystem === 'ledger' ? '#1A3A52' : '#7F8C9A',
+                          fontSize: '13px',
+                          fontWeight: employeeSystem === 'ledger' ? 600 : 500,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>
+                          {lang === 'ja' ? '台帳管理' : '台账管理'}
+                        </div>
+                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
+                          {lang === 'ja' ? '在庫・出荷管理' : '库存・出货管理'}
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* ID Input */}
                 <div style={{ marginBottom: '20px' }}>
