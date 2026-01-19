@@ -676,9 +676,9 @@ function ANSHomepage() {
     const handleScroll = () => {
       const sections = [
         { id: 'home', offset: 0 },
-        { id: 'about', offset: (document.getElementById('about')?.offsetTop || 0) - 150 },
         { id: 'twin-hub', offset: (document.getElementById('twin-hub')?.offsetTop || 0) - 150 },
         { id: 'services', offset: (document.getElementById('services')?.offsetTop || 0) - 150 },
+        { id: 'about', offset: (document.getElementById('about')?.offsetTop || 0) - 150 },
         { id: 'recruit', offset: (document.getElementById('recruit')?.offsetTop || 0) - 150 },
       ];
 
@@ -1187,14 +1187,14 @@ function ANSHomepage() {
             >
               {t.nav.home}
             </a>
-            <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
-              {t.nav.about}
-            </a>
             <a href="#twin-hub" className={`nav-link ${activeSection === 'twin-hub' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.twinHub}
             </a>
             <a href="#services" className={`nav-link ${activeSection === 'services' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.services}
+            </a>
+            <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+              {t.nav.about}
             </a>
             <a href="#recruit" className={`nav-link ${activeSection === 'recruit' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.recruit}
@@ -1357,13 +1357,6 @@ function ANSHomepage() {
             {t.nav.home}
           </a>
           <a 
-            href="#about" 
-            onClick={() => setMobileMenuOpen(false)}
-            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
-          >
-            {t.nav.about}
-          </a>
-          <a 
             href="#twin-hub" 
             onClick={() => setMobileMenuOpen(false)}
             style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
@@ -1376,6 +1369,13 @@ function ANSHomepage() {
             style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
           >
             {t.nav.services}
+          </a>
+          <a 
+            href="#about" 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+          >
+            {t.nav.about}
           </a>
           <a 
             href="#recruit" 
