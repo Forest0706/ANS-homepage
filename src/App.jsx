@@ -99,7 +99,7 @@ function ANSHomepage() {
   // 客户端系统
   const adminUrl = import.meta.env.VITE_ADMIN_URL || 'https://thscus.ans-scm.com';
   // 员工系统 - THS（勤怠・給与管理）
-  const thsUrl = import.meta.env.VITE_THS_URL || 'https://thswms.ans-scm.com';
+  const thsUrl = import.meta.env.VITE_THS_URL || 'https://thscus.ans-scm.com/admin_hwc';
   // 员工系统 - 台账管理
   const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com';
   const emailDomain = domain;
@@ -3678,13 +3678,16 @@ function ANSHomepage() {
                 e.preventDefault();
                 // 根据用户类型跳转到不同系统
                 if (userType === 'user') {
-                  // 跳转到客户端系统
-                  window.location.href = adminUrl;
+                  // 用户登录 - 直接跳转到客户端系统登录页面
+                  window.location.href = `${adminUrl}/login.php?act=login`;
                 } else {
                   // 员工系统 - 根据选择跳转到THS或台账管理
                   if (employeeSystem === 'ths') {
+                    // THS系统 - 需要ID和密码，使用表单提交
+                    // 这里可以添加THS系统的登录逻辑（如果需要）
                     window.location.href = thsUrl;
                   } else {
+                    // 台帳管理 - 直接跳转到登录页面
                     window.location.href = wmsUrl;
                   }
                 }
@@ -3807,73 +3810,77 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* ID Input */}
-                <div style={{ marginBottom: '20px' }}>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    color: '#2C3E50',
-                    marginBottom: '8px',
-                  }}>
-                    {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={loginData.id}
-                    onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      border: '2px solid #E8ECF0',
-                      borderRadius: '8px',
+                {/* ID Input - 仅THS系统显示 */}
+                {userType === 'employee' && employeeSystem === 'ths' && (
+                  <div style={{ marginBottom: '20px' }}>
+                    <label style={{
+                      display: 'block',
                       fontSize: '14px',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FF8C00';
-                      e.currentTarget.style.outline = 'none';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '#E8ECF0';
-                    }}
-                  />
-                </div>
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={loginData.id}
+                      onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+                )}
 
-                {/* Password Input */}
-                <div style={{ marginBottom: '24px' }}>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    color: '#2C3E50',
-                    marginBottom: '8px',
-                  }}>
-                    {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={loginData.password}
-                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      border: '2px solid #E8ECF0',
-                      borderRadius: '8px',
+                {/* Password Input - 仅THS系统显示 */}
+                {userType === 'employee' && employeeSystem === 'ths' && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <label style={{
+                      display: 'block',
                       fontSize: '14px',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FF8C00';
-                      e.currentTarget.style.outline = 'none';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '#E8ECF0';
-                    }}
-                  />
-                </div>
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      value={loginData.password}
+                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+                )}
 
                 {/* Login Button */}
                 <button
@@ -3901,7 +3908,10 @@ function ANSHomepage() {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  {lang === 'ja' ? 'ログイン' : '登录'}
+                  {(userType === 'user' || (userType === 'employee' && employeeSystem === 'ledger'))
+                    ? (lang === 'ja' ? 'ログインページへ' : '前往登录页面')
+                    : (lang === 'ja' ? 'ログイン' : '登录')
+                  }
                 </button>
               </form>
             </div>
