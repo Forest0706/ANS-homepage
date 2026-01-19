@@ -2350,12 +2350,12 @@ function ANSHomepage() {
 
           {/* Company Info Section Container */}
           <div style={{
-            maxWidth: '1200px',
+            maxWidth: '1000px',
             margin: '0 auto',
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '60px',
-            justifyContent: 'center',
+            gap: '40px',
+            justifyContent: 'space-between',
             alignItems: 'flex-start',
             opacity: aboutSection.isVisible ? 1 : 0,
             transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -2390,7 +2390,7 @@ function ANSHomepage() {
                       lineHeight: 1.8,
                       whiteSpace: 'pre-line',
                     }}>
-                      {lang === 'ja' ? t.about.companyName : t.about.companyNameEn}
+                      {lang === 'ja' ? 'Answer Supply Chain Co., Ltd.\nアンササプライチェーン株式会社' : 'Answer Supply Chain Co., Ltd.\nAnswer Supply Chain Co., Ltd.'}
                     </td>
                   </tr>
 
@@ -2483,7 +2483,7 @@ function ANSHomepage() {
 
             {/* Right Column: Images */}
             <div style={{
-              flex: '0 0 360px',
+              flex: '0 0 300px',
               maxWidth: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -2493,13 +2493,15 @@ function ANSHomepage() {
                 overflow: 'hidden',
                 borderRadius: '8px',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                height: '200px',
               }}>
                 <img 
                   src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/Front.jpg" 
                   alt="Building Front"
                   style={{
                     width: '100%',
-                    height: 'auto',
+                    height: '100%',
+                    objectFit: 'cover',
                     display: 'block',
                     transition: 'transform 0.5s ease',
                   }}
@@ -2511,13 +2513,15 @@ function ANSHomepage() {
                 overflow: 'hidden',
                 borderRadius: '8px',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                height: '200px',
               }}>
                 <img 
                   src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/office.jpg" 
                   alt="Office Interior"
                   style={{
                     width: '100%',
-                    height: 'auto',
+                    height: '100%',
+                    objectFit: 'cover',
                     display: 'block',
                     transition: 'transform 0.5s ease',
                   }}
