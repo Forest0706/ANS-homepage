@@ -557,6 +557,8 @@ function ANSHomepage() {
       about: {
         title: '公司概况',
         subtitle: 'Company Profile',
+        companyName: 'Answer Supply Chain Co., Ltd.',
+        companyNameEn: 'Answer Supply Chain Co., Ltd.',
         established: '2024年6月',
         establishedEn: 'June 2024',
         capital: '5,000万日元',
@@ -2346,118 +2348,181 @@ function ANSHomepage() {
             </p>
           </div>
 
-          {/* Company Info Table */}
+          {/* Company Info Section Container */}
           <div style={{
-            maxWidth: '800px',
+            maxWidth: '1200px',
             margin: '0 auto',
-            background: 'white',
-            borderRadius: '16px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            overflow: 'hidden',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '60px',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
             opacity: aboutSection.isVisible ? 1 : 0,
             transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
             transition: 'all 0.8s ease',
           }}>
-            <table style={{
-              width: '100%',
-              borderCollapse: 'collapse',
+            {/* Left Column: Info List */}
+            <div style={{
+              flex: '1 1 500px',
+              minWidth: '300px',
             }}>
-              <tbody>
-                <tr style={{
-                  borderBottom: '1px solid #E8ECF0',
-                }}>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    color: '#1A3A52',
-                    width: '40%',
-                    backgroundColor: '#F5F7FA',
-                  }}>
-                    {lang === 'ja' ? '設立年月' : '成立时间'}
-                  </td>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    color: '#2C3E50',
-                    fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
-                    fontStyle: lang === 'ja' ? 'normal' : 'italic',
-                    fontWeight: lang === 'ja' ? 'normal' : 700,
-                    letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
-                  }}>
-                    {lang === 'ja' ? t.about.established : t.about.establishedEn}
-                  </td>
-                </tr>
-                <tr style={{
-                  borderBottom: '1px solid #E8ECF0',
-                }}>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    color: '#1A3A52',
-                    backgroundColor: '#F5F7FA',
-                  }}>
-                    {lang === 'ja' ? '資本金' : '资本金'}
-                  </td>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    color: '#2C3E50',
-                    fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
-                    fontStyle: lang === 'ja' ? 'normal' : 'italic',
-                    fontWeight: lang === 'ja' ? 'normal' : 700,
-                    letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
-                  }}>
-                    {lang === 'ja' ? t.about.capital : t.about.capitalEn}
-                  </td>
-                </tr>
-                <tr style={{
-                  borderBottom: '1px solid #E8ECF0',
-                }}>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    color: '#1A3A52',
-                    backgroundColor: '#F5F7FA',
-                    verticalAlign: 'top',
-                  }}>
-                    {lang === 'ja' ? '本社所在地' : '公司地址'}
-                  </td>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    color: '#2C3E50',
-                    lineHeight: 1.6,
-                  }}>
-                    {lang === 'ja' ? t.about.address : t.about.addressEn}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    color: '#1A3A52',
-                    backgroundColor: '#F5F7FA',
-                  }}>
-                    {lang === 'ja' ? '従業員数' : '员工数'}
-                  </td>
-                  <td style={{
-                    padding: '24px 32px',
-                    fontSize: '16px',
-                    color: '#2C3E50',
-                    fontFamily: lang === 'ja' ? 'inherit' : '"Playfair Display", serif',
-                    fontStyle: lang === 'ja' ? 'normal' : 'italic',
-                    fontWeight: lang === 'ja' ? 'normal' : 700,
-                    letterSpacing: lang === 'ja' ? 'normal' : '0.5px',
-                  }}>
-                    {lang === 'ja' ? t.about.employees : t.about.employeesEn}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <table style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+              }}>
+                <tbody>
+                  {/* Company Name */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '24px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      width: '30%',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '企業名' : '企业名称'}
+                    </td>
+                    <td style={{
+                      padding: '24px 0 24px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.6,
+                    }}>
+                      {lang === 'ja' ? t.about.companyName : t.about.companyNameEn}
+                    </td>
+                  </tr>
+
+                  {/* Established */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '24px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '設立年月日' : '成立时间'}
+                    </td>
+                    <td style={{
+                      padding: '24px 0 24px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                    }}>
+                      {lang === 'ja' ? t.about.established : t.about.establishedEn}
+                    </td>
+                  </tr>
+
+                  {/* Capital */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '24px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '資本金' : '资本金'}
+                    </td>
+                    <td style={{
+                      padding: '24px 0 24px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                    }}>
+                      {lang === 'ja' ? t.about.capital : t.about.capitalEn}
+                    </td>
+                  </tr>
+
+                  {/* Access */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '24px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? 'アクセス' : '公司地址'}
+                    </td>
+                    <td style={{
+                      padding: '24px 0 24px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.6,
+                    }}>
+                      {lang === 'ja' ? t.about.address : t.about.addressEn}
+                    </td>
+                  </tr>
+
+                   {/* Business Guide */}
+                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '24px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '事業案内' : '业务介绍'}
+                    </td>
+                    <td style={{
+                      padding: '24px 0 24px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.6,
+                    }}>
+                      {lang === 'ja' ? '日中間の国際物流サービス全般' : '中日国际物流服务全般'}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Right Column: Images */}
+            <div style={{
+              flex: '0 0 400px',
+              maxWidth: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px'
+            }}>
+              <div style={{
+                overflow: 'hidden',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              }}>
+                <img 
+                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/Front.jpg" 
+                  alt="Building Front"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
+              </div>
+              <div style={{
+                overflow: 'hidden',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              }}>
+                <img 
+                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/office.jpg" 
+                  alt="Office Interior"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -3683,11 +3748,10 @@ function ANSHomepage() {
                 } else {
                   // 员工系统 - 根据选择跳转到THS或台账管理
                   if (employeeSystem === 'ths') {
-                    // THS系统 - 需要ID和密码，使用表单提交
-                    // 这里可以添加THS系统的登录逻辑（如果需要）
+                    // THS系统 - 直接跳转到登录页面
                     window.location.href = thsUrl;
                   } else {
-                    // 台帳管理 - 直接跳转到登录页面
+                    // 台帳管理 - 需要ID和密码（此处为模拟，实际跳转到WMS）
                     window.location.href = wmsUrl;
                   }
                 }
@@ -3810,8 +3874,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* ID Input - 仅THS系统显示 */}
-                {userType === 'employee' && employeeSystem === 'ths' && (
+                {/* ID Input - 仅台账管理系统显示 */}
+                {userType === 'employee' && employeeSystem === 'ledger' && (
                   <div style={{ marginBottom: '20px' }}>
                     <label style={{
                       display: 'block',
@@ -3846,8 +3910,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* Password Input - 仅THS系统显示 */}
-                {userType === 'employee' && employeeSystem === 'ths' && (
+                {/* Password Input - 仅台账管理系统显示 */}
+                {userType === 'employee' && employeeSystem === 'ledger' && (
                   <div style={{ marginBottom: '24px' }}>
                     <label style={{
                       display: 'block',
@@ -3908,7 +3972,7 @@ function ANSHomepage() {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  {(userType === 'user' || (userType === 'employee' && employeeSystem === 'ledger'))
+                  {(userType === 'user' || (userType === 'employee' && employeeSystem === 'ths'))
                     ? (lang === 'ja' ? 'ログインページへ' : '前往登录页面')
                     : (lang === 'ja' ? 'ログイン' : '登录')
                   }
