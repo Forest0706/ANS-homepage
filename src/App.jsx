@@ -557,8 +557,8 @@ function ANSHomepage() {
       about: {
         title: '公司概况',
         subtitle: 'Company Profile',
-        companyName: 'Answer Supply Chain Co., Ltd.',
-        companyNameEn: 'Answer Supply Chain Co., Ltd.',
+        companyName: 'Answer Supply Chain Co., Ltd.\nアンササプライチェーン株式会社',
+        companyNameEn: 'Answer Supply Chain Co., Ltd.\nAnswer Supply Chain Co., Ltd.',
         established: '2024年6月',
         establishedEn: 'June 2024',
         capital: '5,000万日元',
@@ -2388,6 +2388,7 @@ function ANSHomepage() {
                       fontSize: '16px',
                       color: '#2C3E50',
                       lineHeight: 1.6,
+                      whiteSpace: 'pre-line',
                     }}>
                       {lang === 'ja' ? t.about.companyName : t.about.companyNameEn}
                     </td>
