@@ -670,6 +670,33 @@ function ANSHomepage() {
   const messageSection = useScrollReveal();
   const processSection = useScrollReveal();
 
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        { id: 'home', offset: 0 },
+        { id: 'about', offset: (document.getElementById('about')?.offsetTop || 0) - 150 },
+        { id: 'twin-hub', offset: (document.getElementById('twin-hub')?.offsetTop || 0) - 150 },
+        { id: 'services', offset: (document.getElementById('services')?.offsetTop || 0) - 150 },
+        { id: 'recruit', offset: (document.getElementById('recruit')?.offsetTop || 0) - 150 },
+      ];
+
+      const scrollPosition = window.scrollY + 120;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (scrollPosition >= sections[i].offset) {
+          setActiveSection(sections[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div style={{
       fontFamily: "'Noto Sans JP', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif",
@@ -1039,8 +1066,13 @@ function ANSHomepage() {
           transition: width 0.3s ease;
         }
         
-        .nav-link:hover::after {
+        .nav-link:hover::after,
+        .nav-link.active::after {
           width: 100%;
+        }
+
+        .nav-link.active {
+          color: #FF8C00 !important;
         }
         
         .btn-primary:hover {
@@ -1150,21 +1182,21 @@ function ANSHomepage() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="nav-link" 
+              className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}
               style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease', cursor: 'pointer' }}
             >
               {t.nav.home}
             </a>
-            <a href="#about" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+            <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.about}
             </a>
-            <a href="#twin-hub" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+            <a href="#twin-hub" className={`nav-link ${activeSection === 'twin-hub' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.twinHub}
             </a>
-            <a href="#services" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+            <a href="#services" className={`nav-link ${activeSection === 'services' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.services}
             </a>
-            <a href="#recruit" className="nav-link" style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
+            <a href="#recruit" className={`nav-link ${activeSection === 'recruit' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.recruit}
             </a>
             <a 
@@ -1434,7 +1466,7 @@ function ANSHomepage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="hero-section" style={{
+      <section id="home" className="hero-section" style={{
         position: 'relative',
         minHeight: '100vh',
         backgroundImage: 'url(https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/back.jpg)',
