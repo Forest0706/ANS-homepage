@@ -2374,7 +2374,7 @@ function ANSHomepage() {
                   {/* Company Name */}
                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
                     <td style={{
-                      padding: '24px 0',
+                      padding: '28px 0',
                       fontSize: '16px',
                       fontWeight: 600,
                       color: '#2E8B98',
@@ -2384,10 +2384,10 @@ function ANSHomepage() {
                       {lang === 'ja' ? '企業名' : '企业名称'}
                     </td>
                     <td style={{
-                      padding: '24px 0 24px 32px',
+                      padding: '28px 0 28px 32px',
                       fontSize: '16px',
                       color: '#2C3E50',
-                      lineHeight: 1.6,
+                      lineHeight: 1.8,
                       whiteSpace: 'pre-line',
                     }}>
                       {lang === 'ja' ? t.about.companyName : t.about.companyNameEn}
@@ -2397,7 +2397,7 @@ function ANSHomepage() {
                   {/* Established */}
                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
                     <td style={{
-                      padding: '24px 0',
+                      padding: '28px 0',
                       fontSize: '16px',
                       fontWeight: 600,
                       color: '#2E8B98',
@@ -2406,9 +2406,10 @@ function ANSHomepage() {
                       {lang === 'ja' ? '設立年月日' : '成立时间'}
                     </td>
                     <td style={{
-                      padding: '24px 0 24px 32px',
+                      padding: '28px 0 28px 32px',
                       fontSize: '16px',
                       color: '#2C3E50',
+                      lineHeight: 1.8,
                     }}>
                       {lang === 'ja' ? t.about.established : t.about.establishedEn}
                     </td>
@@ -2417,7 +2418,7 @@ function ANSHomepage() {
                   {/* Capital */}
                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
                     <td style={{
-                      padding: '24px 0',
+                      padding: '28px 0',
                       fontSize: '16px',
                       fontWeight: 600,
                       color: '#2E8B98',
@@ -2426,9 +2427,10 @@ function ANSHomepage() {
                       {lang === 'ja' ? '資本金' : '资本金'}
                     </td>
                     <td style={{
-                      padding: '24px 0 24px 32px',
+                      padding: '28px 0 28px 32px',
                       fontSize: '16px',
                       color: '#2C3E50',
+                      lineHeight: 1.8,
                     }}>
                       {lang === 'ja' ? t.about.capital : t.about.capitalEn}
                     </td>
@@ -2437,7 +2439,7 @@ function ANSHomepage() {
                   {/* Access */}
                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
                     <td style={{
-                      padding: '24px 0',
+                      padding: '28px 0',
                       fontSize: '16px',
                       fontWeight: 600,
                       color: '#2E8B98',
@@ -2446,10 +2448,10 @@ function ANSHomepage() {
                       {lang === 'ja' ? 'アクセス' : '公司地址'}
                     </td>
                     <td style={{
-                      padding: '24px 0 24px 32px',
+                      padding: '28px 0 28px 32px',
                       fontSize: '16px',
                       color: '#2C3E50',
-                      lineHeight: 1.6,
+                      lineHeight: 1.8,
                     }}>
                       {lang === 'ja' ? t.about.address : t.about.addressEn}
                     </td>
@@ -2458,7 +2460,7 @@ function ANSHomepage() {
                    {/* Business Guide */}
                    <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
                     <td style={{
-                      padding: '24px 0',
+                      padding: '28px 0',
                       fontSize: '16px',
                       fontWeight: 600,
                       color: '#2E8B98',
@@ -2467,10 +2469,10 @@ function ANSHomepage() {
                       {lang === 'ja' ? '事業案内' : '业务介绍'}
                     </td>
                     <td style={{
-                      padding: '24px 0 24px 32px',
+                      padding: '28px 0 28px 32px',
                       fontSize: '16px',
                       color: '#2C3E50',
-                      lineHeight: 1.6,
+                      lineHeight: 1.8,
                     }}>
                       {lang === 'ja' ? '日中間の国際物流サービス全般' : '中日国际物流服务全般'}
                     </td>
@@ -2481,11 +2483,11 @@ function ANSHomepage() {
 
             {/* Right Column: Images */}
             <div style={{
-              flex: '0 0 400px',
+              flex: '0 0 360px',
               maxWidth: '100%',
               display: 'flex',
               flexDirection: 'column',
-              gap: '20px'
+              gap: '24px'
             }}>
               <div style={{
                 overflow: 'hidden',
