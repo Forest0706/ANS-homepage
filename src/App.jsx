@@ -2515,7 +2515,7 @@ function ANSHomepage() {
 
             {/* Right Column: Images */}
             <div style={{
-              flex: '0 0 300px',
+              flex: '0 0 340px',
               maxWidth: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -2525,7 +2525,7 @@ function ANSHomepage() {
                 overflow: 'hidden',
                 borderRadius: '8px',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                height: '200px',
+                height: '220px',
               }}>
                 <img 
                   src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/Front.jpg" 
@@ -2545,7 +2545,7 @@ function ANSHomepage() {
                 overflow: 'hidden',
                 borderRadius: '8px',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                height: '200px',
+                height: '220px',
               }}>
                 <img 
                   src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/office.jpg" 
