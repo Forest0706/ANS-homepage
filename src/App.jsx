@@ -3782,26 +3782,8 @@ function ANSHomepage() {
                 e.preventDefault();
                 // 根据用户类型跳转到不同系统
                 if (userType === 'user') {
-                  // 用户登录 - 提交表单到外部WMS
-                  // 创建一个隐藏的表单并提交
-                  const form = document.createElement('form');
-                  form.method = 'POST';
-                  form.action = 'https://thscus.ans-scm.com/admin_hwc/privilege.php?act=login';
-                  
-                  const usernameInput = document.createElement('input');
-                  usernameInput.type = 'hidden';
-                  usernameInput.name = 'user_name'; // 假设字段名为 user_name，如需调整请修改此处
-                  usernameInput.value = loginData.id;
-                  
-                  const passwordInput = document.createElement('input');
-                  passwordInput.type = 'hidden';
-                  passwordInput.name = 'password'; // 假设字段名为 password
-                  passwordInput.value = loginData.password;
-                  
-                  form.appendChild(usernameInput);
-                  form.appendChild(passwordInput);
-                  document.body.appendChild(form);
-                  form.submit();
+                  // 用户登录 - 直接跳转到客户端系统登录页面
+                  window.location.href = `${adminUrl}/login.php?act=login`;
                 } else {
                   // 员工系统 - 根据选择跳转到THS或台账管理
                   if (employeeSystem === 'ths') {
@@ -3931,8 +3913,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* ID Input - 台账管理系统或用户登录显示 */}
-                {((userType === 'employee' && employeeSystem === 'ledger') || userType === 'user') && (
+                {/* ID Input - 仅台账管理系统显示 */}
+                {userType === 'employee' && employeeSystem === 'ledger' && (
                   <div style={{ marginBottom: '20px' }}>
                     <label style={{
                       display: 'block',
@@ -3941,7 +3923,7 @@ function ANSHomepage() {
                       color: '#2C3E50',
                       marginBottom: '8px',
                     }}>
-                      {lang === 'ja' ? 'ID' : (userType === 'user' ? '账号' : 'ID')} <span style={{ color: '#FF8C00' }}>*</span>
+                      {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
                     </label>
                     <input
                       type="text"
@@ -3967,8 +3949,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* Password Input - 台账管理系统或用户登录显示 */}
-                {((userType === 'employee' && employeeSystem === 'ledger') || userType === 'user') && (
+                {/* Password Input - 仅台账管理系统显示 */}
+                {userType === 'employee' && employeeSystem === 'ledger' && (
                   <div style={{ marginBottom: '24px' }}>
                     <label style={{
                       display: 'block',
@@ -4029,7 +4011,7 @@ function ANSHomepage() {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  {(userType === 'employee' && employeeSystem === 'ths')
+                  {(userType === 'user' || (userType === 'employee' && employeeSystem === 'ths'))
                     ? (lang === 'ja' ? 'ログインページへ' : '前往登录页面')
                     : (lang === 'ja' ? 'ログイン' : '登录')
                   }
