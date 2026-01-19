@@ -1638,534 +1638,6 @@ function ANSHomepage() {
         </div>
       </section>
 
-      {/* About Section - 公司概况 */}
-      <section 
-        ref={aboutSection.ref}
-        id="about"
-        style={{
-          background: 'white',
-          padding: '100px 24px',
-        }}
-      >
-        <div style={{
-          maxWidth: '1320px',
-          margin: '0 auto',
-        }}>
-          {/* Section Header */}
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '60px',
-            opacity: aboutSection.isVisible ? 1 : 0,
-            transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.8s ease',
-          }}>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 40px)',
-              fontWeight: 700,
-              color: '#1A3A52',
-              marginBottom: '8px',
-            }}>
-              {t.about.title}
-            </h2>
-            <p style={{
-              fontSize: '18px',
-              color: '#7F8C9A',
-              fontFamily: '"Playfair Display", serif',
-              fontStyle: 'italic',
-              fontWeight: 700,
-              letterSpacing: '0.5px',
-            }}>
-              {t.about.subtitle}
-            </p>
-          </div>
-
-          {/* Company Info Section Container */}
-          <div style={{
-            maxWidth: '1000px',
-            margin: '0 auto',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '40px',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            opacity: aboutSection.isVisible ? 1 : 0,
-            transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.8s ease',
-          }}>
-            {/* Left Column: Info List */}
-            <div style={{
-              flex: '1 1 500px',
-              minWidth: '300px',
-            }}>
-              <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-              }}>
-                <tbody>
-                  {/* Company Name */}
-                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
-                    <td style={{
-                      padding: '28px 0',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: '#2E8B98',
-                      width: '30%',
-                      verticalAlign: 'top',
-                    }}>
-                      {lang === 'ja' ? '企業名' : '企业名称'}
-                    </td>
-                    <td style={{
-                      padding: '28px 0 28px 32px',
-                      fontSize: '16px',
-                      color: '#2C3E50',
-                      lineHeight: 1.8,
-                      whiteSpace: 'pre-line',
-                    }}>
-                      {lang === 'ja' ? 'Answer Supply Chain Co., Ltd.\nアンササプライチェーン株式会社' : 'Answer Supply Chain Co., Ltd.\nAnswer Supply Chain Co., Ltd.'}
-                    </td>
-                  </tr>
-
-                  {/* Established */}
-                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
-                    <td style={{
-                      padding: '28px 0',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: '#2E8B98',
-                      verticalAlign: 'top',
-                    }}>
-                      {lang === 'ja' ? '設立年月日' : '成立时间'}
-                    </td>
-                    <td style={{
-                      padding: '28px 0 28px 32px',
-                      fontSize: '16px',
-                      color: '#2C3E50',
-                      lineHeight: 1.8,
-                    }}>
-                      {lang === 'ja' ? t.about.established : t.about.establishedEn}
-                    </td>
-                  </tr>
-
-                  {/* Capital */}
-                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
-                    <td style={{
-                      padding: '28px 0',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: '#2E8B98',
-                      verticalAlign: 'top',
-                    }}>
-                      {lang === 'ja' ? '資本金' : '资本金'}
-                    </td>
-                    <td style={{
-                      padding: '28px 0 28px 32px',
-                      fontSize: '16px',
-                      color: '#2C3E50',
-                      lineHeight: 1.8,
-                    }}>
-                      {lang === 'ja' ? t.about.capital : t.about.capitalEn}
-                    </td>
-                  </tr>
-
-                  {/* Access */}
-                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
-                    <td style={{
-                      padding: '28px 0',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: '#2E8B98',
-                      verticalAlign: 'top',
-                    }}>
-                      {lang === 'ja' ? 'アクセス' : '公司地址'}
-                    </td>
-                    <td style={{
-                      padding: '28px 0 28px 32px',
-                      fontSize: '16px',
-                      color: '#2C3E50',
-                      lineHeight: 1.8,
-                    }}>
-                      {lang === 'ja' ? t.about.address : t.about.addressEn}
-                    </td>
-                  </tr>
-
-                   {/* Business Guide */}
-                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
-                    <td style={{
-                      padding: '28px 0',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: '#2E8B98',
-                      verticalAlign: 'top',
-                    }}>
-                      {lang === 'ja' ? '事業案内' : '业务介绍'}
-                    </td>
-                    <td style={{
-                      padding: '28px 0 28px 32px',
-                      fontSize: '16px',
-                      color: '#2C3E50',
-                      lineHeight: 1.8,
-                    }}>
-                      {lang === 'ja' ? '日中間の国際物流サービス全般' : '中日国际物流服务全般'}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Right Column: Images */}
-            <div style={{
-              flex: '0 0 300px',
-              maxWidth: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px'
-            }}>
-              <div style={{
-                overflow: 'hidden',
-                borderRadius: '8px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                height: '200px',
-              }}>
-                <img 
-                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/Front.jpg" 
-                  alt="Building Front"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                    transition: 'transform 0.5s ease',
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                />
-              </div>
-              <div style={{
-                overflow: 'hidden',
-                borderRadius: '8px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                height: '200px',
-              }}>
-                <img 
-                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/office.jpg" 
-                  alt="Office Interior"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                    transition: 'transform 0.5s ease',
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section - 数据展示区块 */}
-      <section 
-        ref={statsSection.ref}
-        style={{
-          background: '#F5F7FA',
-          padding: '100px 24px',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        
-        <div style={{
-          maxWidth: '1320px',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 1,
-        }}>
-          {/* Stats Cards - 4项数据，2列×2行 */}
-          <div className="fade-in-delay-4 stats-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '40px',
-            maxWidth: '900px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}>
-            {[
-              { key: 'area', countHook: area, isNumber: true },
-              { key: 'delivery', countHook: delivery, isNumber: true },
-              { key: 'turnover', countHook: turnover, isNumber: true },
-              { key: 'shipments', countHook: shipments, isNumber: true },
-            ].map((stat, i) => {
-              const statData = t.stats[stat.key];
-              // useCountUp 返回 { count, ref }
-              // 当statsSection可见时，使用count值；如果count为0但section可见，直接显示最终值
-              const targetValues = {
-                area: 28000,
-                delivery: 99.8,
-                turnover: 2,
-                shipments: 38000
-              };
-              const displayCount = statsSection.isVisible ? 
-                (stat.countHook.count > 0 ? stat.countHook.count : targetValues[stat.key]) : 0;
-              return (
-                <div key={stat.key} ref={stat.countHook.ref} className="stat-card" style={{
-                  background: 'white',
-                  borderRadius: '16px',
-                  padding: '32px',
-                  border: '1px solid #E8ECF0',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                  transition: 'all 0.3s ease',
-                  textAlign: 'center',
-                }}>
-                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>
-                    {statData.icon}
-                  </div>
-                  <div style={{ fontSize: 'clamp(40px, 5vw, 56px)', fontWeight: 700, color: '#1A3A52', lineHeight: 1 }}>
-                    {stat.isNumber ? displayCount.toLocaleString() : statData.value}
-                    <span style={{ fontSize: 'clamp(20px, 2.5vw, 24px)', marginLeft: '4px' }}>
-                      {statData.unit}
-                    </span>
-                  </div>
-                  <div style={{ color: '#7F8C9A', fontSize: '16px', marginTop: '12px' }}>
-                    {statData.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section 
-        ref={timelineSection.ref}
-        style={{
-          background: 'white',
-          padding: '100px 24px',
-          position: 'relative',
-        }}
-      >
-        <div style={{
-          maxWidth: '1320px',
-          margin: '0 auto',
-        }}>
-          {/* Section Header */}
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '60px',
-            opacity: timelineSection.isVisible ? 1 : 0,
-            transform: timelineSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.8s ease',
-          }}>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 40px)',
-              fontWeight: 700,
-              color: '#1A3A52',
-              marginBottom: '8px',
-            }}>
-              {t.timeline.title}
-            </h2>
-            <p style={{
-              fontSize: '18px',
-              color: '#7F8C9A',
-              fontFamily: '"Playfair Display", serif',
-              fontStyle: 'italic',
-              fontWeight: 700,
-              letterSpacing: '0.5px',
-            }}>
-              {t.timeline.subtitle}
-            </p>
-          </div>
-
-          {/* Timeline */}
-          <div style={{
-            position: 'relative',
-            maxWidth: '800px',
-            margin: '0 auto',
-          }}>
-            {/* Timeline Line */}
-            <div className="timeline-line" style={{
-              position: 'absolute',
-              left: '50%',
-              top: 0,
-              bottom: 0,
-              width: '4px',
-              background: 'linear-gradient(180deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
-              transform: 'translateX(-50%)',
-              borderRadius: '2px',
-              opacity: timelineSection.isVisible ? 1 : 0,
-              transition: 'all 1s ease 0.3s',
-            }} />
-
-            {/* Timeline Items */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '60px',
-              position: 'relative',
-            }}>
-              {t.timeline.milestones.map((milestone, i) => (
-                <div
-                  key={i}
-                  className="timeline-item"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '40px',
-                    position: 'relative',
-                    opacity: timelineSection.isVisible ? 1 : 0,
-                    transform: timelineSection.isVisible ? 'translateX(0)' : (i % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)'),
-                    transition: 'all 0.8s ease',
-                    transitionDelay: `${i * 0.2}s`,
-                  }}
-                >
-                  {/* Left Content (Even) */}
-                  {i % 2 === 0 && (
-                    <>
-                      <div className="timeline-content-left" style={{
-                        flex: 1,
-                        textAlign: 'right',
-                      }}>
-                        <div style={{
-                          background: 'white',
-                          borderRadius: '16px',
-                          padding: '32px',
-                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                          border: '2px solid #E8ECF0',
-                          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                          cursor: 'pointer',
-                        }}>
-                          <div style={{
-                            fontSize: '14px',
-                            color: '#FF8C00',
-                            fontWeight: 600,
-                            marginBottom: '8px',
-                          }}>
-                            {milestone.date}
-                          </div>
-                          <h3 style={{
-                            fontSize: '24px',
-                            fontWeight: 700,
-                            color: '#1A3A52',
-                            marginBottom: '8px',
-                          }}>
-                            {milestone.title}
-                          </h3>
-                          <p style={{
-                            fontSize: '14px',
-                            color: '#7F8C9A',
-                            marginBottom: '4px',
-                            fontFamily: '"Playfair Display", serif',
-                            fontStyle: 'italic',
-                            fontWeight: 700,
-                            letterSpacing: '0.5px',
-                          }}>
-                            {milestone.titleEn}
-                          </p>
-                          <p style={{
-                            fontSize: '14px',
-                            color: '#4B5563',
-                            lineHeight: 1.6,
-                          }}>
-                            {milestone.desc}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Timeline Dot */}
-                      <div className="timeline-dot" style={{
-                        width: '20px',
-                        height: '20px',
-                        borderRadius: '50%',
-                        background: i === 0 ? '#FF8C00' : '#1A3A52',
-                        border: '4px solid white',
-                        boxShadow: '0 0 0 4px rgba(26,58,82,0.1)',
-                        flexShrink: 0,
-                        zIndex: 1,
-                      }} />
-
-                      {/* Right Spacer (Even) */}
-                      <div className="timeline-spacer" style={{ flex: 1 }} />
-                    </>
-                  )}
-
-                  {/* Right Content (Odd) */}
-                  {i % 2 === 1 && (
-                    <>
-                      {/* Left Spacer (Odd) */}
-                      <div className="timeline-spacer" style={{ flex: 1 }} />
-
-                      {/* Timeline Dot */}
-                      <div className="timeline-dot" style={{
-                        width: '20px',
-                        height: '20px',
-                        borderRadius: '50%',
-                        background: i === 1 ? '#1A3A52' : '#FF8C00',
-                        border: '4px solid white',
-                        boxShadow: '0 0 0 4px rgba(26,58,82,0.1)',
-                        flexShrink: 0,
-                        zIndex: 1,
-                      }} />
-
-                      <div className="timeline-content-right" style={{
-                        flex: 1,
-                        textAlign: 'left',
-                      }}>
-                        <div style={{
-                          background: 'white',
-                          borderRadius: '16px',
-                          padding: '32px',
-                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                          border: '2px solid #E8ECF0',
-                          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                          cursor: 'pointer',
-                        }}>
-                          <div style={{
-                            fontSize: '14px',
-                            color: '#1A3A52',
-                            fontWeight: 600,
-                            marginBottom: '8px',
-                          }}>
-                            {milestone.date}
-                          </div>
-                          <h3 style={{
-                            fontSize: '24px',
-                            fontWeight: 700,
-                            color: '#1A3A52',
-                            marginBottom: '8px',
-                          }}>
-                            {milestone.title}
-                          </h3>
-                          <p style={{
-                            fontSize: '14px',
-                            color: '#7F8C9A',
-                            marginBottom: '4px',
-                            fontFamily: '"Playfair Display", serif',
-                            fontStyle: 'italic',
-                            fontWeight: 700,
-                            letterSpacing: '0.5px',
-                          }}>
-                            {milestone.titleEn}
-                          </p>
-                          <p style={{
-                            fontSize: '14px',
-                            color: '#4B5563',
-                            lineHeight: 1.6,
-                          }}>
-                            {milestone.desc}
-                          </p>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Twin Hub Section */}
       <section 
         ref={warehouseSection.ref}
@@ -2638,7 +2110,533 @@ function ANSHomepage() {
         </div>
       </section>
 
+      {/* Timeline Section */}
+      <section 
+        ref={timelineSection.ref}
+        style={{
+          background: 'white',
+          padding: '100px 24px',
+          position: 'relative',
+        }}
+      >
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+        }}>
+          {/* Section Header */}
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '60px',
+            opacity: timelineSection.isVisible ? 1 : 0,
+            transform: timelineSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 700,
+              color: '#1A3A52',
+              marginBottom: '8px',
+            }}>
+              {t.timeline.title}
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#7F8C9A',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
+            }}>
+              {t.timeline.subtitle}
+            </p>
+          </div>
 
+          {/* Timeline */}
+          <div style={{
+            position: 'relative',
+            maxWidth: '800px',
+            margin: '0 auto',
+          }}>
+            {/* Timeline Line */}
+            <div className="timeline-line" style={{
+              position: 'absolute',
+              left: '50%',
+              top: 0,
+              bottom: 0,
+              width: '4px',
+              background: 'linear-gradient(180deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+              transform: 'translateX(-50%)',
+              borderRadius: '2px',
+              opacity: timelineSection.isVisible ? 1 : 0,
+              transition: 'all 1s ease 0.3s',
+            }} />
+
+            {/* Timeline Items */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '60px',
+              position: 'relative',
+            }}>
+              {t.timeline.milestones.map((milestone, i) => (
+                <div
+                  key={i}
+                  className="timeline-item"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '40px',
+                    position: 'relative',
+                    opacity: timelineSection.isVisible ? 1 : 0,
+                    transform: timelineSection.isVisible ? 'translateX(0)' : (i % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)'),
+                    transition: 'all 0.8s ease',
+                    transitionDelay: `${i * 0.2}s`,
+                  }}
+                >
+                  {/* Left Content (Even) */}
+                  {i % 2 === 0 && (
+                    <>
+                      <div className="timeline-content-left" style={{
+                        flex: 1,
+                        textAlign: 'right',
+                      }}>
+                        <div style={{
+                          background: 'white',
+                          borderRadius: '16px',
+                          padding: '32px',
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                          border: '2px solid #E8ECF0',
+                          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                          cursor: 'pointer',
+                        }}>
+                          <div style={{
+                            fontSize: '14px',
+                            color: '#FF8C00',
+                            fontWeight: 600,
+                            marginBottom: '8px',
+                          }}>
+                            {milestone.date}
+                          </div>
+                          <h3 style={{
+                            fontSize: '24px',
+                            fontWeight: 700,
+                            color: '#1A3A52',
+                            marginBottom: '8px',
+                          }}>
+                            {milestone.title}
+                          </h3>
+                          <p style={{
+                            fontSize: '14px',
+                            color: '#7F8C9A',
+                            marginBottom: '4px',
+                            fontFamily: '"Playfair Display", serif',
+                            fontStyle: 'italic',
+                            fontWeight: 700,
+                            letterSpacing: '0.5px',
+                          }}>
+                            {milestone.titleEn}
+                          </p>
+                          <p style={{
+                            fontSize: '14px',
+                            color: '#4B5563',
+                            lineHeight: 1.6,
+                          }}>
+                            {milestone.desc}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Timeline Dot */}
+                      <div className="timeline-dot" style={{
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '50%',
+                        background: i === 0 ? '#FF8C00' : '#1A3A52',
+                        border: '4px solid white',
+                        boxShadow: '0 0 0 4px rgba(26,58,82,0.1)',
+                        flexShrink: 0,
+                        zIndex: 1,
+                      }} />
+
+                      {/* Right Spacer (Even) */}
+                      <div className="timeline-spacer" style={{ flex: 1 }} />
+                    </>
+                  )}
+
+                  {/* Right Content (Odd) */}
+                  {i % 2 === 1 && (
+                    <>
+                      {/* Left Spacer (Odd) */}
+                      <div className="timeline-spacer" style={{ flex: 1 }} />
+
+                      {/* Timeline Dot */}
+                      <div className="timeline-dot" style={{
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '50%',
+                        background: i === 1 ? '#1A3A52' : '#FF8C00',
+                        border: '4px solid white',
+                        boxShadow: '0 0 0 4px rgba(26,58,82,0.1)',
+                        flexShrink: 0,
+                        zIndex: 1,
+                      }} />
+
+                      <div className="timeline-content-right" style={{
+                        flex: 1,
+                        textAlign: 'left',
+                      }}>
+                        <div style={{
+                          background: 'white',
+                          borderRadius: '16px',
+                          padding: '32px',
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                          border: '2px solid #E8ECF0',
+                          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                          cursor: 'pointer',
+                        }}>
+                          <div style={{
+                            fontSize: '14px',
+                            color: '#1A3A52',
+                            fontWeight: 600,
+                            marginBottom: '8px',
+                          }}>
+                            {milestone.date}
+                          </div>
+                          <h3 style={{
+                            fontSize: '24px',
+                            fontWeight: 700,
+                            color: '#1A3A52',
+                            marginBottom: '8px',
+                          }}>
+                            {milestone.title}
+                          </h3>
+                          <p style={{
+                            fontSize: '14px',
+                            color: '#7F8C9A',
+                            marginBottom: '4px',
+                            fontFamily: '"Playfair Display", serif',
+                            fontStyle: 'italic',
+                            fontWeight: 700,
+                            letterSpacing: '0.5px',
+                          }}>
+                            {milestone.titleEn}
+                          </p>
+                          <p style={{
+                            fontSize: '14px',
+                            color: '#4B5563',
+                            lineHeight: 1.6,
+                          }}>
+                            {milestone.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section - 公司概况 */}
+      <section 
+        ref={aboutSection.ref}
+        id="about"
+        style={{
+          background: 'white',
+          padding: '100px 24px',
+        }}
+      >
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+        }}>
+          {/* Section Header */}
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '60px',
+            opacity: aboutSection.isVisible ? 1 : 0,
+            transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 700,
+              color: '#1A3A52',
+              marginBottom: '8px',
+            }}>
+              {t.about.title}
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: '#7F8C9A',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
+            }}>
+              {t.about.subtitle}
+            </p>
+          </div>
+
+          {/* Company Info Section Container */}
+          <div style={{
+            maxWidth: '1000px',
+            margin: '0 auto',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '40px',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            opacity: aboutSection.isVisible ? 1 : 0,
+            transform: aboutSection.isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease',
+          }}>
+            {/* Left Column: Info List */}
+            <div style={{
+              flex: '1 1 500px',
+              minWidth: '300px',
+            }}>
+              <table style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+              }}>
+                <tbody>
+                  {/* Company Name */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '28px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      width: '30%',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '企業名' : '企业名称'}
+                    </td>
+                    <td style={{
+                      padding: '28px 0 28px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.8,
+                      whiteSpace: 'pre-line',
+                    }}>
+                      {lang === 'ja' ? 'Answer Supply Chain Co., Ltd.\nアンササプライチェーン株式会社' : 'Answer Supply Chain Co., Ltd.\nAnswer Supply Chain Co., Ltd.'}
+                    </td>
+                  </tr>
+
+                  {/* Established */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '28px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '設立年月日' : '成立时间'}
+                    </td>
+                    <td style={{
+                      padding: '28px 0 28px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.8,
+                    }}>
+                      {lang === 'ja' ? t.about.established : t.about.establishedEn}
+                    </td>
+                  </tr>
+
+                  {/* Capital */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '28px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '資本金' : '资本金'}
+                    </td>
+                    <td style={{
+                      padding: '28px 0 28px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.8,
+                    }}>
+                      {lang === 'ja' ? t.about.capital : t.about.capitalEn}
+                    </td>
+                  </tr>
+
+                  {/* Access */}
+                  <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '28px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? 'アクセス' : '公司地址'}
+                    </td>
+                    <td style={{
+                      padding: '28px 0 28px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.8,
+                    }}>
+                      {lang === 'ja' ? t.about.address : t.about.addressEn}
+                    </td>
+                  </tr>
+
+                   {/* Business Guide */}
+                   <tr style={{ borderBottom: '1px solid #E8ECF0' }}>
+                    <td style={{
+                      padding: '28px 0',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#2E8B98',
+                      verticalAlign: 'top',
+                    }}>
+                      {lang === 'ja' ? '事業案内' : '业务介绍'}
+                    </td>
+                    <td style={{
+                      padding: '28px 0 28px 32px',
+                      fontSize: '16px',
+                      color: '#2C3E50',
+                      lineHeight: 1.8,
+                    }}>
+                      {lang === 'ja' ? '日中間の国際物流サービス全般' : '中日国际物流服务全般'}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Right Column: Images */}
+            <div style={{
+              flex: '0 0 300px',
+              maxWidth: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
+            }}>
+              <div style={{
+                overflow: 'hidden',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                height: '200px',
+              }}>
+                <img 
+                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/Front.jpg" 
+                  alt="Building Front"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
+              </div>
+              <div style={{
+                overflow: 'hidden',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                height: '200px',
+              }}>
+                <img 
+                  src="https://vxoacbydmzmjvnhvwjli.supabase.co/storage/v1/object/public/company%20Infomation/office.jpg" 
+                  alt="Office Interior"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section - 数据展示区块 */}
+      <section 
+        ref={statsSection.ref}
+        style={{
+          background: '#F5F7FA',
+          padding: '100px 24px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        
+        <div style={{
+          maxWidth: '1320px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
+        }}>
+          {/* Stats Cards - 4项数据，2列×2行 */}
+          <div className="fade-in-delay-4 stats-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '40px',
+            maxWidth: '900px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}>
+            {[
+              { key: 'area', countHook: area, isNumber: true },
+              { key: 'delivery', countHook: delivery, isNumber: true },
+              { key: 'turnover', countHook: turnover, isNumber: true },
+              { key: 'shipments', countHook: shipments, isNumber: true },
+            ].map((stat, i) => {
+              const statData = t.stats[stat.key];
+              // useCountUp 返回 { count, ref }
+              // 当statsSection可见时，使用count值；如果count为0但section可见，直接显示最终值
+              const targetValues = {
+                area: 28000,
+                delivery: 99.8,
+                turnover: 2,
+                shipments: 38000
+              };
+              const displayCount = statsSection.isVisible ? 
+                (stat.countHook.count > 0 ? stat.countHook.count : targetValues[stat.key]) : 0;
+              return (
+                <div key={stat.key} ref={stat.countHook.ref} className="stat-card" style={{
+                  background: 'white',
+                  borderRadius: '16px',
+                  padding: '32px',
+                  border: '1px solid #E8ECF0',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center',
+                }}>
+                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>
+                    {statData.icon}
+                  </div>
+                  <div style={{ fontSize: 'clamp(40px, 5vw, 56px)', fontWeight: 700, color: '#1A3A52', lineHeight: 1 }}>
+                    {stat.isNumber ? displayCount.toLocaleString() : statData.value}
+                    <span style={{ fontSize: 'clamp(20px, 2.5vw, 24px)', marginLeft: '4px' }}>
+                      {statData.unit}
+                    </span>
+                  </div>
+                  <div style={{ color: '#7F8C9A', fontSize: '16px', marginTop: '12px' }}>
+                    {statData.label}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* Message Section - 社长致辞 */}
       <section 
