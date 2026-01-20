@@ -3790,32 +3790,48 @@ function ANSHomepage() {
                     // THS系统 - 直接跳转到登录页面
                     window.location.href = thsUrl;
                   } else {
-                    // 台账管理 - 提交表单到外部WMS
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = 'https://thscus.ans-scm.com/admin_hwc/privilege.php';
+                    // 台账管理 - 使用 Supabase Auth 登录
+                    setIsSubmitting(true);
                     
-                    // 必须的隐藏字段 act=signin
-                    const actInput = document.createElement('input');
-                    actInput.type = 'hidden';
-                    actInput.name = 'act';
-                    actInput.value = 'signin';
-                    form.appendChild(actInput);
-  
-                    const usernameInput = document.createElement('input');
-                    usernameInput.type = 'hidden';
-                    usernameInput.name = 'username'; // 确认字段名为 username
-                    usernameInput.value = loginData.id;
-                    form.appendChild(usernameInput);
-                    
-                    const passwordInput = document.createElement('input');
-                    passwordInput.type = 'hidden';
-                    passwordInput.name = 'password'; // 确认字段名为 password
-                    passwordInput.value = loginData.password;
-                    form.appendChild(passwordInput);
-                    
-                    document.body.appendChild(form);
-                    form.submit();
+                    fetch('https://jstqorjesyjasxurkjvg.supabase.co/auth/v1/token?grant_type=password', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
+                      },
+                      body: JSON.stringify({
+                        email: loginData.id, // 使用输入的ID作为邮箱
+                        password: loginData.password
+                      })
+                    })
+                    .then(response => {
+                      if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error_description || '登录失败'); });
+                      }
+                      return response.json();
+                    })
+                    .then(data => {
+                      // 登录成功，构造跳转 URL
+                      // 将 Token 信息通过 URL Hash 传递
+                      // 注意：这种方式依赖于目标页面能够解析 Hash 中的 Token
+                      // 格式参考 Supabase Magic Link
+                      const params = new URLSearchParams();
+                      params.append('access_token', data.access_token);
+                      params.append('refresh_token', data.refresh_token);
+                      params.append('expires_in', data.expires_in);
+                      params.append('token_type', data.token_type);
+                      params.append('type', 'recovery'); // 尝试模拟 recovery 类型以触发 session 恢复
+                      
+                      const targetUrl = `https://thsadmin.ans-scm.com/app.html#${params.toString()}`;
+                      window.location.href = targetUrl;
+                    })
+                    .catch(error => {
+                      console.error('Login error:', error);
+                      alert(lang === 'ja' ? 'ログインに失敗しました。IDとパスワードを確認してください。' : '登录失败，请检查账号和密码。');
+                    })
+                    .finally(() => {
+                      setIsSubmitting(false);
+                    });
                   }
                 }
               }}>
@@ -4050,4 +4066,3 @@ function ANSHomepage() {
 }
 
 export default ANSHomepage;
-实际调用方式是通过 Supabase JavaScript SDK：
