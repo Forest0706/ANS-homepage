@@ -3790,8 +3790,32 @@ function ANSHomepage() {
                     // THS系统 - 直接跳转到登录页面
                     window.location.href = thsUrl;
                   } else {
-                    // 台帳管理 - 需要ID和密码（此处为模拟，实际跳转到WMS）
-                    window.location.href = wmsUrl;
+                    // 台账管理 - 提交表单到外部WMS
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = 'https://thscus.ans-scm.com/admin_hwc/privilege.php';
+                    
+                    // 必须的隐藏字段 act=signin
+                    const actInput = document.createElement('input');
+                    actInput.type = 'hidden';
+                    actInput.name = 'act';
+                    actInput.value = 'signin';
+                    form.appendChild(actInput);
+  
+                    const usernameInput = document.createElement('input');
+                    usernameInput.type = 'hidden';
+                    usernameInput.name = 'username'; // 确认字段名为 username
+                    usernameInput.value = loginData.id;
+                    form.appendChild(usernameInput);
+                    
+                    const passwordInput = document.createElement('input');
+                    passwordInput.type = 'hidden';
+                    passwordInput.name = 'password'; // 确认字段名为 password
+                    passwordInput.value = loginData.password;
+                    form.appendChild(passwordInput);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
                   }
                 }
               }}>
@@ -4026,3 +4050,4 @@ function ANSHomepage() {
 }
 
 export default ANSHomepage;
+实际调用方式是通过 Supabase JavaScript SDK：
