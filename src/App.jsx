@@ -3790,48 +3790,8 @@ function ANSHomepage() {
                     // THS系统 - 直接跳转到登录页面
                     window.location.href = thsUrl;
                   } else {
-                    // 台账管理 - 使用 Supabase Auth 登录
-                    setIsSubmitting(true);
-                    
-                    fetch('https://jstqorjesyjasxurkjvg.supabase.co/auth/v1/token?grant_type=password', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
-                      },
-                      body: JSON.stringify({
-                        email: loginData.id, // 使用输入的ID作为邮箱
-                        password: loginData.password
-                      })
-                    })
-                    .then(response => {
-                      if (!response.ok) {
-                        return response.json().then(err => { throw new Error(err.error_description || '登录失败'); });
-                      }
-                      return response.json();
-                    })
-                    .then(data => {
-                      // 登录成功，构造跳转 URL
-                      // 将 Token 信息通过 URL Hash 传递
-                      // 注意：这种方式依赖于目标页面能够解析 Hash 中的 Token
-                      // 格式参考 Supabase Magic Link
-                      const params = new URLSearchParams();
-                      params.append('access_token', data.access_token);
-                      params.append('refresh_token', data.refresh_token);
-                      params.append('expires_in', data.expires_in);
-                      params.append('token_type', data.token_type);
-                      params.append('type', 'recovery'); // 尝试模拟 recovery 类型以触发 session 恢复
-                      
-                      const targetUrl = `https://thsadmin.ans-scm.com/app.html#${params.toString()}`;
-                      window.location.href = targetUrl;
-                    })
-                    .catch(error => {
-                      console.error('Login error:', error);
-                      alert(lang === 'ja' ? 'ログインに失敗しました。IDとパスワードを確認してください。' : '登录失败，请检查账号和密码。');
-                    })
-                    .finally(() => {
-                      setIsSubmitting(false);
-                    });
+                    // 台帳管理 - 需要ID和密码（此处为模拟，实际跳转到WMS）
+                    window.location.href = wmsUrl;
                   }
                 }
               }}>
