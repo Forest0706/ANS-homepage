@@ -3975,11 +3975,15 @@ function ANSHomepage() {
                       color: '#2C3E50',
                       marginBottom: '8px',
                     }}>
-                      {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
+                      {employeeSystem === 'ths'
+                        ? (lang === 'ja' ? '管理者ID' : '管理员ID')
+                        : 'ID'
+                      } <span style={{ color: '#FF8C00' }}>*</span>
                     </label>
                     <input
-                      type="text"
+                      type={employeeSystem === 'ths' ? 'number' : 'text'}
                       required
+                      placeholder={employeeSystem === 'ths' ? (lang === 'ja' ? '数字IDを入力' : '请输入数字ID') : ''}
                       value={loginData.id}
                       onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
                       style={{
