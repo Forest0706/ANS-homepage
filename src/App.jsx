@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import md5 from 'md5';
 
 // 数字递增动画Hook
 const useCountUp = (end, duration = 2000, startOnView = true) => {
@@ -3787,8 +3788,19 @@ function ANSHomepage() {
                 } else {
                   // 员工系统 - 根据选择跳转到THS或台账管理
                   if (employeeSystem === 'ths') {
-                    // THS系统 - 直接跳转到登录页面
-                    window.location.href = thsUrl;
+                    // THS系统 - 自动登录
+                    const adminId = loginData.id;
+                    if (!adminId) {
+                      alert(lang === 'ja' ? '管理者IDを入力してください。' : '请输入管理员ID。');
+                      return;
+                    }
+                    const now = new Date();
+                    const dateStr = now.getFullYear().toString()
+                      + String(now.getMonth() + 1).padStart(2, '0')
+                      + String(now.getDate()).padStart(2, '0')
+                      + String(now.getHours()).padStart(2, '0');
+                    const userMd = md5('HWC' + dateStr + adminId);
+                    window.location.href = `${thsUrl}/index.php?user_md=${userMd}&admin_id=${adminId}`;
                   } else {
                     // 台账管理 - 使用 Supabase Auth 登录
                     setIsSubmitting(true);
@@ -3953,8 +3965,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* ID Input - 仅台账管理系统显示 */}
-                {userType === 'employee' && employeeSystem === 'ledger' && (
+                {/* ID Input - 员工系统显示（THS和台账管理） */}
+                {userType === 'employee' && (
                   <div style={{ marginBottom: '20px' }}>
                     <label style={{
                       display: 'block',
@@ -4051,7 +4063,7 @@ function ANSHomepage() {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  {(userType === 'user' || (userType === 'employee' && employeeSystem === 'ths'))
+                  {userType === 'user'
                     ? (lang === 'ja' ? 'ログインページへ' : '前往登录页面')
                     : (lang === 'ja' ? 'ログイン' : '登录')
                   }
