@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import md5 from 'md5';
 
 // 数字递增动画Hook
 const useCountUp = (end, duration = 2000, startOnView = true) => {
@@ -3788,19 +3787,25 @@ function ANSHomepage() {
                 } else {
                   // 员工系统 - 根据选择跳转到THS或台账管理
                   if (employeeSystem === 'ths') {
-                    // THS系统 - 自动登录
-                    const adminId = loginData.id;
-                    if (!adminId) {
-                      alert(lang === 'ja' ? '管理者IDを入力してください。' : '请输入管理员ID。');
+                    // THS系统 - 通过隐藏表单POST直接登录
+                    if (!loginData.id || !loginData.password) {
+                      alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入账号和密码。');
                       return;
                     }
-                    const now = new Date();
-                    const dateStr = now.getFullYear().toString()
-                      + String(now.getMonth() + 1).padStart(2, '0')
-                      + String(now.getDate()).padStart(2, '0')
-                      + String(now.getHours()).padStart(2, '0');
-                    const userMd = md5('HWC' + dateStr + adminId);
-                    window.location.href = `${thsUrl}/index.php?user_md=${userMd}&admin_id=${adminId}`;
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `${thsUrl}/index.php?act=login`;
+                    form.style.display = 'none';
+                    const fieldUser = document.createElement('input');
+                    fieldUser.name = 'user_name';
+                    fieldUser.value = loginData.id;
+                    form.appendChild(fieldUser);
+                    const fieldPass = document.createElement('input');
+                    fieldPass.name = 'user_pw';
+                    fieldPass.value = loginData.password;
+                    form.appendChild(fieldPass);
+                    document.body.appendChild(form);
+                    form.submit();
                   } else {
                     // 台账管理 - 使用 Supabase Auth 登录
                     setIsSubmitting(true);
@@ -3975,15 +3980,11 @@ function ANSHomepage() {
                       color: '#2C3E50',
                       marginBottom: '8px',
                     }}>
-                      {employeeSystem === 'ths'
-                        ? (lang === 'ja' ? '管理者ID' : '管理员ID')
-                        : 'ID'
-                      } <span style={{ color: '#FF8C00' }}>*</span>
+                      ID <span style={{ color: '#FF8C00' }}>*</span>
                     </label>
                     <input
-                      type={employeeSystem === 'ths' ? 'number' : 'text'}
+                      type="text"
                       required
-                      placeholder={employeeSystem === 'ths' ? (lang === 'ja' ? '数字IDを入力' : '请输入数字ID') : ''}
                       value={loginData.id}
                       onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
                       style={{
@@ -4005,8 +4006,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* Password Input - 仅台账管理系统显示 */}
-                {userType === 'employee' && employeeSystem === 'ledger' && (
+                {/* Password Input - 员工系统显示（THS和台账管理） */}
+                {userType === 'employee' && (
                   <div style={{ marginBottom: '24px' }}>
                     <label style={{
                       display: 'block',
