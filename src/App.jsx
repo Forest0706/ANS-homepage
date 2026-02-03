@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import md5 from 'md5';
 
 // 数字递增动画Hook
 const useCountUp = (end, duration = 2000, startOnView = true) => {
@@ -3788,19 +3787,31 @@ function ANSHomepage() {
                 } else {
                   // 员工系统 - 根据选择跳转到THS或台账管理
                   if (employeeSystem === 'ths') {
-                    // THS系统 - 自动登录
-                    const adminId = loginData.id;
-                    if (!adminId) {
-                      alert(lang === 'ja' ? '管理者IDを入力してください。' : '请输入管理员ID。');
+                    // THS系统 - 与台账管理同一逻辑：输入 ID 和密码后直接进入系统（POST 到 THS 登录页，不再跳转第三方）
+                    const account = loginData.id?.trim();
+                    const password = loginData.password;
+                    if (!account || !password) {
+                      alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
                       return;
                     }
-                    const now = new Date();
-                    const dateStr = now.getFullYear().toString()
-                      + String(now.getMonth() + 1).padStart(2, '0')
-                      + String(now.getDate()).padStart(2, '0')
-                      + String(now.getHours()).padStart(2, '0');
-                    const userMd = md5('HWC' + dateStr + adminId);
-                    window.location.href = `${thsUrl}/index.php?user_md=${userMd}&admin_id=${adminId}`;
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `${thsUrl}/privilege.php?act=login`;
+                    form.style.display = 'none';
+                    // 与 thscus.ans-scm.com/admin_hwc/privilege.php 登录页一致（账号/密码）。若后端使用 admin_id、pwd 等字段名，可在此调整
+                    const fields = [
+                      { name: 'account', value: account },
+                      { name: 'password', value: password }
+                    ];
+                    fields.forEach(({ name, value }) => {
+                      const input = document.createElement('input');
+                      input.type = 'hidden';
+                      input.name = name;
+                      input.value = value;
+                      form.appendChild(input);
+                    });
+                    document.body.appendChild(form);
+                    form.submit();
                   } else {
                     // 台账管理 - 使用 Supabase Auth 登录
                     setIsSubmitting(true);
@@ -4001,8 +4012,8 @@ function ANSHomepage() {
                   </div>
                 )}
 
-                {/* Password Input - 仅台账管理系统显示 */}
-                {userType === 'employee' && employeeSystem === 'ledger' && (
+                {/* Password Input - 员工系统（THS 与台账管理）均显示，与台账管理同一逻辑 */}
+                {userType === 'employee' && (
                   <div style={{ marginBottom: '24px' }}>
                     <label style={{
                       display: 'block',
