@@ -3489,7 +3489,9 @@ function ANSHomepage() {
                       color: '#2C3E50',
                       marginBottom: '8px',
                     }}>
-                      {lang === 'ja' ? 'お名前' : '姓名'} <span style={{ color: '#FF8C00' }}>*</span>
+                      {modalType === 'recruit'
+                        ? (lang === 'ja' ? '氏名' : '姓名')
+                        : (lang === 'ja' ? 'お名前' : '姓名')} <span style={{ color: '#FF8C00' }}>*</span>
                     </label>
                     <input
                       type="text"
@@ -3579,6 +3581,7 @@ function ANSHomepage() {
                     />
                   </div>
 
+                  {modalType !== 'recruit' && (
                   <div>
                     <label style={{
                       display: 'block',
@@ -3610,6 +3613,7 @@ function ANSHomepage() {
                       }}
                     />
                   </div>
+                  )}
 
                   <div>
                     <label style={{

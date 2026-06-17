@@ -32,10 +32,10 @@ export default async function handler(req, res) {
     const emailBody = `
 ${type === 'recruit' ? '【採用応募】' : '【お問い合わせ】'}
 
-お名前: ${name}
+${type === 'recruit' ? '氏名' : 'お名前'}: ${name}
 メールアドレス: ${email}
 電話番号: ${phone || '未入力'}
-会社名: ${company || '未入力'}
+${type !== 'recruit' ? `会社名: ${company || '未入力'}\n` : ''}
 ${type === 'recruit' ? '応募ポジション' : 'お問い合わせ内容'}: ${message}
 
 ---
