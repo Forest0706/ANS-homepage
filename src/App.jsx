@@ -673,6 +673,8 @@ function ANSHomepage() {
 
   const openLoginModal = () => {
     setUserType('user');
+    setEmployeeSystem('ths');
+    setLoginData({ id: '', password: '' });
     setLoginModalOpen(true);
   };
 
@@ -3786,16 +3788,14 @@ function ANSHomepage() {
               }}>
                 THS ログイン
               </h2>
-              {userType !== 'user' && (
-                <p style={{
-                  fontSize: '14px',
-                  color: '#7F8C9A',
-                  marginBottom: '32px',
-                  textAlign: 'center',
-                }}>
-                  {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
-                </p>
-              )}
+              <p style={{
+                fontSize: '14px',
+                color: '#7F8C9A',
+                marginBottom: userType === 'user' ? '16px' : '32px',
+                textAlign: 'center',
+              }}>
+                {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
+              </p>
 
               <form onSubmit={(e) => {
                 e.preventDefault();
@@ -4099,10 +4099,10 @@ function ANSHomepage() {
                       src={portalLoginUrl}
                       title="THS 顧客ログイン"
                       allow="clipboard-read; clipboard-write"
-                      scrolling="no"
+                      scrolling="auto"
                       style={{
                         width: '100%',
-                        height: '260px',
+                        height: '340px',
                         border: 'none',
                         display: 'block',
                       }}
