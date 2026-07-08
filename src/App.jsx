@@ -670,7 +670,6 @@ function ANSHomepage() {
 
   const openLoginModal = () => {
     setUserType('user');
-    setEmployeeSystem('ths');
     setLoginData({ id: '', password: '' });
     setLoginModalOpen(true);
   };
