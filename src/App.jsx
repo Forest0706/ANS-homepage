@@ -3729,7 +3729,7 @@ function ANSHomepage() {
           <div style={{
             background: 'white',
             borderRadius: '16px',
-            maxWidth: '560px',
+            maxWidth: userType === 'user' ? '480px' : '560px',
             width: '100%',
             position: 'relative',
             boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
@@ -3768,28 +3768,30 @@ function ANSHomepage() {
             </button>
 
             {/* Modal Content */}
-            <div style={{ padding: '40px' }}>
+            <div style={{ padding: userType === 'user' ? '24px 28px 20px' : '40px' }}>
               <h2 style={{
-                fontSize: '28px',
+                fontSize: userType === 'user' ? '22px' : '28px',
                 fontWeight: 700,
                 color: '#1A3A52',
-                marginBottom: '8px',
+                marginBottom: userType === 'user' ? '4px' : '8px',
                 textAlign: 'center',
               }}>
                 THS ログイン
               </h2>
-              <p style={{
-                fontSize: '14px',
-                color: '#7F8C9A',
-                marginBottom: '32px',
-                textAlign: 'center',
-              }}>
-                {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
-              </p>
+              {userType !== 'user' && (
+                <p style={{
+                  fontSize: '14px',
+                  color: '#7F8C9A',
+                  marginBottom: '32px',
+                  textAlign: 'center',
+                }}>
+                  {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
+                </p>
+              )}
 
               <div>
                 {/* User Type Selection */}
-                <div style={{ marginBottom: '24px' }}>
+                <div style={{ marginBottom: userType === 'user' ? '12px' : '24px' }}>
                   <label style={{
                     display: 'block',
                     fontSize: '14px',
@@ -3855,9 +3857,10 @@ function ANSHomepage() {
                       src={portalLoginUrl}
                       title="THS 顧客ログイン"
                       allow="clipboard-read; clipboard-write"
+                      scrolling="no"
                       style={{
                         width: '100%',
-                        height: '520px',
+                        height: '260px',
                         border: 'none',
                         display: 'block',
                       }}
