@@ -76,11 +76,6 @@ function ANSHomepage() {
   const [modalType, setModalType] = useState('consultation'); // 'consultation' or 'recruit'
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [userType, setUserType] = useState('user'); // 'user' or 'employee'
-  const [employeeSystem, setEmployeeSystem] = useState('ths'); // 'ths' or 'ledger'
-  const [loginData, setLoginData] = useState({
-    id: '',
-    password: ''
-  });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -96,12 +91,9 @@ function ANSHomepage() {
   
   // 域名配置 - 从环境变量获取，如果没有则使用默认值
   const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
-  // 客户端系统
-  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'https://thscus.ans-scm.com';
-  // 员工系统 - THS（勤怠・給与管理）
-  const thsUrl = import.meta.env.VITE_THS_URL || 'https://thscus.ans-scm.com/admin_hwc';
-  // 员工系统 - 台账管理
-  const wmsUrl = import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com';
+  // THS / 台账管理（认证均在 thsadmin 域完成；VITE_WMS_URL 仅替换域名）
+  const wmsUrl = (import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com').replace(/\/$/, '');
+  const portalLoginUrl = `${wmsUrl}/portal-login.html?embedded=1`;
   const emailDomain = domain;
 
   // 页面刷新后滚动到顶部
@@ -982,9 +974,8 @@ function ANSHomepage() {
           
           /* Process steps responsive */
           .process-steps {
-            flex-direction: column !important;
+            grid-template-columns: 1fr !important;
             gap: 32px !important;
-            align-items: center !important;
           }
           
           /* Service card image smaller on mobile */
@@ -1096,6 +1087,18 @@ function ANSHomepage() {
         
         .process-step:hover .step-number {
           transform: scale(1.1);
+        }
+
+        .process-step {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .recruit-card {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
         }
       `}</style>
 
@@ -2793,20 +2796,17 @@ function ANSHomepage() {
 
           {/* Process Steps - 4步横向流程 */}
           <div className="process-steps" style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '20px',
+            alignItems: 'stretch',
             position: 'relative',
-            flexWrap: 'wrap',
           }}>
             {t.process.steps.map((step, i) => (
               <div 
                 key={i}
                 className="process-step"
                 style={{
-                  flex: '1',
-                  minWidth: '200px',
                   background: 'white',
                   borderRadius: '16px',
                   padding: '32px',
@@ -2870,6 +2870,8 @@ function ANSHomepage() {
                   color: '#4B5563',
                   fontSize: '14px',
                   lineHeight: 1.6,
+                  flex: 1,
+                  minHeight: '45px',
                 }}>
                   {lang === 'ja' ? step.desc : (step.descZh || step.desc)}
                 </p>
@@ -2955,10 +2957,11 @@ function ANSHomepage() {
           {/* Job Cards */}
           <div className="recruit-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '32px',
             maxWidth: '1200px',
             margin: '0 auto',
+            alignItems: 'stretch',
           }}>
             {t.recruit.jobs.map((job, i) => (
               <div
@@ -3019,6 +3022,7 @@ function ANSHomepage() {
                 <div style={{
                   borderTop: '1px solid #E8ECF0',
                   paddingTop: '20px',
+                  flex: 1,
                 }}>
                   <h4 style={{
                     fontSize: '16px',
@@ -3044,6 +3048,7 @@ function ANSHomepage() {
                   </div>
                 </div>
 
+                <div style={{ marginTop: 'auto', paddingTop: '24px', width: '100%' }}>
                 <button
                   onClick={() => {
                   setModalType('recruit');
@@ -3051,7 +3056,6 @@ function ANSHomepage() {
                 }}
                   style={{
                     width: '100%',
-                    marginTop: '24px',
                     padding: '12px 24px',
                     background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
                     border: 'none',
@@ -3075,6 +3079,7 @@ function ANSHomepage() {
                 >
                   {lang === 'ja' ? '応募する' : '立即申请'}
                 </button>
+                </div>
               </div>
             ))}
           </div>
@@ -3724,7 +3729,7 @@ function ANSHomepage() {
           <div style={{
             background: 'white',
             borderRadius: '16px',
-            maxWidth: '480px',
+            maxWidth: '560px',
             width: '100%',
             position: 'relative',
             boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
@@ -3782,86 +3787,7 @@ function ANSHomepage() {
                 {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
               </p>
 
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                // 根据用户类型跳转到不同系统
-                if (userType === 'user') {
-                  // 用户登录 - 直接跳转到客户端系统登录页面
-                  window.location.href = `${adminUrl}/login.php?act=login`;
-                } else {
-                  // 员工系统 - 根据选择跳转到THS或台账管理
-                  if (employeeSystem === 'ths') {
-                    // THS系统 - 与台账管理同一逻辑：输入 ID 和密码后直接进入系统（POST 到 THS 登录页，不再跳转第三方）
-                    const account = loginData.id?.trim();
-                    const password = loginData.password;
-                    if (!account || !password) {
-                      alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
-                      return;
-                    }
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = `${thsUrl}/privilege.php?act=login`;
-                    form.style.display = 'none';
-                    // 与 thscus.ans-scm.com/admin_hwc/privilege.php 登录页一致（账号/密码）。若后端使用 admin_id、pwd 等字段名，可在此调整
-                    const fields = [
-                      { name: 'account', value: account },
-                      { name: 'password', value: password }
-                    ];
-                    fields.forEach(({ name, value }) => {
-                      const input = document.createElement('input');
-                      input.type = 'hidden';
-                      input.name = name;
-                      input.value = value;
-                      form.appendChild(input);
-                    });
-                    document.body.appendChild(form);
-                    form.submit();
-                  } else {
-                    // 台账管理 - 使用 Supabase Auth 登录
-                    setIsSubmitting(true);
-                    
-                    fetch('https://jstqorjesyjasxurkjvg.supabase.co/auth/v1/token?grant_type=password', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
-                      },
-                      body: JSON.stringify({
-                        email: loginData.id, // 使用输入的ID作为邮箱
-                        password: loginData.password
-                      })
-                    })
-                    .then(response => {
-                      if (!response.ok) {
-                        return response.json().then(err => { throw new Error(err.error_description || '登录失败'); });
-                      }
-                      return response.json();
-                    })
-                    .then(data => {
-                      // 登录成功，构造跳转 URL
-                      // 将 Token 信息通过 URL Hash 传递
-                      // 注意：这种方式依赖于目标页面能够解析 Hash 中的 Token
-                      // 格式参考 Supabase Magic Link
-                      const params = new URLSearchParams();
-                      params.append('access_token', data.access_token);
-                      params.append('refresh_token', data.refresh_token);
-                      params.append('expires_in', data.expires_in);
-                      params.append('token_type', data.token_type);
-                      params.append('type', 'recovery'); // 尝试模拟 recovery 类型以触发 session 恢复
-                      
-                      const targetUrl = `https://thsadmin.ans-scm.com/app.html#${params.toString()}`;
-                      window.location.href = targetUrl;
-                    })
-                    .catch(error => {
-                      console.error('Login error:', error);
-                      alert(lang === 'ja' ? 'ログインに失敗しました。IDとパスワードを確認してください。' : '登录失败，请检查账号和密码。');
-                    })
-                    .finally(() => {
-                      setIsSubmitting(false);
-                    });
-                  }
-                }
-              }}>
+              <div>
                 {/* User Type Selection */}
                 <div style={{ marginBottom: '24px' }}>
                   <label style={{
@@ -3897,7 +3823,9 @@ function ANSHomepage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setUserType('employee')}
+                      onClick={() => {
+                        window.location.href = `${wmsUrl}/index.html`;
+                      }}
                       style={{
                         flex: 1,
                         padding: '12px 24px',
@@ -3916,174 +3844,27 @@ function ANSHomepage() {
                   </div>
                 </div>
 
-                {/* Employee System Selection - 当选择员工时显示 */}
-                {userType === 'employee' && (
-                  <div style={{ marginBottom: '24px' }}>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#2C3E50',
-                      marginBottom: '12px',
-                    }}>
-                      {lang === 'ja' ? 'システム選択' : '系统选择'}
-                    </label>
-                    <div style={{
-                      display: 'flex',
-                      gap: '12px',
-                    }}>
-                      <button
-                        type="button"
-                        onClick={() => setEmployeeSystem('ths')}
-                        style={{
-                          flex: 1,
-                          padding: '12px 16px',
-                          border: `2px solid ${employeeSystem === 'ths' ? '#1A3A52' : '#E8ECF0'}`,
-                          borderRadius: '8px',
-                          background: employeeSystem === 'ths' ? '#F0F4F8' : 'white',
-                          color: employeeSystem === 'ths' ? '#1A3A52' : '#7F8C9A',
-                          fontSize: '13px',
-                          fontWeight: employeeSystem === 'ths' ? 600 : 500,
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                        }}
-                      >
-                        <div style={{ fontWeight: 600 }}>THS</div>
-                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                          {lang === 'ja' ? '在庫・入出荷管理' : '库存・出入库管理'}
-                        </div>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setEmployeeSystem('ledger')}
-                        style={{
-                          flex: 1,
-                          padding: '12px 16px',
-                          border: `2px solid ${employeeSystem === 'ledger' ? '#1A3A52' : '#E8ECF0'}`,
-                          borderRadius: '8px',
-                          background: employeeSystem === 'ledger' ? '#F0F4F8' : 'white',
-                          color: employeeSystem === 'ledger' ? '#1A3A52' : '#7F8C9A',
-                          fontSize: '13px',
-                          fontWeight: employeeSystem === 'ledger' ? 600 : 500,
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                        }}
-                      >
-                        <div style={{ fontWeight: 600 }}>
-                          {lang === 'ja' ? '台帳管理' : '台账管理'}
-                        </div>
-                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                          {lang === 'ja' ? '業務台帳管理' : '业务台账管理'}
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* ID Input - 员工系统显示（THS和台账管理） */}
-                {userType === 'employee' && (
-                  <div style={{ marginBottom: '20px' }}>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#2C3E50',
-                      marginBottom: '8px',
-                    }}>
-                      {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={loginData.id}
-                      onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '12px 16px',
-                        border: '2px solid #E8ECF0',
-                        borderRadius: '8px',
-                        fontSize: '14px',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = '#FF8C00';
-                        e.currentTarget.style.outline = 'none';
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '#E8ECF0';
-                      }}
-                    />
-                  </div>
-                )}
-
-                {/* Password Input - 员工系统（THS 与台账管理）均显示，与台账管理同一逻辑 */}
-                {userType === 'employee' && (
-                  <div style={{ marginBottom: '24px' }}>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#2C3E50',
-                      marginBottom: '8px',
-                    }}>
-                      {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
-                    </label>
-                    <input
-                      type="password"
-                      required
-                      value={loginData.password}
-                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '12px 16px',
-                        border: '2px solid #E8ECF0',
-                        borderRadius: '8px',
-                        fontSize: '14px',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = '#FF8C00';
-                        e.currentTarget.style.outline = 'none';
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '#E8ECF0';
-                      }}
-                    />
-                  </div>
-                )}
-
-                {/* Login Button */}
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '16px',
-                    background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
-                    border: 'none',
+                {/* 顧客认证在 thsadmin iframe 内完成；登录成功后 iframe 内 top 跳转门户（预期整页切到 thsadmin） */}
+                {userType === 'user' && (
+                  <div style={{
                     borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  {userType === 'user'
-                    ? (lang === 'ja' ? 'ログインページへ' : '前往登录页面')
-                    : (lang === 'ja' ? 'ログイン' : '登录')
-                  }
-                </button>
-              </form>
+                    overflow: 'hidden',
+                    border: '1px solid #E8ECF0',
+                  }}>
+                    <iframe
+                      src={portalLoginUrl}
+                      title="THS 顧客ログイン"
+                      allow="clipboard-read; clipboard-write"
+                      style={{
+                        width: '100%',
+                        height: '520px',
+                        border: 'none',
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
