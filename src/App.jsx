@@ -76,6 +76,11 @@ function ANSHomepage() {
   const [modalType, setModalType] = useState('consultation'); // 'consultation' or 'recruit'
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [userType, setUserType] = useState('user'); // 'user' or 'employee'
+  const [employeeSystem, setEmployeeSystem] = useState('ths'); // 'ths' or 'ledger'
+  const [loginData, setLoginData] = useState({
+    id: '',
+    password: ''
+  });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -91,7 +96,9 @@ function ANSHomepage() {
   
   // 域名配置 - 从环境变量获取，如果没有则使用默认值
   const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
-  // THS / 台账管理（认证均在 thsadmin 域完成；VITE_WMS_URL 仅替换域名）
+  // THS 员工系统（勤怠・在庫管理）
+  const thsUrl = import.meta.env.VITE_THS_URL || 'https://thscus.ans-scm.com/admin_hwc';
+  // 台账管理（认证在 thsadmin 域完成；VITE_WMS_URL 仅替换域名）
   const wmsUrl = (import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com').replace(/\/$/, '');
   const portalLoginUrl = `${wmsUrl}/portal-login.html?embedded=1`;
   const emailDomain = domain;
@@ -3789,7 +3796,79 @@ function ANSHomepage() {
                 </p>
               )}
 
-              <div>
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                if (userType !== 'employee') return;
+
+                if (employeeSystem === 'ths') {
+                  const account = loginData.id?.trim();
+                  const password = loginData.password;
+                  if (!account || !password) {
+                    alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
+                    return;
+                  }
+                  const form = document.createElement('form');
+                  form.method = 'POST';
+                  form.action = `${thsUrl}/privilege.php?act=login`;
+                  form.style.display = 'none';
+                  const fields = [
+                    { name: 'account', value: account },
+                    { name: 'password', value: password }
+                  ];
+                  fields.forEach(({ name, value }) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
+                  });
+                  document.body.appendChild(form);
+                  form.submit();
+                } else {
+                  const account = loginData.id?.trim();
+                  const password = loginData.password;
+                  if (!account || !password) {
+                    alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
+                    return;
+                  }
+                  setIsSubmitting(true);
+
+                  fetch('https://jstqorjesyjasxurkjvg.supabase.co/auth/v1/token?grant_type=password', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
+                    },
+                    body: JSON.stringify({
+                      email: account,
+                      password: password
+                    })
+                  })
+                  .then(response => {
+                    if (!response.ok) {
+                      return response.json().then(err => { throw new Error(err.error_description || '登录失败'); });
+                    }
+                    return response.json();
+                  })
+                  .then(data => {
+                    const params = new URLSearchParams();
+                    params.append('access_token', data.access_token);
+                    params.append('refresh_token', data.refresh_token);
+                    params.append('expires_in', data.expires_in);
+                    params.append('token_type', data.token_type);
+                    params.append('type', 'recovery');
+
+                    window.location.href = `${wmsUrl}/app.html#${params.toString()}`;
+                  })
+                  .catch(error => {
+                    console.error('Login error:', error);
+                    alert(lang === 'ja' ? 'ログインに失敗しました。IDとパスワードを確認してください。' : '登录失败，请检查账号和密码。');
+                  })
+                  .finally(() => {
+                    setIsSubmitting(false);
+                  });
+                }
+              }}>
                 {/* User Type Selection */}
                 <div style={{ marginBottom: userType === 'user' ? '12px' : '24px' }}>
                   <label style={{
@@ -3825,9 +3904,7 @@ function ANSHomepage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        window.location.href = `${wmsUrl}/index.html`;
-                      }}
+                      onClick={() => setUserType('employee')}
                       style={{
                         flex: 1,
                         padding: '12px 24px',
@@ -3846,7 +3923,170 @@ function ANSHomepage() {
                   </div>
                 </div>
 
-                {/* 顧客认证在 thsadmin iframe 内完成；登录成功后 iframe 内 top 跳转门户（预期整页切到 thsadmin） */}
+                {/* Employee System Selection */}
+                {userType === 'employee' && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '12px',
+                    }}>
+                      {lang === 'ja' ? 'システム選択' : '系统选择'}
+                    </label>
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                      <button
+                        type="button"
+                        onClick={() => setEmployeeSystem('ths')}
+                        style={{
+                          flex: 1,
+                          padding: '12px 16px',
+                          border: `2px solid ${employeeSystem === 'ths' ? '#1A3A52' : '#E8ECF0'}`,
+                          borderRadius: '8px',
+                          background: employeeSystem === 'ths' ? '#F0F4F8' : 'white',
+                          color: employeeSystem === 'ths' ? '#1A3A52' : '#7F8C9A',
+                          fontSize: '13px',
+                          fontWeight: employeeSystem === 'ths' ? 600 : 500,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>THS</div>
+                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
+                          {lang === 'ja' ? '在庫・入出荷管理' : '库存・出入库管理'}
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEmployeeSystem('ledger')}
+                        style={{
+                          flex: 1,
+                          padding: '12px 16px',
+                          border: `2px solid ${employeeSystem === 'ledger' ? '#1A3A52' : '#E8ECF0'}`,
+                          borderRadius: '8px',
+                          background: employeeSystem === 'ledger' ? '#F0F4F8' : 'white',
+                          color: employeeSystem === 'ledger' ? '#1A3A52' : '#7F8C9A',
+                          fontSize: '13px',
+                          fontWeight: employeeSystem === 'ledger' ? 600 : 500,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>
+                          {lang === 'ja' ? '台帳管理' : '台账管理'}
+                        </div>
+                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
+                          {lang === 'ja' ? '業務台帳管理' : '业务台账管理'}
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {userType === 'employee' && (
+                  <div style={{ marginBottom: '20px' }}>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={loginData.id}
+                      onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+                )}
+
+                {userType === 'employee' && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <label style={{
+                      display: 'block',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#2C3E50',
+                      marginBottom: '8px',
+                    }}>
+                      {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      value={loginData.password}
+                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        border: '2px solid #E8ECF0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FF8C00';
+                        e.currentTarget.style.outline = 'none';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '#E8ECF0';
+                      }}
+                    />
+                  </div>
+                )}
+
+                {userType === 'employee' && (
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    style={{
+                      width: '100%',
+                      padding: '16px',
+                      background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                      opacity: isSubmitting ? 0.7 : 1,
+                      transition: 'all 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (isSubmitting) return;
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    {lang === 'ja' ? 'ログイン' : '登录'}
+                  </button>
+                )}
+              </form>
+
+              {/* 顧客认证在 thsadmin iframe 内完成 */}
                 {userType === 'user' && (
                   <div style={{
                     borderRadius: '8px',
@@ -3867,7 +4107,6 @@ function ANSHomepage() {
                     />
                   </div>
                 )}
-              </div>
             </div>
           </div>
         </div>
