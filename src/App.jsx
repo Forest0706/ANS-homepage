@@ -671,6 +671,11 @@ function ANSHomepage() {
 
   const [activeSection, setActiveSection] = useState('home');
 
+  const openLoginModal = () => {
+    setUserType('user');
+    setLoginModalOpen(true);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = [
@@ -1209,17 +1214,14 @@ function ANSHomepage() {
             <a href="#recruit" className={`nav-link ${activeSection === 'recruit' ? 'active' : ''}`} style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease' }}>
               {t.nav.recruit}
             </a>
-            <a 
-              href="#ths" 
-              onClick={(e) => {
-                e.preventDefault();
-                setLoginModalOpen(true);
-              }}
-              className="nav-link" 
-              style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease', cursor: 'pointer' }}
+            <button
+              type="button"
+              onClick={openLoginModal}
+              className="nav-link"
+              style={{ position: 'relative', color: '#2C3E50', textDecoration: 'none', fontSize: '15px', fontWeight: 500, transition: 'color 0.3s ease', cursor: 'pointer', background: 'none', border: 'none', padding: 0, fontFamily: 'inherit' }}
             >
               {t.nav.ths}
-            </a>
+            </button>
             
             {/* Language Switcher */}
             <div style={{
@@ -1394,17 +1396,16 @@ function ANSHomepage() {
           >
             {t.nav.recruit}
           </a>
-          <a 
-            href="#ths" 
-            onClick={(e) => {
-              e.preventDefault();
+          <button
+            type="button"
+            onClick={() => {
               setMobileMenuOpen(false);
-              setLoginModalOpen(true);
+              openLoginModal();
             }}
-            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0' }}
+            style={{ color: '#2C3E50', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '12px 0', borderBottom: '1px solid #E8ECF0', background: 'none', borderLeft: 'none', borderRight: 'none', borderTop: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit' }}
           >
             {t.nav.ths}
-          </a>
+          </button>
           
           {/* Language Switcher in Mobile Menu */}
           <div style={{
@@ -4087,13 +4088,14 @@ function ANSHomepage() {
               </form>
 
               {/* 顧客认证在 thsadmin iframe 内完成 */}
-                {userType === 'user' && (
+                {loginModalOpen && userType === 'user' && (
                   <div style={{
                     borderRadius: '8px',
                     overflow: 'hidden',
                     border: '1px solid #E8ECF0',
                   }}>
                     <iframe
+                      key={loginModalOpen ? 'portal-login-open' : 'portal-login-closed'}
                       src={portalLoginUrl}
                       title="THS 顧客ログイン"
                       allow="clipboard-read; clipboard-write"
