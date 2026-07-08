@@ -76,7 +76,6 @@ function ANSHomepage() {
   const [modalType, setModalType] = useState('consultation'); // 'consultation' or 'recruit'
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [userType, setUserType] = useState('user'); // 'user' or 'employee'
-  const [employeeSystem, setEmployeeSystem] = useState('ths'); // 'ths' or 'ledger'
   const [loginData, setLoginData] = useState({
     id: '',
     password: ''
@@ -96,8 +95,6 @@ function ANSHomepage() {
   
   // 域名配置 - 从环境变量获取，如果没有则使用默认值
   const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
-  // THS 员工系统（勤怠・在庫管理）
-  const thsUrl = import.meta.env.VITE_THS_URL || 'https://thscus.ans-scm.com/admin_hwc';
   // 台账管理（认证在 thsadmin 域完成；VITE_WMS_URL 仅替换域名）
   const wmsUrl = (import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com').replace(/\/$/, '');
   const portalLoginUrl = `${wmsUrl}/portal-login.html?embedded=1`;
@@ -3801,74 +3798,48 @@ function ANSHomepage() {
                 e.preventDefault();
                 if (userType !== 'employee') return;
 
-                if (employeeSystem === 'ths') {
-                  const account = loginData.id?.trim();
-                  const password = loginData.password;
-                  if (!account || !password) {
-                    alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
-                    return;
-                  }
-                  const form = document.createElement('form');
-                  form.method = 'POST';
-                  form.action = `${thsUrl}/privilege.php?act=login`;
-                  form.style.display = 'none';
-                  const fields = [
-                    { name: 'account', value: account },
-                    { name: 'password', value: password }
-                  ];
-                  fields.forEach(({ name, value }) => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = name;
-                    input.value = value;
-                    form.appendChild(input);
-                  });
-                  document.body.appendChild(form);
-                  form.submit();
-                } else {
-                  const account = loginData.id?.trim();
-                  const password = loginData.password;
-                  if (!account || !password) {
-                    alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
-                    return;
-                  }
-                  setIsSubmitting(true);
-
-                  fetch('https://jstqorjesyjasxurkjvg.supabase.co/auth/v1/token?grant_type=password', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
-                    },
-                    body: JSON.stringify({
-                      email: account,
-                      password: password
-                    })
-                  })
-                  .then(response => {
-                    if (!response.ok) {
-                      return response.json().then(err => { throw new Error(err.error_description || '登录失败'); });
-                    }
-                    return response.json();
-                  })
-                  .then(data => {
-                    const params = new URLSearchParams();
-                    params.append('access_token', data.access_token);
-                    params.append('refresh_token', data.refresh_token);
-                    params.append('expires_in', data.expires_in);
-                    params.append('token_type', data.token_type);
-                    params.append('type', 'recovery');
-
-                    window.location.href = `${wmsUrl}/app.html#${params.toString()}`;
-                  })
-                  .catch(error => {
-                    console.error('Login error:', error);
-                    alert(lang === 'ja' ? 'ログインに失敗しました。IDとパスワードを確認してください。' : '登录失败，请检查账号和密码。');
-                  })
-                  .finally(() => {
-                    setIsSubmitting(false);
-                  });
+                const account = loginData.id?.trim();
+                const password = loginData.password;
+                if (!account || !password) {
+                  alert(lang === 'ja' ? 'IDとパスワードを入力してください。' : '请输入 ID 和密码。');
+                  return;
                 }
+                setIsSubmitting(true);
+
+                fetch('https://jstqorjesyjasxurkjvg.supabase.co/auth/v1/token?grant_type=password', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
+                  },
+                  body: JSON.stringify({
+                    email: account,
+                    password: password
+                  })
+                })
+                .then(response => {
+                  if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.error_description || '登录失败'); });
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  const params = new URLSearchParams();
+                  params.append('access_token', data.access_token);
+                  params.append('refresh_token', data.refresh_token);
+                  params.append('expires_in', data.expires_in);
+                  params.append('token_type', data.token_type);
+                  params.append('type', 'recovery');
+
+                  window.location.href = `${wmsUrl}/app.html#${params.toString()}`;
+                })
+                .catch(error => {
+                  console.error('Login error:', error);
+                  alert(lang === 'ja' ? 'ログインに失敗しました。IDとパスワードを確認してください。' : '登录失败，请检查账号和密码。');
+                })
+                .finally(() => {
+                  setIsSubmitting(false);
+                });
               }}>
                 {/* User Type Selection */}
                 <div style={{ marginBottom: userType === 'user' ? '12px' : '24px' }}>
@@ -3924,7 +3895,7 @@ function ANSHomepage() {
                   </div>
                 </div>
 
-                {/* Employee System Selection */}
+                {/* 従業員：台帳管理のみ */}
                 {userType === 'employee' && (
                   <div style={{ marginBottom: '24px' }}>
                     <label style={{
@@ -3934,53 +3905,21 @@ function ANSHomepage() {
                       color: '#2C3E50',
                       marginBottom: '12px',
                     }}>
-                      {lang === 'ja' ? 'システム選択' : '系统选择'}
+                      {lang === 'ja' ? 'システム' : '系统'}
                     </label>
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <button
-                        type="button"
-                        onClick={() => setEmployeeSystem('ths')}
-                        style={{
-                          flex: 1,
-                          padding: '12px 16px',
-                          border: `2px solid ${employeeSystem === 'ths' ? '#1A3A52' : '#E8ECF0'}`,
-                          borderRadius: '8px',
-                          background: employeeSystem === 'ths' ? '#F0F4F8' : 'white',
-                          color: employeeSystem === 'ths' ? '#1A3A52' : '#7F8C9A',
-                          fontSize: '13px',
-                          fontWeight: employeeSystem === 'ths' ? 600 : 500,
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                        }}
-                      >
-                        <div style={{ fontWeight: 600 }}>THS</div>
-                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                          {lang === 'ja' ? '在庫・入出荷管理' : '库存・出入库管理'}
-                        </div>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setEmployeeSystem('ledger')}
-                        style={{
-                          flex: 1,
-                          padding: '12px 16px',
-                          border: `2px solid ${employeeSystem === 'ledger' ? '#1A3A52' : '#E8ECF0'}`,
-                          borderRadius: '8px',
-                          background: employeeSystem === 'ledger' ? '#F0F4F8' : 'white',
-                          color: employeeSystem === 'ledger' ? '#1A3A52' : '#7F8C9A',
-                          fontSize: '13px',
-                          fontWeight: employeeSystem === 'ledger' ? 600 : 500,
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                        }}
-                      >
-                        <div style={{ fontWeight: 600 }}>
-                          {lang === 'ja' ? '台帳管理' : '台账管理'}
-                        </div>
-                        <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                          {lang === 'ja' ? '業務台帳管理' : '业务台账管理'}
-                        </div>
-                      </button>
+                    <div style={{
+                      padding: '12px 16px',
+                      border: '2px solid #1A3A52',
+                      borderRadius: '8px',
+                      background: '#F0F4F8',
+                      color: '#1A3A52',
+                    }}>
+                      <div style={{ fontWeight: 600, fontSize: '13px' }}>
+                        {lang === 'ja' ? '台帳管理' : '台账管理'}
+                      </div>
+                      <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
+                        {lang === 'ja' ? '業務台帳管理' : '业务台账管理'}
+                      </div>
                     </div>
                   </div>
                 )}
