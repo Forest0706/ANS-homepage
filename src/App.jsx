@@ -97,7 +97,7 @@ function ANSHomepage() {
   const domain = import.meta.env.VITE_DOMAIN || 'ans-scm.com';
   // 台账管理（认证在 thsadmin 域完成；VITE_WMS_URL 仅替换域名）
   const wmsUrl = (import.meta.env.VITE_WMS_URL || 'https://thsadmin.ans-scm.com').replace(/\/$/, '');
-  const portalLoginUrl = `${wmsUrl}/portal-login.html?embedded=1`;
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE';
   const emailDomain = domain;
 
   // 页面刷新后滚动到顶部
@@ -3735,7 +3735,7 @@ function ANSHomepage() {
           <div style={{
             background: 'white',
             borderRadius: '16px',
-            maxWidth: userType === 'user' ? '480px' : '560px',
+            maxWidth: '480px',
             width: '100%',
             position: 'relative',
             boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
@@ -3774,12 +3774,12 @@ function ANSHomepage() {
             </button>
 
             {/* Modal Content */}
-            <div style={{ padding: userType === 'user' ? '24px 28px 20px' : '40px' }}>
+            <div style={{ padding: '40px' }}>
               <h2 style={{
-                fontSize: userType === 'user' ? '22px' : '28px',
+                fontSize: '28px',
                 fontWeight: 700,
                 color: '#1A3A52',
-                marginBottom: userType === 'user' ? '4px' : '8px',
+                marginBottom: '8px',
                 textAlign: 'center',
               }}>
                 THS ログイン
@@ -3787,7 +3787,7 @@ function ANSHomepage() {
               <p style={{
                 fontSize: '14px',
                 color: '#7F8C9A',
-                marginBottom: userType === 'user' ? '16px' : '32px',
+                marginBottom: '32px',
                 textAlign: 'center',
               }}>
                 {lang === 'ja' ? 'ログインタイプを選択してください' : '请选择登录类型'}
@@ -3795,7 +3795,6 @@ function ANSHomepage() {
 
               <form onSubmit={(e) => {
                 e.preventDefault();
-                if (userType !== 'employee') return;
 
                 const account = loginData.id?.trim();
                 const password = loginData.password;
@@ -3809,7 +3808,7 @@ function ANSHomepage() {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
-                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdHFvcmplc3lqYXN4dXJranZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3Mzg4MTksImV4cCI6MjA3NTMxNDgxOX0.mxbC_D6W_SoJKCZUlWiuOzzuG835spbVW_VWW_fK-gE'
+                    'apikey': supabaseAnonKey
                   },
                   body: JSON.stringify({
                     email: account,
@@ -3830,7 +3829,8 @@ function ANSHomepage() {
                   params.append('token_type', data.token_type);
                   params.append('type', 'recovery');
 
-                  window.location.href = `${wmsUrl}/app.html#${params.toString()}`;
+                  const targetPath = userType === 'user' ? 'client-portal.html' : 'app.html';
+                  window.location.href = `${wmsUrl}/${targetPath}#${params.toString()}`;
                 })
                 .catch(error => {
                   console.error('Login error:', error);
@@ -3841,7 +3841,7 @@ function ANSHomepage() {
                 });
               }}>
                 {/* User Type Selection */}
-                <div style={{ marginBottom: userType === 'user' ? '12px' : '24px' }}>
+                <div style={{ marginBottom: '24px' }}>
                   <label style={{
                     display: 'block',
                     fontSize: '14px',
@@ -3894,159 +3894,101 @@ function ANSHomepage() {
                   </div>
                 </div>
 
-                {/* 従業員：台帳管理のみ */}
-                {userType === 'employee' && (
-                  <div style={{ marginBottom: '24px' }}>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#2C3E50',
-                      marginBottom: '12px',
-                    }}>
-                      {lang === 'ja' ? 'システム' : '系统'}
-                    </label>
-                    <div style={{
-                      padding: '12px 16px',
-                      border: '2px solid #1A3A52',
-                      borderRadius: '8px',
-                      background: '#F0F4F8',
-                      color: '#1A3A52',
-                    }}>
-                      <div style={{ fontWeight: 600, fontSize: '13px' }}>
-                        {lang === 'ja' ? '台帳管理' : '台账管理'}
-                      </div>
-                      <div style={{ fontSize: '11px', marginTop: '4px', opacity: 0.8 }}>
-                        {lang === 'ja' ? '業務台帳管理' : '业务台账管理'}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {userType === 'employee' && (
-                  <div style={{ marginBottom: '20px' }}>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#2C3E50',
-                      marginBottom: '8px',
-                    }}>
-                      {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={loginData.id}
-                      onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '12px 16px',
-                        border: '2px solid #E8ECF0',
-                        borderRadius: '8px',
-                        fontSize: '14px',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = '#FF8C00';
-                        e.currentTarget.style.outline = 'none';
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '#E8ECF0';
-                      }}
-                    />
-                  </div>
-                )}
-
-                {userType === 'employee' && (
-                  <div style={{ marginBottom: '24px' }}>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#2C3E50',
-                      marginBottom: '8px',
-                    }}>
-                      {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
-                    </label>
-                    <input
-                      type="password"
-                      required
-                      value={loginData.password}
-                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '12px 16px',
-                        border: '2px solid #E8ECF0',
-                        borderRadius: '8px',
-                        fontSize: '14px',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = '#FF8C00';
-                        e.currentTarget.style.outline = 'none';
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '#E8ECF0';
-                      }}
-                    />
-                  </div>
-                )}
-
-                {userType === 'employee' && (
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#2C3E50',
+                    marginBottom: '8px',
+                  }}>
+                    {lang === 'ja' ? 'ID' : 'ID'} <span style={{ color: '#FF8C00' }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={loginData.id}
+                    onChange={(e) => setLoginData({ ...loginData, id: e.target.value })}
                     style={{
                       width: '100%',
-                      padding: '16px',
-                      background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
-                      border: 'none',
+                      padding: '12px 16px',
+                      border: '2px solid #E8ECF0',
                       borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                      opacity: isSubmitting ? 0.7 : 1,
-                      transition: 'all 0.3s ease',
+                      fontSize: '14px',
+                      transition: 'all 0.2s ease',
                     }}
-                    onMouseEnter={(e) => {
-                      if (isSubmitting) return;
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#FF8C00';
+                      e.currentTarget.style.outline = 'none';
                     }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#E8ECF0';
                     }}
-                  >
-                    {lang === 'ja' ? 'ログイン' : '登录'}
-                  </button>
-                )}
-              </form>
+                  />
+                </div>
 
-              {/* 顧客认证在 thsadmin iframe 内完成 */}
-                {loginModalOpen && userType === 'user' && (
-                  <div style={{
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                    border: '1px solid #E8ECF0',
+                <div style={{ marginBottom: '24px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#2C3E50',
+                    marginBottom: '8px',
                   }}>
-                    <iframe
-                      key={loginModalOpen ? 'portal-login-open' : 'portal-login-closed'}
-                      src={portalLoginUrl}
-                      title="THS 顧客ログイン"
-                      allow="clipboard-read; clipboard-write"
-                      scrolling="auto"
-                      style={{
-                        width: '100%',
-                        height: '340px',
-                        border: 'none',
-                        display: 'block',
-                      }}
-                    />
-                  </div>
-                )}
+                    {lang === 'ja' ? 'パスワード' : '密码'} <span style={{ color: '#FF8C00' }}>*</span>
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={loginData.password}
+                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: '2px solid #E8ECF0',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#FF8C00';
+                      e.currentTarget.style.outline = 'none';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#E8ECF0';
+                    }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={{
+                    width: '100%',
+                    padding: '16px',
+                    background: 'linear-gradient(135deg, #FF8C00 0%, #4A90E2 50%, #004E89 100%)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                    opacity: isSubmitting ? 0.7 : 1,
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (isSubmitting) return;
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(211, 47, 47, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {lang === 'ja' ? 'ログイン' : '登录'}
+                </button>
+              </form>
             </div>
           </div>
         </div>
