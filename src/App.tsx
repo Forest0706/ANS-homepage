@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import InquiryModal, { type InquiryType } from "./InquiryModal";
 import ThsLoginModal from "./ThsLoginModal";
 import "./styles.css";
 
@@ -90,7 +91,7 @@ const copy = {
       ["Warehouse Operations", "Receiving, inspection, labeling, shipping, and inventory control."],
       ["Accounting", "Billing, payments, bookkeeping, and monthly closing support."],
     ],
-    recruitButton: "View opportunities",
+    recruitButton: "Apply now",
     finalKicker: "Build what fits",
     finalTitleA: "Ready to create the answer",
     finalTitleB: "for your supply chain?",
@@ -176,7 +177,7 @@ const copy = {
       ["仓库运营担当", "负责入出库、检品、贴标、发货及库存管理。"],
       ["财务会计担当", "负责账务处理、开票付款及月度结算支持。"],
     ],
-    recruitButton: "查看招聘职位",
+    recruitButton: "立即申请",
     finalKicker: "创造最适合的答案",
     finalTitleA: "准备好共同创造",
     finalTitleB: "您的供应链答案了吗？",
@@ -262,7 +263,7 @@ const copy = {
       ["倉庫作業員", "入出庫、検品、ラベル貼り、在庫管理を担当。"],
       ["経理担当者", "帳簿処理、請求・支払管理、月次業務を担当。"],
     ],
-    recruitButton: "募集職種を見る",
+    recruitButton: "応募する",
     finalKicker: "最適な答えを創る",
     finalTitleA: "サプライチェーンの答えを、",
     finalTitleB: "私たちとともに創りませんか。",
@@ -291,11 +292,21 @@ export default function Home() {
   const [lang, setLang] = useState<Language>("ja");
   const [menu, setMenu] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [inquiryType, setInquiryType] = useState<InquiryType>("consultation");
+  const [inquiryMessage, setInquiryMessage] = useState("");
   const t = copy[lang];
 
   const openLoginModal = () => {
     setMenu(false);
     setLoginOpen(true);
+  };
+
+  const openInquiryModal = (type: InquiryType = "consultation", message = "") => {
+    setMenu(false);
+    setInquiryType(type);
+    setInquiryMessage(message);
+    setInquiryOpen(true);
   };
 
   useEffect(() => {
@@ -316,6 +327,9 @@ export default function Home() {
         <a href="#top" className="logo-link"><BrandMark /></a>
         <nav className={`desktop-nav ${menu ? "nav-open" : ""}`} aria-label="Primary navigation">
           {t.nav.map((item, i) => <a key={item} href={`#${ids[i]}`} onClick={() => setMenu(false)}>{item}</a>)}
+          <button type="button" className="nav-inquiry-mobile" onClick={() => openInquiryModal("consultation")}>
+            {t.contact}
+          </button>
         </nav>
         <div className="nav-actions">
           <button type="button" className="nav-ths" onClick={openLoginModal}>{t.ths}</button>
@@ -324,7 +338,9 @@ export default function Home() {
               <button key={item} className={lang === item ? "active" : ""} onClick={() => setLang(item)}>{item.toUpperCase()}</button>
             ))}
           </div>
-          <a className="nav-contact" href="#contact">{t.contact}<span>↗</span></a>
+          <button type="button" className="nav-contact" onClick={() => openInquiryModal("consultation")}>
+            {t.contact}<span>↗</span>
+          </button>
           <button className="menu-button" aria-label="Toggle menu" aria-expanded={menu} onClick={() => setMenu(!menu)}>
             <i /><i />
           </button>
@@ -342,7 +358,9 @@ export default function Home() {
             <p className="hero-body">{t.heroBody}</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#twin-hub">{t.explore}<span>↓</span></a>
-              <a className="text-link" href="#contact">{t.talk}<span>↗</span></a>
+              <button type="button" className="text-link" onClick={() => openInquiryModal("consultation")}>
+                {t.talk}<span>↗</span>
+              </button>
             </div>
           </div>
         </div>
@@ -418,7 +436,13 @@ export default function Home() {
         <div className="stories-noise" />
         <div className="section-index on-dark reveal"><span>04</span><p>{t.storyKicker}</p></div>
         <div className="stories-grid">
-          <div className="stories-copy reveal"><h2>{t.storyTitle}</h2><p>{t.storyBody}</p><a href="#contact" className="button button-outline">{t.storyCta}<span>↗</span></a></div>
+          <div className="stories-copy reveal">
+            <h2>{t.storyTitle}</h2>
+            <p>{t.storyBody}</p>
+            <button type="button" className="button button-outline" onClick={() => openInquiryModal("consultation")}>
+              {t.storyCta}<span>↗</span>
+            </button>
+          </div>
           <div className="case-card reveal">
             <div className="case-top"><span>{t.storyTag}</span><strong>{t.storyIndustry}</strong></div>
             <div className="case-flow">
@@ -446,10 +470,35 @@ export default function Home() {
         <div className="section-index on-dark reveal"><span>06</span><p>{t.recruitKicker}</p></div>
         <div className="recruit-head reveal">
           <h2>{t.recruitTitle}</h2>
-          <div><p>{t.recruitBody}</p><a href="mailto:info@ans-scm.com?subject=Recruit" className="button button-outline recruit-button">{t.recruitButton}<span>↗</span></a></div>
+          <div>
+            <p>{t.recruitBody}</p>
+            <button type="button" className="button button-outline recruit-button" onClick={() => openInquiryModal("recruit")}>
+              {t.recruitButton}<span>↗</span>
+            </button>
+          </div>
         </div>
         <div className="recruit-grid">
-          {t.recruitRoles.map(([title, body], i) => <article className="recruit-card reveal" style={{ "--delay": `${i * 80}ms` } as React.CSSProperties} key={title}><span>0{i + 1}</span><h3>{title}</h3><p>{body}</p><i>↗</i></article>)}
+          {t.recruitRoles.map(([title, body], i) => (
+            <article
+              className="recruit-card reveal"
+              style={{ "--delay": `${i * 80}ms` } as React.CSSProperties}
+              key={title}
+              role="button"
+              tabIndex={0}
+              onClick={() => openInquiryModal("recruit", title)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  openInquiryModal("recruit", title);
+                }
+              }}
+            >
+              <span>0{i + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+              <i>↗</i>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -458,12 +507,22 @@ export default function Home() {
         <div className="contact-copy reveal">
           <p className="eyebrow light"><span />{t.finalKicker}</p>
           <h2>{t.finalTitleA}<br /><em>{t.finalTitleB}</em></h2>
-          <a href="mailto:info@ans-scm.com" className="button button-contact">{t.finalButton}<span>↗</span></a>
+          <button type="button" className="button button-contact" onClick={() => openInquiryModal("consultation")}>
+            {t.finalButton}<span>↗</span>
+          </button>
         </div>
         <footer><BrandMark /><p>{t.footerLine}</p><span>© {new Date().getFullYear()} ANS</span></footer>
       </section>
 
       {loginOpen && <ThsLoginModal lang={lang} onClose={() => setLoginOpen(false)} />}
+      {inquiryOpen && (
+        <InquiryModal
+          lang={lang}
+          type={inquiryType}
+          initialMessage={inquiryMessage}
+          onClose={() => setInquiryOpen(false)}
+        />
+      )}
     </main>
   );
 }
