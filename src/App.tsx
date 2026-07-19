@@ -84,7 +84,7 @@ const copy = {
       ["Business", "China–Japan international logistics"],
     ],
     recruitKicker: "Recruit",
-    recruitTitle: "Create the future of China–Japan logistics with us.",
+    recruitTitle: "We're looking for teammates to grow China–Japan supply chains with us.",
     recruitBody: "ANS is building a practical, connected supply chain across China and Japan. We welcome people who want to learn, take ownership, and improve operations together.",
     recruitRoles: [
       ["Import / Export Operations", "Trade documents, customs coordination, and customer support."],
@@ -170,7 +170,7 @@ const copy = {
       ["主营业务", "中日国际供应链服务"],
     ],
     recruitKicker: "人才招聘",
-    recruitTitle: "与我们共同创造中日物流的未来。",
+    recruitTitle: "正在招募共同培育中日供应链的伙伴。",
     recruitBody: "ANS 正在建设连接中国与日本的供应链体系。我们期待愿意学习、主动担当，并与团队持续改善运营的伙伴加入。",
     recruitRoles: [
       ["进出口业务担当", "负责贸易文件、通关协调及客户沟通。"],
@@ -256,7 +256,7 @@ const copy = {
       ["事業内容", "日中間の国際物流サービス全般"],
     ],
     recruitKicker: "採用情報",
-    recruitTitle: "一緒に日中物流の未来を創りませんか。",
+    recruitTitle: "日中サプライチェーンを、ともに育てる仲間を募集しています。",
     recruitBody: "ANSは、中国と日本をつなぐ新しいサプライチェーンを構築しています。学び、責任を持ち、チームとともに現場を改善できる仲間を募集しています。",
     recruitRoles: [
       ["輸出入業務担当", "輸出入書類、通関手続き、顧客対応を担当。"],
