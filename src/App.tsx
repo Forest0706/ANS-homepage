@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ThsLoginModal from "./ThsLoginModal";
 import "./styles.css";
 
 type Language = "en" | "zh" | "ja";
@@ -9,6 +10,7 @@ const copy = {
   en: {
     nav: ["Why ANS", "Twin Hub", "Solutions", "Stories", "About", "Recruit"],
     contact: "Start a conversation",
+    ths: "THS",
     eyebrow: "China × Japan · Connected supply chains",
     heroLead: "We Create the Answer",
     heroMid: "for Your Supply Chain.",
@@ -98,6 +100,7 @@ const copy = {
   zh: {
     nav: ["为什么选择 ANS", "Twin Hub", "解决方案", "客户案例", "关于我们", "人才招聘"],
     contact: "开始沟通",
+    ths: "THS",
     eyebrow: "连接中国与日本 · 协同供应链",
     heroLead: "与您共同创造",
     heroMid: "最适合企业发展的",
@@ -183,6 +186,7 @@ const copy = {
   ja: {
     nav: ["ANSを選ぶ理由", "Twin Hub", "ソリューション", "導入事例", "私たちについて", "採用情報"],
     contact: "相談する",
+    ths: "THS",
     eyebrow: "中国 × 日本 · つながるサプライチェーン",
     heroLead: "お客様とともに、",
     heroMid: "企業の成長に最適な",
@@ -286,7 +290,13 @@ function InfinityFlow({ small = false, icon = false }: { small?: boolean; icon?:
 export default function Home() {
   const [lang, setLang] = useState<Language>("ja");
   const [menu, setMenu] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const t = copy[lang];
+
+  const openLoginModal = () => {
+    setMenu(false);
+    setLoginOpen(true);
+  };
 
   useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh-CN" : lang === "ja" ? "ja" : "en";
@@ -306,6 +316,7 @@ export default function Home() {
         <a href="#top" className="logo-link"><BrandMark /></a>
         <nav className={`desktop-nav ${menu ? "nav-open" : ""}`} aria-label="Primary navigation">
           {t.nav.map((item, i) => <a key={item} href={`#${ids[i]}`} onClick={() => setMenu(false)}>{item}</a>)}
+          <button type="button" className="nav-ths" onClick={openLoginModal}>{t.ths}</button>
         </nav>
         <div className="nav-actions">
           <div className="lang-switch" aria-label="Language selector">
@@ -451,6 +462,8 @@ export default function Home() {
         </div>
         <footer><BrandMark /><p>{t.footerLine}</p><span>© {new Date().getFullYear()} ANS</span></footer>
       </section>
+
+      {loginOpen && <ThsLoginModal lang={lang} onClose={() => setLoginOpen(false)} />}
     </main>
   );
 }
