@@ -316,9 +316,9 @@ export default function Home() {
         <a href="#top" className="logo-link"><BrandMark /></a>
         <nav className={`desktop-nav ${menu ? "nav-open" : ""}`} aria-label="Primary navigation">
           {t.nav.map((item, i) => <a key={item} href={`#${ids[i]}`} onClick={() => setMenu(false)}>{item}</a>)}
-          <button type="button" className="nav-ths" onClick={openLoginModal}>{t.ths}</button>
         </nav>
         <div className="nav-actions">
+          <button type="button" className="nav-ths" onClick={openLoginModal}>{t.ths}</button>
           <div className="lang-switch" aria-label="Language selector">
             {(["en", "zh", "ja"] as Language[]).map((item) => (
               <button key={item} className={lang === item ? "active" : ""} onClick={() => setLang(item)}>{item.toUpperCase()}</button>

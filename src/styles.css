@@ -35,8 +35,14 @@ main { overflow: hidden; }
 .desktop-nav { display: flex; justify-content: center; gap: clamp(20px, 2.5vw, 42px); }
 .desktop-nav a { font-size: 12px; letter-spacing: .02em; color: rgba(255,255,255,.68); transition: color .25s; white-space: nowrap; }
 .desktop-nav a:hover { color: white; }
-.nav-ths { padding: 0; border: 0; background: transparent; font-size: 12px; letter-spacing: .02em; color: rgba(255,255,255,.68); cursor: pointer; transition: color .25s; white-space: nowrap; font-family: inherit; }
-.nav-ths:hover { color: white; }
+.nav-ths {
+  padding: 9px 14px; border: 1px solid rgba(255,122,26,.55); border-radius: 999px;
+  background: rgba(255,122,26,.12); font-size: 11px; font-weight: 650;
+  letter-spacing: .08em; color: var(--orange-hot); cursor: pointer;
+  transition: background .25s, color .25s, border-color .25s;
+  white-space: nowrap; font-family: inherit;
+}
+.nav-ths:hover { color: white; background: rgba(255,122,26,.28); border-color: var(--orange-hot); }
 .nav-actions { display: flex; align-items: center; gap: 18px; }
 .lang-switch { display: flex; gap: 2px; padding: 3px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; }
 .lang-switch button { width: 32px; height: 25px; padding: 0; border: 0; border-radius: 999px; background: transparent; color: rgba(255,255,255,.48); font: 9px var(--mono); cursor: pointer; }
@@ -210,7 +216,7 @@ footer p { text-align: center; } footer > span { white-space: nowrap; }
   .nav-wrap { height: 70px; padding: 0 20px; grid-template-columns: 1fr auto; }
   .brand-full { display: none; }.brand-letters { font-size: 24px; }
   .desktop-nav { position: fixed; inset: 70px 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 0; padding: 12px 20px 24px; background: rgba(6,19,38,.98); border-bottom: 1px solid rgba(255,255,255,.13); transform: translateY(-140%); transition: transform .35s; }
-  .desktop-nav.nav-open { transform: none; }.desktop-nav a, .desktop-nav .nav-ths { width: 100%; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; text-align: left; }
+  .desktop-nav.nav-open { transform: none; }.desktop-nav a { width: 100%; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; text-align: left; }
   .menu-button { display: flex; width: 36px; height: 36px; border: 0; background: transparent; flex-direction: column; justify-content: center; gap: 6px; cursor: pointer; }
   .menu-button i { display: block; width: 22px; height: 1px; background: white; }
   .lang-switch button { width: 28px; }
