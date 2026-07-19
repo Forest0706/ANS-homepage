@@ -815,7 +815,7 @@ footer { width: min(100%, var(--content-width)); margin: 84px auto 0; }
   object-fit: contain;
   filter: drop-shadow(0 22px 38px rgba(0,0,0,.25));
 }
-.center-caption { margin-top: -18px; }
+.center-caption { margin-top: 14px; }
 .connection-line { left: 27%; right: 27%; }
 
 .solution-row { grid-template-columns: 70px minmax(230px,.8fr) minmax(360px,1fr) 40px; }
