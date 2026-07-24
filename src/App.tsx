@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import InfinityFlow from "./InfinityFlow";
 import InquiryModal, { type InquiryType } from "./InquiryModal";
 import ThsLoginModal from "./ThsLoginModal";
 import "./styles.css";
@@ -277,14 +278,6 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
     <span className={`brand-mark ${compact ? "compact" : ""}`} aria-label="ANS — Answer Supply Chain">
       <img src="/ans-logo-transparent-v2.png" alt="ANS — Answer Supply Chain" />
     </span>
-  );
-}
-
-function InfinityFlow({ small = false, icon = false }: { small?: boolean; icon?: boolean }) {
-  return (
-    <div className={`infinity ${small ? "infinity-small" : ""} ${icon ? "infinity-icon" : ""}`} aria-hidden="true">
-      <img src={icon ? "/ans-logo-transparent-v2.png" : "/infinity-flow-transparent-v2.png"} alt="" />
-    </div>
   );
 }
 
