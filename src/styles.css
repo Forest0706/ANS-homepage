@@ -451,7 +451,9 @@ footer p { text-align: center; } footer > span { white-space: nowrap; }
 .solutions-head,
 .solutions-list,
 .stories-grid,
-.about-grid {
+.about-grid,
+.recruit-head,
+.recruit-grid {
   width: min(100%, var(--content-width));
   margin-left: auto;
   margin-right: auto;
@@ -487,7 +489,8 @@ footer p { text-align: center; } footer > span { white-space: nowrap; }
 
 .section-light,
 .twin-section,
-.stories { padding: 82px max(40px, calc((100vw - var(--content-width)) / 2)); }
+.stories,
+.recruit { padding: 82px max(40px, calc((100vw - var(--content-width)) / 2)); }
 .section-index { margin-bottom: 46px; }
 .section-index::after { margin-top: 10px; }
 
@@ -572,7 +575,7 @@ footer { width: min(100%, var(--content-width)); margin: 84px auto 0; }
 @media (max-width: 1080px) {
   .hero { grid-template-columns: 47% 53%; padding-inline: 32px; }
   .hero-visual { width: 58vw; transform: translateX(7vw); }
-  .section-light, .twin-section, .stories { padding-inline: 32px; }
+  .section-light, .twin-section, .stories, .recruit { padding-inline: 32px; }
   .nav-wrap { padding-inline: 32px; }
   .why-heading, .twin-intro { gap: 52px; }
   .stories-grid { grid-template-columns: .8fr 1fr; gap: 50px; }
@@ -588,7 +591,7 @@ footer { width: min(100%, var(--content-width)); margin: 84px auto 0; }
     -webkit-mask-image: radial-gradient(ellipse 69% 75% at 50% 50%, #000 52%, transparent 100%);
     mask-image: radial-gradient(ellipse 69% 75% at 50% 50%, #000 52%, transparent 100%);
   }
-  .section-light, .twin-section, .stories { padding: 68px 20px; }
+  .section-light, .twin-section, .stories, .recruit { padding: 68px 20px; }
   .section-index { margin-bottom: 38px; }
   .why-heading, .twin-intro { grid-template-columns: 1fr; gap: 24px; }
   .process-grid { margin-top: 40px; }
@@ -919,7 +922,6 @@ footer { width: min(100%, var(--content-width)); margin: 84px auto 0; }
 
 .recruit {
   position: relative;
-  padding: 110px 4vw;
   color: white;
   background: linear-gradient(145deg,#0a1b34,#071426 64%,#0b203e);
 }
@@ -969,7 +971,6 @@ footer { width: min(100%, var(--content-width)); margin: 84px auto 0; }
   .stories-grid { grid-template-columns: 1fr; }
   .case-flow > div:nth-child(3) { border-top-color: rgba(255,255,255,.14); }
   .contact-flow { width: 620px; right: -280px; opacity: .24; }
-  .recruit { padding: 78px 20px; }
   .recruit-head { grid-template-columns: 1fr; gap: 32px; }
   .recruit-grid { grid-template-columns: 1fr; margin-top: 50px; }
   .recruit-card { min-height: 210px; }
