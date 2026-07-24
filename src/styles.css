@@ -372,7 +372,9 @@ footer p { text-align: center; } footer > span { white-space: nowrap; }
 }
 .infinity { width: 100%; aspect-ratio: auto; filter: none; }
 .infinity img,
-.infinity-svg { display: block; width: 100%; height: auto; object-fit: contain; }
+.infinity-svg { display: block; width: 100%; height: auto; }
+.infinity-svg { overflow: visible; }
+.infinity-art { transform-box: fill-box; transform-origin: center; }
 .hero-visual .infinity img,
 .hero-visual .infinity-svg { filter: drop-shadow(0 0 24px rgba(45,119,255,.18)); }
 .infinity-orbit-dot { pointer-events: none; }
@@ -787,12 +789,14 @@ footer { width: min(100%, var(--content-width)); margin: 84px auto 0; }
   height: auto;
   mix-blend-mode: normal;
   filter: drop-shadow(0 0 22px rgba(47,119,255,.14));
+}
+.hero-visual .infinity-art,
+.contact-flow .infinity-art {
   animation: flowBreath 5.5s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-visual .infinity-svg,
-  .contact-flow .infinity-svg,
-  .twin-center .infinity-svg { animation: none; }
+  .hero-visual .infinity-art,
+  .contact-flow .infinity-art { animation: none; }
 }
 .hero-visual::before,
 .contact-flow::before { display: none; }
